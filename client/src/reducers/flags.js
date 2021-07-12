@@ -1,7 +1,6 @@
 export default function flags(state = [], action) {
 	switch (action.type) {
 		case 'FETCH_FLAGS_SUCCESS': {
-			console.log('flag reducer, fetch flags success, state: ', state);
 			return action.flags;
 		}
 		case 'FETCH_FLAG_SUCCESS': {
@@ -24,7 +23,6 @@ export default function flags(state = [], action) {
 		}
 		case 'DELETE_FLAG_SUCCESS': {
 			const removedFlagId = action.flag.id;
-			console.log('delete reducer: ', action);
 			return state.filter((flag) => flag.id !== removedFlagId);
 		}
 		default:

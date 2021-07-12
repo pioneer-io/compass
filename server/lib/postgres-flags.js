@@ -22,7 +22,6 @@ async function fetchFlag(id) {
 	const searchVal = [ id ];
 	const result = await postgresQuery(insertText, searchVal);
 	const flagData = result.rows[0];
-	console.log(`single flag data (id: ${id})`, flagData);
 	return flagData;
 }
 
@@ -54,7 +53,6 @@ async function deleteFlagDb(id) {
 	// thought this was a bug, but don't think it is
 	const deleteSuccess = result.rowCount === 1;
 	console.log('deleteFlagDB delete success :', deleteSuccess);
-	// return id;
 	return deleteSuccess;
 }
 

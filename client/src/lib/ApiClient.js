@@ -12,7 +12,6 @@ function logError(errorResponse) {
 }
 
 function unwrapData(response) {
-	console.log("unwrapping data: ", response);
 	return response.data;
 }
 
@@ -36,7 +35,6 @@ const apiClient = {
 		return axios.post(routes.CREATE_FLAG_URL, flagData).then(unwrapData).then(callback).catch(logError);
 	},
 	logFlagDeletion : function(flagData, callback) {
-		console.log("line 39 apiclient, logFlagDeletion. Flagdata: ", flagData);
 		return axios.post(routes.POST_EVENTS_LOG_URL, flagData).then(unwrapData).then(callback).catch(logError);
 	},
 };

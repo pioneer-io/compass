@@ -7,7 +7,6 @@ const getEventLog = async (req, res, next) => {
 	const text = "SELECT * FROM logs";
 	const result = await postgresQuery(text);
 	const logData = result.rows;
-	console.log("all log data", logData);
 	res.json(logData);
 }
 
@@ -22,7 +21,6 @@ const getEventsForFlag = async (req, res, next) => {
 }
 
 const addCreateFlagEvent = async (req, res, next) => {
-	console.log('event log req', req.flag);
 	const errors = validationResult(req);
 
 	const description = `Flag created.`;

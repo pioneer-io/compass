@@ -59,7 +59,6 @@ const updateFlag = async (req, res, next) => {
 	const flag = req.body.flag;
 	const toggleChange = req.body.toggleChange;
 	const errors = validationResult(req);
-	console.log(errors.isEmpty());
 
 	if (errors.isEmpty()) {
 		await updateFlagDb(id, flag.title, flag.description, flag.is_active)
