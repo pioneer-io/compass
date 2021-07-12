@@ -104,6 +104,9 @@ const SingleFlag = (props) => {
       <button onClick={handleEditFlag} type="button" className="float-right inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
         Edit flag
       </button>
+      <button onClick={() => {props.history.push('/')}} type="button" className="float-left inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+        Back to Dashboard
+      </button>
     </div>
     </>
   );
