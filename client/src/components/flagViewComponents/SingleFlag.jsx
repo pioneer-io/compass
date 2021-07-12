@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import SingleFlagHeader from './SingleFlagHeader';
 import EditFlagForm from './EditFlagForm';
 import SingleFlagLogs from './SingleFlagLogs';
+import Toggle from '../Toggle';
+import { updateFlag } from '../../actions/FlagActions';
 import { getFlag, deleteFlag } from '../../actions/FlagActions';
 import { fetchLogs } from '../../actions/LogActions';
 import { parseDate } from '../../lib/helpers';
@@ -23,6 +25,12 @@ const SingleFlag = (props) => {
 
 	const handleEditFlag = () => {
 		setEditingFlag(true);
+	}
+
+	const handleClickToggle = (e) => {
+		e.preventDefault();
+		const updatedFlag = { id: flag.id, title:flag.title, description:flag.description, is_active: !flag.is_active };
+		dispatch(updateFlag(updatedFlag));
 	}
 
   useEffect(() => {
@@ -57,7 +65,8 @@ const SingleFlag = (props) => {
               Current status
             </dt>
             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-              {flag.toggledOn ? "On" : "Off"}
+              {flag.is_active ? "On" : "Off"}
+							<Toggle toggledOn={flag.is_active} _id={flag.id} handleClickToggle={handleClickToggle} />	
             </dd>
           </div>
           <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
