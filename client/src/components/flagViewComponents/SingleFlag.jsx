@@ -7,8 +7,8 @@ import SingleFlagLogs from './SingleFlagLogs';
 import Toggle from '../Toggle';
 import { updateFlag } from '../../actions/FlagActions';
 import { getFlag } from '../../actions/FlagActions';
-import { fetchLogs } from '../../actions/LogActions';
-import { parseDate } from '../../lib/helpers';
+import { fetchLogs, logFlagDeletion } from '../../actions/LogActions';
+import parseDate from '../../lib/helpers';
 
 
 const SingleFlag = (props) => {
