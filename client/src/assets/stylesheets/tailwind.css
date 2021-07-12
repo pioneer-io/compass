@@ -1,0 +1,35 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+#modal-container {
+  background: rgba(0,0, 0, 0.7);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  overflow: auto;
+  z-index: 3;
+}
+
+#modal {
+  margin: 48px 0 78px 50%;
+  transform: translateX(-50%);
+  width: 730px;
+  box-sizing: border-box;
+  background-color: #edeff0;
+  border-radius: 3px;
+  position: relative;
+  line-height: 18px;
+  font-size: 14px;
+  z-index: 5;
+}
+
+#modal:after {
+  content: "";
+  clear: both;
+  display: block;
+}
