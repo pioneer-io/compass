@@ -12,7 +12,7 @@ function logError(errorResponse) {
 }
 
 function unwrapData(response) {
-	console.log('unwrapping data: ', response);
+	//console.log("unwrapping data: ", response);
 	return response.data;
 }
 

@@ -73,10 +73,10 @@ export function getFlag(id) {
 	};
 }
 
-export function deleteFlag(id, callback) {
+export function deleteFlag(flag, callback) {
 	return function(dispatch) {
 		dispatch(deleteFlagRequest());
-		apiClient.deleteFlag(id, (data) => {
+		apiClient.deleteFlag(flag, (data) => {
 			console.log('delete flag success : ', data);
 			dispatch(deleteFlagSuccess(data));
 
@@ -87,11 +87,11 @@ export function deleteFlag(id, callback) {
 	};
 }
 
-export function createFlag(data, callback) {
+export function createFlag(id, callback) {
 	return function(dispatch) {
 		dispatch(createFlagRequest());
-		apiClient.createFlag(data, (resData) => {
-			dispatch(deleteFlagSuccess(resData));
+		apiClient.createFlag(id, (resData) => {
+			dispatch(createFlagSuccess(resData));
 
 			if (callback) {
 				callback();
