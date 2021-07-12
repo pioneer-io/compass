@@ -1,12 +1,8 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import Toggle from'../Toggle';
+import Toggle from '../Toggle';
 import { updateFlag } from '../../actions/FlagActions';
-import parseDate from '../../lib/helpers';
-
-const truncate = (description) => {
-	return description.length < 50 ? description : description.slice(0, 50);
-};
+import { parseDate, truncate } from '../../lib/helpers';
 
 const Flag = ({ id, title, description, is_active, created_at }) => {
 	const dispatch = useDispatch();

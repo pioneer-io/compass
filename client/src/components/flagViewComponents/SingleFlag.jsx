@@ -5,7 +5,7 @@ import EditFlagForm from './EditFlagForm';
 import SingleFlagLogs from './SingleFlagLogs';
 import { getFlag, deleteFlag } from '../../actions/FlagActions';
 import { fetchLogs } from '../../actions/LogActions';
-import parseDate from '../../lib/helpers';
+import { parseDate } from '../../lib/helpers';
 
 
 const SingleFlag = (props) => {
