@@ -12,7 +12,7 @@ function logError(errorResponse) {
 }
 
 function unwrapData(response) {
-	//console.log("unwrapping data: ", response);
+	console.log("unwrapping data: ", response);
 	return response.data;
 }
 
@@ -29,12 +29,16 @@ const apiClient = {
 	getFlag    : function(id, callback) {
 		return axios.get(`${routes.GET_FLAG_URL}${id}`).then(unwrapData).then(callback).catch(logError);
 	},
-	deleteFlag : function(id, callback) {
-		return axios.delete(`${routes.DELETE_FLAG_URL}${id}`).then(unwrapData).then(callback).catch(logError);
+	deleteFlag : function(flag, callback) {
+		return axios.delete(`${routes.DELETE_FLAG_URL}${flag.id}`, flag).then(unwrapData).then(callback).catch(logError);
 	},
 	createFlag : function(flagData, callback) {
 		return axios.post(routes.CREATE_FLAG_URL, flagData).then(unwrapData).then(callback).catch(logError);
-	}
+	},
+	logFlagDeletion : function(flagData, callback) {
+		console.log("line 39 apiclient, logFlagDeletion. Flagdata: ", flagData);
+		return axios.post(routes.POST_EVENTS_LOG_URL, flagData).then(unwrapData).then(callback).catch(logError);
+	},
 };
 
 export default apiClient;

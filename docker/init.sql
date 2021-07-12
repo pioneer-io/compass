@@ -21,8 +21,9 @@ CREATE TABLE IF NOT EXISTS Logs (
   title varchar(100) NOT NULL,
   description varchar(100) NOT NULL,
   created_at timestamp DEFAULT NOW(),
-  PRIMARY KEY (id),
-  FOREIGN KEY (flag_id) REFERENCES Flags(id) ON DELETE CASCADE
+  PRIMARY KEY (id)
+  -- we should preserve logs for deletions.. history will be weird otherwise
+  -- FOREIGN KEY (flag_id) REFERENCES Flags(id) ON DELETE CASCADE
 );
 
 INSERT INTO Flags(title, description, is_active) VALUES ('LOGIN_MICROSERVICE', 'Redirects users to the login microservice', FALSE);

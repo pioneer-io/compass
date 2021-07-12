@@ -73,18 +73,15 @@ const updateFlag = async (req, res, next) => {
 	}
 };
 
-const deleteFlag = async (flag, req, res, next) => {
-	console.log(" I AM IN DELETEFLAG in flagsController")
+const deleteFlag = async (req, res, next) => {
 	const id = req.params.id.toString();
-	console.log("FLAG: ", flag);
-
+	
 	await deleteFlagDb(id)
 		.then((deleteSuccess) => {
 			if (deleteSuccess) {
 				publish('FLAG.deleted', `${id}`);
 
 				res.send({ id });
-				// next(id);
 			} else {
 				next(new HttpError('Deleting flag failed, not found.', 400));
 			}

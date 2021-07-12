@@ -1,4 +1,5 @@
 import React from 'react';
+import parseDate from '../../lib/helpers';
 
 const LogEvent = ({flag_id, title, description, created_at}) => {
   return (
@@ -6,7 +7,7 @@ const LogEvent = ({flag_id, title, description, created_at}) => {
       <h2>{title}</h2>
       <h3>Flag ID: {flag_id}</h3>
       <p>Description: {description}</p>
-      <p>Timestamp: {created_at}</p>
+      <p>Timestamp: {parseDate(created_at)}</p>
     </li>
   );
 }

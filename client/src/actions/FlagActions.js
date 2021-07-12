@@ -76,6 +76,7 @@ export function getFlag(id) {
 export function deleteFlag(flag, callback) {
 	return function(dispatch) {
 		dispatch(deleteFlagRequest());
+
 		apiClient.deleteFlag(flag, (data) => {
 			console.log('delete flag success : ', data);
 			dispatch(deleteFlagSuccess(data));

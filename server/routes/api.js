@@ -24,4 +24,6 @@ router.delete('/flags/:id', flagsController.deleteFlag);
 
 router.get('/logs', eventLogController.getEventLog);
 
+router.post('/logs', eventLogController.addDeleteFlagEvent);
+
 module.exports = router;

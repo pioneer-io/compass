@@ -4,7 +4,7 @@ import SingleFlagHeader from './SingleFlagHeader';
 import EditFlagForm from './EditFlagForm';
 import SingleFlagLogs from './SingleFlagLogs';
 import { getFlag, deleteFlag } from '../../actions/FlagActions';
-import { fetchLogs } from '../../actions/LogActions';
+import { fetchLogs, logFlagDeletion } from '../../actions/LogActions';
 import parseDate from '../../lib/helpers';
 
 
@@ -18,7 +18,9 @@ const SingleFlag = (props) => {
   const logs = useSelector(state => state.eventLogs).filter(event => event.flag_id === flagId);
 
   const handleDeleteFlag = () => {
-    dispatch(deleteFlag(flagId, () => {props.history.push("/flags")}));
+    dispatch(deleteFlag(flag, () => {
+      dispatch(logFlagDeletion(flag, () => props.history.push("/flags")));
+    }));
   };
 
 	const handleEditFlag = () => {
