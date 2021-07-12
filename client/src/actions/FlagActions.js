@@ -49,8 +49,8 @@ export function fetchFlags() {
 	};
 }
 
-export function updateFlag({ id, title, description, is_active }, callback) {
-	const updatedInfo = { flag: { title, description, is_active } };
+export function updateFlag({ id, title, description, is_active }, toggleChange, callback) {
+	const updatedInfo = { flag: { title, description, is_active }, toggleChange };
 	return function(dispatch) {
 		dispatch(updateFlagRequest());
 		apiClient.updateFlag(id, updatedInfo, (data) => {

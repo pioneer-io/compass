@@ -39,12 +39,14 @@ const addCreateFlagEvent = async (req, res, next) => {
 };
 
 const addUpdateFlagEvent = async (req, res, next) => {
-	console.log('event log req', req.flag);
 	const errors = validationResult(req);
+	const toggleChange = req.toggleChange;
+	const flag = req.flag;
+	const toggleStatus = req.flag.is_active ? 'on' : 'off';
+	const flagId = flag.id;
+	const title = flag.title;
 
-	const description = `Updated flag: '${req.flag.title}'`;
-	const flagId = req.flag.id;
-	const title = req.flag.title;
+	const description = toggleChange ? `Flag ${title} toggled ${toggleStatus}` : `Updated flag: '${title}'`;
 
 	if (errors.isEmpty()) {
 		await createEventDb(flagId, title, description)

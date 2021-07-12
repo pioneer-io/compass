@@ -2,10 +2,7 @@ const express = require('express');
 const router = express.Router();
 const flagsController = require('../controllers/flagsController');
 const eventLogController = require('../controllers/eventLogController');
-// const dashboardController = require('../controllers/dashboardsController');
 
-// ??
-//router.get('/', dashboardController.getDashboard);
 
 router.get('/flags', flagsController.getFlags, flagsController.sendFlag);
 
