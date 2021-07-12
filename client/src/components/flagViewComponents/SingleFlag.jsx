@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import SingleFlagHeader from './SingleFlagHeader';
 import EditFlagForm from './EditFlagForm';
+import DeleteFlagModal from './DeleteFlagModal';
 import SingleFlagLogs from './SingleFlagLogs';
 import Toggle from '../Toggle';
 import { updateFlag } from '../../actions/FlagActions';
-import { getFlag, deleteFlag } from '../../actions/FlagActions';
+import { getFlag } from '../../actions/FlagActions';
 import { fetchLogs } from '../../actions/LogActions';
 import { parseDate } from '../../lib/helpers';
 
@@ -15,12 +16,14 @@ const SingleFlag = (props) => {
 
   const dispatch = useDispatch();
 	const [ editingFlag, setEditingFlag ] = useState(false);
+	const [ deletingFlag, setDeletingFlag ] = useState(false);
 
   const flag = useSelector(state => state.flags).find(flag => flag.id === flagId);
   const logs = useSelector(state => state.eventLogs).filter(event => event.flag_id === flagId);
 
   const handleDeleteFlag = () => {
-    dispatch(deleteFlag(flagId, () => {props.history.push("/flags")}));
+		setDeletingFlag(true)
+    // dispatch(deleteFlag(flagId, () => {props.history.push("/flags")}));
   };
 
 	const handleEditFlag = () => {
@@ -44,6 +47,7 @@ const SingleFlag = (props) => {
     <>
       <SingleFlagHeader {...flag}/>
       <EditFlagForm editingFlag={editingFlag} setEditingFlag={setEditingFlag} flagCurrentTitle={flag.title} flag={flag}/>
+      <DeleteFlagModal deletingFlag={deletingFlag} setDeletingFlag={setDeletingFlag} flagId={flagId} history={props.history}/>
       <div className="bg-white shadow overflow-hidden sm:rounded-lg">
       <div className="px-4 py-5 sm:px-6">
         <h3 className="text-xl leading-6 font-medium text-gray-900">
@@ -98,7 +102,7 @@ const SingleFlag = (props) => {
       </div>
     </div>
     <div className="clear-both py-10 mb-10">
-      <button onClick={handleDeleteFlag}type="button" className="ml-5 float-right inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+      <button onClick={handleDeleteFlag}type="button" className="ml-5 float-right inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
         Delete flag
       </button>
       <button onClick={handleEditFlag} type="button" className="float-right inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
