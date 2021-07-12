@@ -78,7 +78,6 @@ export function deleteFlag(flag, callback) {
 		dispatch(deleteFlagRequest());
 
 		apiClient.deleteFlag(flag, (data) => {
-			console.log('delete flag success : ', data);
 			dispatch(deleteFlagSuccess(data));
 
 			if (callback) {
@@ -88,10 +87,10 @@ export function deleteFlag(flag, callback) {
 	};
 }
 
-export function createFlag(id, callback) {
+export function createFlag(flagData, callback) {
 	return function(dispatch) {
 		dispatch(createFlagRequest());
-		apiClient.createFlag(id, (resData) => {
+		apiClient.createFlag(flagData, (resData) => {
 			dispatch(createFlagSuccess(resData));
 
 			if (callback) {

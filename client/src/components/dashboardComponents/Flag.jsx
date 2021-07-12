@@ -5,6 +5,7 @@ import { updateFlag } from '../../actions/FlagActions';
 import parseDate from '../../lib/helpers';
 
 const truncate = (description) => {
+	if (!description) { return "No description provided." };
 	return description.length < 50 ? description : description.slice(0, 50);
 };
 

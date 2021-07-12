@@ -7,6 +7,7 @@ import NewFlagForm from './NewFlagForm';
 
 const Flags = () => {
   const flagList = useSelector(state => state.flags);
+  console.log("FLAG LIST: ", flagList);
   const dispatch = useDispatch();
   const [creatingNew, setCreatingNew] = useState(false);
 
@@ -15,22 +16,13 @@ const Flags = () => {
     dispatch(fetchFlags());
   }, [dispatch, creatingNew]);
 
-
-  if (flagList.length === 0) {
-    return (
-      <>
-        <FlagsHeader setCreatingNew={setCreatingNew} />
-        <NewFlagForm creatingNew={creatingNew} setCreatingNew={setCreatingNew} />
-      </>
-    );
-  }
-
   return (
     <>
         <FlagsHeader setCreatingNew={setCreatingNew} />
         <NewFlagForm creatingNew={creatingNew} setCreatingNew={setCreatingNew} />
         <section className="flag-container">
           <ul className="p-8 flag-tiles divide-y divide-gray-200">
+            {console.log("flat list: ", flagList)}
             {flagList.map(flag => <Flag {...flag} key={flag.id} />)}
           </ul>
         </section>
