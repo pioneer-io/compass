@@ -17,13 +17,13 @@ const Flags = () => {
 
   return (
     <>
-      <FlagsHeader setCreatingNew={setCreatingNew} />
-      <NewFlagForm creatingNew={creatingNew} setCreatingNew={setCreatingNew} />
-      <section className="flag-container">
-        <ul className="p-8 flag-tiles divide-y divide-gray-200">
-          {flagList.map(flag => <Flag {...flag} key={flag.id} />)}
-        </ul>
-      </section>
+        <FlagsHeader setCreatingNew={setCreatingNew} />
+        <NewFlagForm creatingNew={creatingNew} setCreatingNew={setCreatingNew} />
+        <section className="flag-container">
+          <ul className="p-8 flag-tiles divide-y divide-gray-200">
+            {flagList.map(flag => <Flag {...flag} key={flag.id} />)}
+          </ul>
+        </section>
     </>
   );
 }

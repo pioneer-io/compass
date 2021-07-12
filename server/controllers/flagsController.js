@@ -57,12 +57,15 @@ const sendFlagWithEvents = (req, res, next) => {
 const updateFlag = async (req, res, next) => {
 	const id = req.params.id.toString();
 	const flag = req.body.flag;
+	const toggleChange = req.body.toggleChange;
 	const errors = validationResult(req);
 
 	if (errors.isEmpty()) {
 		await updateFlagDb(id, flag.title, flag.description, flag.is_active)
 			.then((flag) => {
 				req.flag = flag;
+				req.toggleChange = toggleChange;
+
 				publish('FLAG.updated', `Flag updated. Data: ${JSON.stringify(flag)}`);
 				next();
 			})
@@ -75,33 +78,24 @@ const updateFlag = async (req, res, next) => {
 
 const deleteFlag = async (req, res, next) => {
 	const id = req.params.id.toString();
+
 	await deleteFlagDb(id)
 		.then((deleteSuccess) => {
 			if (deleteSuccess) {
 				publish('FLAG.deleted', `${id}`);
 
 				res.send({ id });
-				// next(id);
 			} else {
 				next(new HttpError('Deleting flag failed, not found.', 400));
 			}
 		})
 		.catch((err) => next(new HttpError('Deleting flag failed, try again.', 500)));
-	// error cases handle a 404 where the client does not supply a valid id?
-
-	// Flag.deleteOne({ _id: id })
-	// 	.then((result) => {
-	// 		req.deletedFlag = id;
-	// 		publish('FLAG.deleted', `${id}`);
-	// 		next();
-	// 	})
-	// 	.catch((err) => next(new HttpError('Deleting flag failed, try again.', 500)));
 };
 
-exports.getFlags = getFlags;
-exports.getFlag = getFlag;
-exports.createFlag = createFlag;
-exports.updateFlag = updateFlag;
-exports.sendFlag = sendFlag;
-exports.sendFlagWithEvents = sendFlagWithEvents;
-exports.deleteFlag = deleteFlag;
+module.exports.getFlags = getFlags;
+module.exports.getFlag = getFlag;
+module.exports.createFlag = createFlag;
+module.exports.updateFlag = updateFlag;
+module.exports.sendFlag = sendFlag;
+module.exports.sendFlagWithEvents = sendFlagWithEvents;
+module.exports.deleteFlag = deleteFlag;

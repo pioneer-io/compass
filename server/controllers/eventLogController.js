@@ -7,7 +7,6 @@ const getEventLog = async (req, res, next) => {
 	const text = "SELECT * FROM logs";
 	const result = await postgresQuery(text);
 	const logData = result.rows;
-	console.log("all log data", logData);
 	res.json(logData);
 }
 
@@ -22,7 +21,6 @@ const getEventsForFlag = async (req, res, next) => {
 }
 
 const addCreateFlagEvent = async (req, res, next) => {
-	console.log('event log req', req.flag);
 	const errors = validationResult(req);
 
 	const description = `Flag created.`;
@@ -39,12 +37,14 @@ const addCreateFlagEvent = async (req, res, next) => {
 };
 
 const addUpdateFlagEvent = async (req, res, next) => {
-	console.log('event log req', req.flag);
 	const errors = validationResult(req);
+	const toggleChange = req.toggleChange;
+	const flag = req.flag;
+	const toggleStatus = req.flag.is_active ? 'on' : 'off';
+	const flagId = flag.id;
+	const title = flag.title;
 
-	const description = `Updated flag: '${req.flag.title}'`;
-	const flagId = req.flag.id;
-	const title = req.flag.title;
+	const description = toggleChange ? `Flag ${title} toggled ${toggleStatus}` : `Updated flag: '${title}'`;
 
 	if (errors.isEmpty()) {
 		await createEventDb(flagId, title, description)
@@ -57,13 +57,13 @@ const addUpdateFlagEvent = async (req, res, next) => {
 
 const addDeleteFlagEvent = async (req, res, next) => {
 	const errors = validationResult(req);
-	const flagId = req.flag.id;
-	const title = req.flag.title;
-	const description = `Deleted flag '${title}' with id: '${flagId}'`;
+	const deletedFlag = req.body;
+
+	const description = `Deleted flag '${deletedFlag.title}' with id: '${deletedFlag.id}'`;
 
 	if (errors.isEmpty()) {
-		await createEventDb(flagId, title, description)
-			.then(() => next())
+		await createEventDb(deletedFlag.id, deletedFlag.title, description)
+			.then((data) => res.json({data}))
 			.catch((err) => next(new HttpError('Creating event log failed, please try again', 500)));
 	} else {
 		return next(new HttpError('The information required to create an event log was not received. Please try again.', 404));

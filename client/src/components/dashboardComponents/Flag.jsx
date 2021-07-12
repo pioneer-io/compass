@@ -5,6 +5,7 @@ import { updateFlag } from '../../actions/FlagActions';
 import parseDate from '../../lib/helpers';
 
 const truncate = (description) => {
+	if (!description) { return "No description provided." };
 	return description.length < 50 ? description : description.slice(0, 50);
 };
 
@@ -14,7 +15,7 @@ const Flag = ({ id, title, description, is_active, created_at }) => {
 	const handleClickToggle = (e) => {
 		e.preventDefault();
 		const updatedFlag = { id, title, description, is_active: !is_active };
-		dispatch(updateFlag(updatedFlag));
+		dispatch(updateFlag(updatedFlag, true));
 	};
 
 	return (

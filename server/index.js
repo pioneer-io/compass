@@ -18,7 +18,7 @@ app.use(express.json());
 app.use('/', routes);
 
 app.use((req, res, next) => {
-	const error = new HttpError('Could not find this route.', 404);
+	const error = new HttpError(`Could not find this route: ${req}.`, 404);
 	throw error;
 });
 
