@@ -89,7 +89,6 @@ export function createFlag(flagData, callback) {
 	return function(dispatch) {
 		dispatch(createFlagRequest());
 		apiClient.createFlag(flagData, (resData) => {
-			console.log('create flag resdata :', resData);
 			dispatch(createFlagSuccess(resData));
 
 			if (callback) {

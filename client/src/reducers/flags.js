@@ -15,7 +15,6 @@ export default function flags(state = [], action) {
 		}
 		case 'CREATE_FLAG_SUCCESS': {
 			const newFlag = action.flag;
-			console.log('reducer create flag: ', newFlag.flag);
 			return state.concat(newFlag);
 		}
 		case 'UPDATE_FLAG_SUCCESS': {

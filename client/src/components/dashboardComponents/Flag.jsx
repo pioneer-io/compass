@@ -4,7 +4,7 @@ import Toggle from '../Toggle';
 import { updateFlag } from '../../actions/FlagActions';
 import { parseDate, truncate } from '../../lib/helpers';
 
-const Flag = ({ id, title, description, is_active, created_at }) => {
+const Flag = ({ id, title, description, is_active, created_at, updated_at }) => {
 	const dispatch = useDispatch();
 
 	const handleClickToggle = (e) => {
@@ -21,6 +21,7 @@ const Flag = ({ id, title, description, is_active, created_at }) => {
 			<Toggle toggledOn={is_active} _id={id} handleClickToggle={handleClickToggle} />
 			<p>Description: {truncate(description)}</p>
 			<p>Created: {parseDate(created_at)}</p>
+			<p>Last updated: {parseDate(updated_at)}</p>
 		</li>
 	);
 };
