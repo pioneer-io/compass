@@ -2,22 +2,22 @@ const {connect, StringCodec, JSONCodec} = require("nats");
 const sc = StringCodec();
 const jc = JSONCodec();
 const   {createStreams, streamsCreated} = require("./jetstreamManager")
+const {fetchAllFlags} = require("./postgres-flags")
 
 // publishing to jetstream
-async function publish(stream, msg) {
+async function publishUpdatedRules() {
   const nc = await connect({ servers: "localhost:4222" });
-
-  // create jetstream client
   const js = nc.jetstream();
   
-  // if streams have not already been created, then create them
+  
   if (! await streamsCreated()) {
     await createStreams();
   }
 
-  console.log(`Publishing this msg: ${msg} to this stream: ${stream}`)
+  const flagData = await fetchAllFlags();
+  console.log(`Publishing this msg: ${flagData} to this stream: ${DATA.FullRuleSet}`)
 
-  const pubMsg = await js.publish(stream, sc.encode(msg))
+  const pubMsg = await js.publish(DATA.FullRuleSet, sc.encode(flagData))
 
   // should capture the stream that captured the message
   // and sequence assigned to msg
@@ -34,7 +34,7 @@ async function publishInit(data) {
   const js = nc.jetstream();
   
   
-  // if streams have not already been created, then create them
+
   if (! await streamsCreated()) {
     await createStreams();
   }
@@ -43,5 +43,5 @@ async function publishInit(data) {
   console.log("DATA.init msg sent");
 }
 
-exports.publish = publish;
+exports.publishUpdatedRules = publishUpdatedRules;
 exports.publishInit = publishInit;

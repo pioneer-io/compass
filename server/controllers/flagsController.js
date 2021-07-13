@@ -1,6 +1,6 @@
 const HttpError = require('../models/httpError');
 const { validationResult } = require('express-validator');
-const { publish } = require('../lib/nats-pub');
+const { publishUpdatedRules } = require('../lib/nats-pub');
 const { createFlagDb, fetchAllFlags, fetchFlag, updateFlagDb, deleteFlagDb } = require('../lib/postgres-flags');
 
 const getFlags = async (req, res, next) => {
