@@ -10,7 +10,7 @@ $$ language 'plpgsql';
 CREATE TABLE IF NOT EXISTS Flags (
   id serial,
   title varchar(100) NOT NULL,
-  description text DEFAULT 'No description provided.' NOT NULL,
+  description text NOT NULL DEFAULT 'No description provided.',
   is_active boolean DEFAULT false NOT NULL,
   version int DEFAULT 1,
   updated_at timestamp with time zone NOT NULL DEFAULT current_timestamp,
