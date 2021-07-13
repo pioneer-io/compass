@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { createFlag } from '../../actions/FlagActions';
 
 
-const NewFlagForm = ({creatingNew, setCreatingNew}) => {
+const NewFlagForm = ({creatingNew, setCreatingNew, existingFlags}) => {
   const [ flagTitle, setFlagTitle ] = useState('');
   const [ flagDescription, setFlagDescription ] = useState('');
   const dispatch = useDispatch();
@@ -18,9 +18,17 @@ const NewFlagForm = ({creatingNew, setCreatingNew}) => {
     setFlagTitle('');
   };
 
+  const nameIsUnique = (newFlagTitle) => {
+    newFlagTitle = newFlagTitle.toLowerCase();
+    return existingFlags.every(flag => flag.title.toLowerCase() !== newFlagTitle);
+  };
+
   const handleSubmit = () => {
     if (flagTitle === '') {
       alert("You must have a flag title");
+      return;
+    } else if (!nameIsUnique(flagTitle)) {
+      alert(`The flag name ${flagTitle} has already been used. Please choose another.`);
       return;
     }
 
