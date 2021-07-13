@@ -27,9 +27,9 @@ async function fetchFlag(id) {
 
 async function updateFlagDb(id, title, description, isActive) {
 	const QUERY_STRING =
-		'UPDATE Flags SET (title, description, is_active, updated_at) = ($2, $3, $4, to_timestamp($5)) WHERE id = $1';
-	const updatedAt = Date.now();
-	const params = [ id, title, description, isActive, updatedAt ];
+		'UPDATE Flags SET (title, description, is_active) = ($2, $3, $4) WHERE id = $1';
+
+	const params = [ id, title, description, isActive ];
 	const result = await postgresQuery(QUERY_STRING, params);
 
 	// IMPORTANT: update and delete queries result in empty rows but rowCount > 0;
