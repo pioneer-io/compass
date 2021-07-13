@@ -1,4 +1,4 @@
-const clearTestDb = require("../lib/clearTestDb");
+const clearTestDb = require("../helper/clearTestDb");
 const { createFlagDb, fetchAllFlags, fetchFlag, updateFlagDb, deleteFlagDb } = require('../../lib/postgres-flags');
 
 describe("test flag controller", () => {
