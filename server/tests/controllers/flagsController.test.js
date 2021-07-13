@@ -1,30 +1,19 @@
-const { postgresQuery } = require('../../lib/postgres-query');
+const clearTestDb = require("../lib/clearTestDb");
 const { createFlagDb, fetchAllFlags, fetchFlag, updateFlagDb, deleteFlagDb } = require('../../lib/postgres-flags');
 
-const clearTestDb = async() => {
-  const DELETE_STRING = "DELETE FROM Flags";
-  await postgresQuery(DELETE_STRING);
-};
-
 describe("test flag controller", () => {
-  // initialize database
   
   afterEach(async () => {
     await clearTestDb();
   });
 
-  // test("Test", () => {
-    // query the db
-  // });
   test("insert data test", async () => {
-    // const QUERY_STRING = "INSERT INTO Flags(title, description, is_active) VALUES ('LOGIN_MICROSERVICE', 'Redirects users to the login microservice', FALSE) RETURNING *";
-    // await testQuery(QUERY_STRING).then(res => {
-    //   expect(res.rowCount).toBe(1);
-    //   expect(res.rows[0].title).toBe("LOGIN_MICROSERVICE");
-    // });
-
     await createFlagDb("FROM_TEST").then(res => {
       expect(res.title).toEqual("FROM_TEST");
+    });
+
+    await fetchAllFlags().then(rows => {
+      expect(rows.length).toEqual(1);
     });
   });
 
@@ -33,6 +22,45 @@ describe("test flag controller", () => {
       expect(rows.length).toEqual(0);
     });
   });
-  
-  // drop database tables();
+
+  test("fetching flag by id", async () => {
+    let id;
+    await createFlagDb("FROM_TEST").then(res => {
+      id = res.id;
+    });
+    
+    await fetchFlag(id).then(res => {
+      expect(res.title).toEqual("FROM_TEST");
+    })
+  });
+
+  test("updating flag", async () => {
+    let id;
+    await createFlagDb("FROM_TEST").then(res => {
+      id = res.id;
+    });
+
+    await updateFlagDb(id, "FROM_TEST2", "hello world", true).then(res => {
+      expect(res.title).toEqual("FROM_TEST2");
+      expect(res.description).toEqual("hello world");
+      expect(res.is_active).toEqual(true);
+    });
+  });
+
+  test("deleting flag", async () => {
+    let id;
+    await createFlagDb("FROM_TEST").then(res => {
+      id = res.id;
+    });
+
+    await deleteFlagDb(id).then(res => {
+      expect(res).toEqual(true);
+    });
+    
+    // deleting a flag a second time returns false
+    await deleteFlagDb(id).then(res => {
+      expect(res).toEqual(false);
+    });
+  });
+
 });
