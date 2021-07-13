@@ -1,4 +1,4 @@
-const { connect } = require("nats");
+const { connect, AckPolicy } = require("nats");
 
 async function createStreams() {
   const nc = await connect({ servers: "localhost:4222" });
@@ -9,7 +9,15 @@ async function createStreams() {
   
   const dataStreamInfo = await jsm.streams.info("DATA")
 
+  await addConsumers(jsm);
   console.log("DATA stream info", dataStreamInfo)
+}
+
+async function addConsumers(jsm) {
+  await jsm.consumers.add('DATA', {
+    durable_name: "dataStream",
+    ack_policy: AckPolicy.Explicit,
+  });
 }
 
 async function streamsCreated() {
