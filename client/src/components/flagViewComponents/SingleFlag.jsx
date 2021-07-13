@@ -7,7 +7,7 @@ import SingleFlagLogs from './SingleFlagLogs';
 import Toggle from '../Toggle';
 import { updateFlag } from '../../actions/FlagActions';
 import { getFlag } from '../../actions/FlagActions';
-import { fetchLogs, logFlagDeletion } from '../../actions/LogActions';
+import { fetchLogs } from '../../actions/LogActions';
 import { parseDate } from '../../lib/helpers';
 
 
