@@ -8,7 +8,7 @@ import Toggle from '../Toggle';
 import { updateFlag } from '../../actions/FlagActions';
 import { getFlag } from '../../actions/FlagActions';
 import { fetchLogs, logFlagDeletion } from '../../actions/LogActions';
-import parseDate from '../../lib/helpers';
+import { parseDate } from '../../lib/helpers';
 
 
 const SingleFlag = (props) => {
@@ -47,7 +47,7 @@ const SingleFlag = (props) => {
     <>
       <SingleFlagHeader {...flag}/>
       <EditFlagForm editingFlag={editingFlag} setEditingFlag={setEditingFlag} flagCurrentTitle={flag.title} flag={flag}/>
-      <DeleteFlagModal deletingFlag={deletingFlag} setDeletingFlag={setDeletingFlag} flagId={flagId} history={props.history}/>
+      <DeleteFlagModal deletingFlag={deletingFlag} setDeletingFlag={setDeletingFlag} flag={flag} history={props.history}/>
       <div className="bg-white shadow overflow-hidden sm:rounded-lg">
       <div className="px-4 py-5 sm:px-6">
         <h3 className="text-xl leading-6 font-medium text-gray-900">

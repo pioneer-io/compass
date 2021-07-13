@@ -1,8 +1,9 @@
 import React from 'react';
+import { logFlagDeletion } from '../../actions/LogActions';
 import { useDispatch } from 'react-redux';
 import { deleteFlag } from '../../actions/FlagActions';
 
-const DeleteConfirmationModal = ({ deletingFlag, setDeletingFlag, flagId, history }) => {
+const DeleteConfirmationModal = ({ deletingFlag, setDeletingFlag, flag, history }) => {
 	const dispatch = useDispatch();
 
 	const handleCancel = () => {
@@ -10,7 +11,11 @@ const DeleteConfirmationModal = ({ deletingFlag, setDeletingFlag, flagId, histor
 	};
 
 	const handleSubmit = () => {
-		dispatch(deleteFlag(flagId, () => history.push('/flags')));
+		dispatch(
+			deleteFlag(flag, () => {
+				dispatch(logFlagDeletion(flag, () => history.push('/flags')));
+			})
+		);
 	};
 
 	return (

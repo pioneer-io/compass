@@ -10,7 +10,6 @@ export function fetchFlagRequest() {
 }
 
 export function fetchFlagSuccess(data) {
-	// { flag: {}}
 	return { type: types.FETCH_FLAG_SUCCESS, flag: data.flag };
 }
 
@@ -69,7 +68,6 @@ export function getFlag(id) {
 		apiClient.getFlag(id, (data) => {
 			dispatch(fetchFlagSuccess(data));
 		});
-
 	};
 }
 
@@ -91,6 +89,7 @@ export function createFlag(flagData, callback) {
 	return function(dispatch) {
 		dispatch(createFlagRequest());
 		apiClient.createFlag(flagData, (resData) => {
+			console.log('create flag resdata :', resData);
 			dispatch(createFlagSuccess(resData));
 
 			if (callback) {
