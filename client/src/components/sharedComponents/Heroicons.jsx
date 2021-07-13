@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function createIcon() {
+function createIcon() {
   return(
     <span className="h-8 w-8 rounded-full bg-green-500 flex items-center justify-center ring-8 ring-white">
       <svg className="h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -10,7 +10,7 @@ export function createIcon() {
   );
 }
 
-export function strategyIcon() {
+function strategyIcon() {
   return (
     <span className="h-8 w-8 rounded-full bg-blue-800 flex items-center justify-center ring-8 ring-white">
       <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -20,7 +20,7 @@ export function strategyIcon() {
   );
 }
 
-export function toggledOnIcon() {
+function toggledOnIcon() {
   return (
     <span className="h-8 w-8 rounded-full bg-green-500 flex items-center justify-center ring-8 ring-white">
       <svg className="h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -30,7 +30,7 @@ export function toggledOnIcon() {
   );
 }
 
-export function toggledOffIcon() {
+function toggledOffIcon() {
   return (
     <span className="h-8 w-8 rounded-full bg-red-500 flex items-center justify-center ring-8 ring-white">
       <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -40,7 +40,7 @@ export function toggledOffIcon() {
   );
 }
 
-export function editedIcon() {
+function editedIcon() {
   return (
     <span className="h-8 w-8 rounded-full bg-yellow-400 flex items-center justify-center ring-8 ring-white">
       <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -50,7 +50,7 @@ export function editedIcon() {
   );
 };
 
-export function genericIcon() {
+function genericIcon() {
   return (
     <span className="h-8 w-8 rounded-full bg-gray-400 flex items-center justify-center ring-8 ring-white">
       <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -59,3 +59,20 @@ export function genericIcon() {
     </span>
   );
 }
+
+export function heroicon(description) {
+	description = description.toLowerCase();
+	if (description.includes('created')) {
+		return createIcon();
+	} else if (description.includes('strategy')) {
+		return strategyIcon();
+	} else if (description.includes('toggled on')) {
+		return toggledOnIcon();
+	} else if (description.includes('toggled off')) {
+		return toggledOffIcon();
+	} else if (description.includes('updated')) {
+		return editedIcon();
+	} else {
+		return genericIcon();
+	}
+};

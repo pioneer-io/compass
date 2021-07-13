@@ -11,7 +11,7 @@ import NotFound from './errorHandling/404';
 function App() {
   return (
     <>
-      <div className="hidden md:flex md:flex-shrink-0 min-h-screen">
+      <div className="flex md:flex md:flex-shrink-0 min-h-screen">
         <Sidebar />
         <div className="main w-full mx-auto sm:px-6 lg:px-8">
           <Switch>

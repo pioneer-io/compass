@@ -17,7 +17,7 @@ const Logs = () => {
     <>
       <LogsHeader />
       <section className="log-container">
-        <ul className="log-tiles p-8 divide-y divide-gray-200">
+        <ul className="log-tiles px-8 pb-8 divide-y divide-gray-200">
           {logEvents.map(event => <LogEvent {...event} key={event.id} />)}
         </ul>
       </section>
