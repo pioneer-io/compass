@@ -7,7 +7,6 @@ async function createEventDb(flagId, title, description) {
 
 	const result = await postgresQuery(insertText, vals)
 	lastEntry = result.rows[result.rows.length-1];
-	console.log("@@@@@@@@@@@ Inserting into event logs");
 	return lastEntry;
 }
 
