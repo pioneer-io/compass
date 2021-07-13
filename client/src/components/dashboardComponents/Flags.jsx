@@ -5,11 +5,24 @@ import Flag from './Flag';
 import FlagsHeader from './FlagsHeader';
 import NewFlagForm from './NewFlagForm';
 
+const sortFlags = (flagList) => {
+  flagList.sort((a, b) => {
+    if (a.updated_at < b.updated_at) {
+      return 1
+    } else if (a.updated_at > b.updated_at) {
+      return -1
+    } else {
+      return 0
+    }
+  });
+
+  return flagList
+}
+
 const Flags = () => {
-  const flagList = useSelector(state => state.flags);
+  const flagList = sortFlags(useSelector(state => state.flags));
   const dispatch = useDispatch();
   const [creatingNew, setCreatingNew] = useState(false);
-
 
   useEffect(() => {
     dispatch(fetchFlags());
