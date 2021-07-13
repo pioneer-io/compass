@@ -5,6 +5,10 @@ export function createFlagRequest() {
 	return { type: types.CREATE_FLAG_REQUEST };
 }
 
+export function createFlagSuccess(data) {
+	return { type: types.CREATE_FLAG_SUCCESS, flag: data.flag };
+}
+
 export function fetchFlagRequest() {
 	return { type: types.FETCH_FLAG_REQUEST };
 }
@@ -35,10 +39,6 @@ export function deleteFlagRequest() {
 
 export function deleteFlagSuccess(flag) {
 	return { type: types.DELETE_FLAG_SUCCESS, flag: flag };
-}
-
-export function createFlagSuccess(flag) {
-	return { type: types.CREATE_FLAG_SUCCESS, flag: flag };
 }
 
 export function fetchFlags() {
