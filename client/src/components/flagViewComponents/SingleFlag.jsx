@@ -7,7 +7,7 @@ import SingleFlagLogs from './SingleFlagLogs';
 import Toggle from '../Toggle';
 import { updateFlag } from '../../actions/FlagActions';
 import { getFlag } from '../../actions/FlagActions';
-import { fetchLogs, logFlagDeletion } from '../../actions/LogActions';
+import { fetchLogs } from '../../actions/LogActions';
 import { parseDate } from '../../lib/helpers';
 
 
@@ -21,7 +21,7 @@ const SingleFlag = (props) => {
 	const [ flagToggled, setFlagToggled ] = useState(false);
 
   const flag = useSelector(state => state.flags).find(flag => flag.id === flagId);
-  const logs = useSelector(state => state.eventLogs).filter(event => event.flag_id === flagId);
+  const logs = useSelector(state => state.eventLogs).filter(event => event.flag_id === flagId).reverse();
 
   const handleDeleteFlag = () => {
 		setDeletingFlag(true)
@@ -71,7 +71,7 @@ const SingleFlag = (props) => {
             </dt>
             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
               {flag.is_active ? "On" : "Off"}
-							<Toggle toggledOn={flag.is_active} _id={flag.id} handleClickToggle={handleClickToggle} />	
+							<Toggle toggledOn={flag.is_active} _id={flag.id} handleClickToggle={handleClickToggle} />
             </dd>
           </div>
           <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">

@@ -18,7 +18,7 @@ const Flags = () => {
   return (
     <>
         <FlagsHeader setCreatingNew={setCreatingNew} />
-        <NewFlagForm creatingNew={creatingNew} setCreatingNew={setCreatingNew} />
+        <NewFlagForm creatingNew={creatingNew} setCreatingNew={setCreatingNew} existingFlags={flagList} />
         <section className="flag-container">
           <ul className="p-8 flag-tiles divide-y divide-gray-200">
             {flagList.map(flag => <Flag {...flag} key={flag.id} />)}
