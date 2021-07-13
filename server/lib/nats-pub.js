@@ -20,13 +20,6 @@ async function publishUpdatedRules() {
 
   const pubMsg = await js.publish('DATA.FullRuleSet', sc.encode(flagData))
 
-  // should capture the stream that captured the message
-  // and sequence assigned to msg
-  const capStream = pubMsg.stream;
-  const msgSeq = pubMsg.seq;
-
-  console.log(`Msg was captured by stream "${capStream}" and is seq num: ${msgSeq}`)
-
   await nc.drain();
 }
 
