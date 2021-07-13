@@ -8,13 +8,11 @@ let js;
 async function createJetStreamConnect() {
   nc = await connect({ servers: "localhost:4222" });
   js = nc.jetstream();
-
 }
+
 // publishing to jetstream
 async function publishUpdatedRules() {
-  if (!nc && !js) {
     await createJetStreamConnect();
-  }
 
   if (! await streamsCreated()) {
     await createStreams();
@@ -30,9 +28,7 @@ async function publishUpdatedRules() {
 }
 
 async function subscribeToRuleSetRequests() {
-  if (!nc && !js) {
-    await createJetStreamConnect();
-  }
+  await createJetStreamConnect();
 
   const sub = await js.subscribe('DATA.FullRuleSetRequest', config('FullRuleSetRequest'));
 
