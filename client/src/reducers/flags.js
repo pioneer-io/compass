@@ -5,7 +5,7 @@ export default function flags(state = [], action) {
 		}
 		case 'FETCH_FLAG_SUCCESS': {
 			const fetchedFlag = action.flag; // { id: 2, title: 'example'.concat.}
-			const exists = state.find(flag => flag.id === fetchedFlag.id);
+			const exists = state.find((flag) => flag.id === fetchedFlag.id);
 
 			if (exists) {
 				return state.map((flag) => (flag.id === fetchedFlag.id ? fetchedFlag : flag));
@@ -15,6 +15,7 @@ export default function flags(state = [], action) {
 		}
 		case 'CREATE_FLAG_SUCCESS': {
 			const newFlag = action.flag;
+			console.log('reducer create flag: ', newFlag.flag);
 			return state.concat(newFlag);
 		}
 		case 'UPDATE_FLAG_SUCCESS': {

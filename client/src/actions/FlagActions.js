@@ -5,12 +5,15 @@ export function createFlagRequest() {
 	return { type: types.CREATE_FLAG_REQUEST };
 }
 
+export function createFlagSuccess(data) {
+	return { type: types.CREATE_FLAG_SUCCESS, flag: data.flag };
+}
+
 export function fetchFlagRequest() {
 	return { type: types.FETCH_FLAG_REQUEST };
 }
 
 export function fetchFlagSuccess(data) {
-	// { flag: {}}
 	return { type: types.FETCH_FLAG_SUCCESS, flag: data.flag };
 }
 
@@ -36,10 +39,6 @@ export function deleteFlagRequest() {
 
 export function deleteFlagSuccess(flag) {
 	return { type: types.DELETE_FLAG_SUCCESS, flag: flag };
-}
-
-export function createFlagSuccess(flag) {
-	return { type: types.CREATE_FLAG_SUCCESS, flag: flag };
 }
 
 export function fetchFlags() {
@@ -69,7 +68,6 @@ export function getFlag(id) {
 		apiClient.getFlag(id, (data) => {
 			dispatch(fetchFlagSuccess(data));
 		});
-
 	};
 }
 
@@ -91,6 +89,7 @@ export function createFlag(flagData, callback) {
 	return function(dispatch) {
 		dispatch(createFlagRequest());
 		apiClient.createFlag(flagData, (resData) => {
+			console.log('create flag resdata :', resData);
 			dispatch(createFlagSuccess(resData));
 
 			if (callback) {
