@@ -18,7 +18,8 @@ const EditFlagForm = ({ editingFlag, setEditingFlag, flag }) => {
 		setFlagDescription(flagDescription);
 	};
 
-	const handleSubmit = () => {
+	const handleSubmit = (e) => {
+		e.preventDefault();
 		if (flagTitle === '') {
 			alert('You must have a flag title');
 			return;

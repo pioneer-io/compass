@@ -1,6 +1,6 @@
 import React from 'react';
 import { parseDate } from '../../lib/helpers';
-import { createIcon, strategyIcon, toggledOnIcon, toggledOffIcon, editedIcon, genericIcon } from './Heroicons';
+import { createIcon, strategyIcon, toggledOnIcon, toggledOffIcon, editedIcon, genericIcon } from '../sharedComponents/Heroicons';
 
 const heroicon = (description) => {
 	description = description.toLowerCase();

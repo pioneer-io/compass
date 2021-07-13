@@ -23,7 +23,9 @@ const NewFlagForm = ({creatingNew, setCreatingNew, existingFlags}) => {
     return existingFlags.every(flag => flag.title.toLowerCase() !== newFlagTitle);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
     if (flagTitle === '') {
       alert("You must have a flag title");
       return;
