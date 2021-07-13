@@ -29,19 +29,5 @@ async function publishUpdatedRules() {
   await nc.drain();
 }
 
-async function publishInit(data) {
-  const nc = await connect({ servers: "localhost:4222" });
-  const js = nc.jetstream();
-  
-  
-
-  if (! await streamsCreated()) {
-    await createStreams();
-  }
-
-  await js.publish("DATA.init", jc.encode(data));
-  console.log("DATA.init msg sent");
-}
 
 exports.publishUpdatedRules = publishUpdatedRules;
-exports.publishInit = publishInit;

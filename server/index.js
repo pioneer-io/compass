@@ -1,7 +1,7 @@
 const express = require('express');
 const HttpError = require('./models/httpError');
 const routes = require('./routes/api');
-const { publishInit } = require('./lib/nats-pub');
+const { publishUpdatedRules } = require('./lib/nats-pub');
 require('dotenv').config();
 
 const app = express();
@@ -32,5 +32,5 @@ app.use((err, req, res, next) => {
 
 app.listen(PORT, () => {
 	console.log(`Server listening on ${PORT}`);
-	publishInit();
+	publishUpdatedRules();
 });

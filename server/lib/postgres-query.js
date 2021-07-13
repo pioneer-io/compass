@@ -28,5 +28,5 @@ const postgresQuery = async(statement, parameters) => {
 }
 
 module.exports = {
-  postgresQuery,
+  postgresQuery
 };
