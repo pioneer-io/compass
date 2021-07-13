@@ -1,41 +1,53 @@
 const { postgresQuery } = require('./postgres-query');
 
-async function createFlagDb(title, description = '', isActive = false) {
-	const insertText = 'INSERT INTO Flags(title, description, is_active) VALUES($1, $2, $3) RETURNING *';
-	const vals = [ title, description, isActive ];
-	const result = await postgresQuery(insertText, vals);
-	const lastIndex = result.rows.length - 1;
-	const lastEntry = result.rows[lastIndex];
-	return lastEntry;
+async function createFlagWithCustomDescription(title, description) {
+	const queryText = 'INSERT INTO Flags(title, description) VALUES($1, $2) RETURNING *';
+	const vals = [ title, description];
+	const result = await postgresQuery(queryText, vals);
+	return result;
+}
+
+async function createFlagWithDefaultDescription(title) {
+	const queryText = 'INSERT INTO Flags(title) VALUES($1) RETURNING *';
+	const vals = [ title ];
+	const result = await postgresQuery(queryText, vals);
+	return result;
+}
+
+async function createFlagDb(title, description) {
+	let result;
+
+	if (description.trim().length < 1) {
+		result = await createFlagWithDefaultDescription(title);
+	} else {
+		result = await createFlagWithCustomDescription(title, description);
+	}
+
+	return result.rows[result.rows.length-1]
 }
 
 async function fetchAllFlags() {
-	const insertText = 'SELECT * FROM flags';
-	const result = await postgresQuery(insertText);
-	const flagData = result.rows;
-	console.log('all flag data', flagData);
-	return flagData;
+	const queryText = 'SELECT * FROM flags';
+	const result = await postgresQuery(queryText);
+	return result.rows;
 }
 
 async function fetchFlag(id) {
-	const insertText = 'SELECT * FROM flags WHERE id = $1';
-	const searchVal = [ id ];
-	const result = await postgresQuery(insertText, searchVal);
-	const flagData = result.rows[0];
-	return flagData;
+	const queryText = 'SELECT * FROM flags WHERE id = $1';
+	const vals = [ id ];
+	const result = await postgresQuery(queryText, vals);
+	return result.rows[0];
 }
 
 async function updateFlagDb(id, title, description, isActive) {
-	const QUERY_STRING =
+	const queryText =
 		'UPDATE Flags SET (title, description, is_active) = ($2, $3, $4) WHERE id = $1';
 
-	const params = [ id, title, description, isActive ];
-	const result = await postgresQuery(QUERY_STRING, params);
+	const vals = [ id, title, description, isActive ];
+	const result = await postgresQuery(queryText, vals);
 
-	// IMPORTANT: update and delete queries result in empty rows but rowCount > 0;
-	// thought this was a bug, but don't think it is
 	const updateSuccess = result.rowCount === 1;
-	console.log(`postgres-flag.js: flag data updated (id: ${id})`, updateSuccess);
+
 	if (updateSuccess) {
 		const flagData = await fetchFlag(id);
 		return flagData;
@@ -45,18 +57,11 @@ async function updateFlagDb(id, title, description, isActive) {
 }
 
 async function deleteFlagDb(id) {
-	const QUERY_STRING = 'DELETE from Flags WHERE id = $1';
-	const params = [ id ];
-	const result = await postgresQuery(QUERY_STRING, params);
-
-	// IMPORTANT: update and delete queries result in empty rows but rowCount > 0;
-	// thought this was a bug, but don't think it is
-	const deleteSuccess = result.rowCount === 1;
-	console.log('deleteFlagDB delete success :', deleteSuccess);
-	return deleteSuccess;
+	const queryText = 'DELETE from Flags WHERE id = $1';
+	const vals = [ id ];
+	const result = await postgresQuery(queryText, vals);
+	return result.rowCount === 1; // bool indicating success or not
 }
-
-// bug report: await updating a flag, result.rows empty?
 
 exports.createFlagDb = createFlagDb;
 exports.fetchAllFlags = fetchAllFlags;
