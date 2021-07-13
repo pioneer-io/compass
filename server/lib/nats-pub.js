@@ -1,15 +1,21 @@
-const {connect, StringCodec, JSONCodec, consumerOpts, createInbox} = require("nats");
+const {connect, StringCodec, consumerOpts, createInbox} = require("nats");
 const sc = StringCodec();
-const jc = JSONCodec();
 const   {createStreams, streamsCreated} = require("./jetstreamManager")
 const {fetchAllFlags} = require("./postgres-flags")
+let nc;
+let js;
 
+async function createJetStreamConnect() {
+  nc = await connect({ servers: "localhost:4222" });
+  js = nc.jetstream();
+
+}
 // publishing to jetstream
 async function publishUpdatedRules() {
-  const nc = await connect({ servers: "localhost:4222" });
-  const js = nc.jetstream();
-  
-  
+  if (!nc && !js) {
+    await createJetStreamConnect();
+  }
+
   if (! await streamsCreated()) {
     await createStreams();
   }
@@ -24,8 +30,9 @@ async function publishUpdatedRules() {
 }
 
 async function subscribeToRuleSetRequests() {
-  const nc = await connect({ servers: "localhost:4222" });
-  const js = nc.jetstream();
+  if (!nc && !js) {
+    await createJetStreamConnect();
+  }
 
   const sub = await js.subscribe('DATA.FullRuleSetRequest', config('FullRuleSetRequest'));
 
