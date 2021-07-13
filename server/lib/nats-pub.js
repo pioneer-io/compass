@@ -1,4 +1,4 @@
-const {connect, StringCodec, JSONCodec} = require("nats");
+const {connect, StringCodec, JSONCodec, consumerOpts, createInbox} = require("nats");
 const sc = StringCodec();
 const jc = JSONCodec();
 const   {createStreams, streamsCreated} = require("./jetstreamManager")
@@ -23,5 +23,29 @@ async function publishUpdatedRules() {
   await nc.drain();
 }
 
+async function subscribeToRuleSetRequests() {
+  const nc = await connect({ servers: "localhost:4222" });
+  const js = nc.jetstream();
+
+  const sub = await js.subscribe('DATA.FullRuleSetRequest', config('FullRuleSetRequest'));
+
+  (async (sub) => {
+    for await (const m of sub) {
+      publishUpdatedRules();
+      m.ack();
+    };
+  })(sub);
+}
+
+function config(subject) {
+  const opts = consumerOpts();
+  opts.durable(subject);
+  opts.manualAck();
+  opts.ackExplicit();
+  opts.deliverTo(createInbox());
+
+  return opts
+}
 
 exports.publishUpdatedRules = publishUpdatedRules;
+exports.subscribeToRuleSetRequests = subscribeToRuleSetRequests;
