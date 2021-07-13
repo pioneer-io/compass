@@ -1,13 +1,10 @@
-const clearTestDb = require("../helper/clearTestDb");
+const clearTable = require("../helper/clearTable");
 const { createFlagDb, fetchAllFlags, fetchFlag, updateFlagDb, deleteFlagDb } = require('../../lib/postgres-flags');
 
 describe("test flag controller", () => {
-  beforeEach(async () => {
-    await clearTestDb();
-  });
   
   afterEach(async () => {
-    await clearTestDb();
+    await clearTable(['Flags']);
   });
 
   xtest("insert data test", async () => {
@@ -34,6 +31,7 @@ describe("test flag controller", () => {
     }
 
     await fetchAllFlags().then(rows => {
+      console.log(rows);
       expect(rows.length).toEqual(3);
       titles.forEach((title, index) => {
         expect(rows[index].title).toBe(title);
