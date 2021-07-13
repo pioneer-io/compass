@@ -23,7 +23,9 @@ const NewFlagForm = ({creatingNew, setCreatingNew, existingFlags}) => {
     return existingFlags.every(flag => flag.title.toLowerCase() !== newFlagTitle);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
     if (flagTitle === '') {
       alert("You must have a flag title");
       return;
@@ -50,7 +52,7 @@ const NewFlagForm = ({creatingNew, setCreatingNew, existingFlags}) => {
   return(
     <div id="modal-container" className={`overflow-scroll fixed ${creatingNew ? "" : "hidden"}`}>
       <div id="modal">
-        <form className="space-y-8 divide-y divide-gray-200 m-8">
+        <form onSubmit={handleSubmit} className="space-y-8 divide-y divide-gray-200 m-8">
           <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5 p-6">
             <div>
               <div>
