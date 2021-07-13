@@ -1,23 +1,6 @@
 import React from 'react';
 import { parseDate } from '../../lib/helpers';
-import { createIcon, strategyIcon, toggledOnIcon, toggledOffIcon, editedIcon, genericIcon } from '../sharedComponents/Heroicons';
-
-const heroicon = (description) => {
-	description = description.toLowerCase();
-	if (description.includes('created')) {
-		return createIcon();
-	} else if (description.includes('strategy')) {
-		return strategyIcon();
-	} else if (description.includes('toggled on')) {
-		return toggledOnIcon();
-	} else if (description.includes('toggled off')) {
-		return toggledOffIcon();
-	} else if (description.includes('updated')) {
-		return editedIcon();
-	} else {
-		return genericIcon();
-	}
-};
+import { heroicon } from '../sharedComponents/Heroicons';
 
 const SingleFlagLogEvent = ({ description, created_at }) => {
 	return (
