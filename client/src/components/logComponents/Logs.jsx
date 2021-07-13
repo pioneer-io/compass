@@ -5,7 +5,8 @@ import LogEvent from './LogEvent';
 import LogsHeader from './LogsHeader';
 
 const Logs = () => {
-  const logEvents = useSelector(state => state.eventLogs);
+  // reverse so most recent events are displayed first
+  const logEvents = useSelector(state => state.eventLogs).reverse();
   const dispatch = useDispatch();
 
   useEffect(() => {
