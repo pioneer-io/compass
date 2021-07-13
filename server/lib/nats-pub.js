@@ -1,47 +1,58 @@
-const {connect, StringCodec, JSONCodec} = require("nats");
+const {connect, StringCodec, consumerOpts, createInbox} = require("nats");
 const sc = StringCodec();
-const jc = JSONCodec();
 const   {createStreams, streamsCreated} = require("./jetstreamManager")
+const {fetchAllFlags} = require("./postgres-flags")
+let nc;
+let js;
 
+async function createJetStreamConnect() {
+  nc = await connect({ servers: "localhost:4222" });
+  js = nc.jetstream();
+
+}
 // publishing to jetstream
-async function publish(stream, msg) {
-  const nc = await connect({ servers: "localhost:4222" });
+async function publishUpdatedRules() {
+  if (!nc && !js) {
+    await createJetStreamConnect();
+  }
 
-  // create jetstream client
-  const js = nc.jetstream();
-  
-  // if streams have not already been created, then create them
   if (! await streamsCreated()) {
     await createStreams();
   }
 
-  console.log(`Publishing this msg: ${msg} to this stream: ${stream}`)
+  let flagData = await fetchAllFlags();
+  flagData = JSON.stringify(flagData);
+  console.log(`Publishing this msg: ${(flagData)} to this stream: 'DATA.FullRuleSet'`)
 
-  const pubMsg = await js.publish(stream, sc.encode(msg))
-
-  // should capture the stream that captured the message
-  // and sequence assigned to msg
-  const capStream = pubMsg.stream;
-  const msgSeq = pubMsg.seq;
-
-  console.log(`Msg was captured by stream "${capStream}" and is seq num: ${msgSeq}`)
+  const pubMsg = await js.publish('DATA.FullRuleSet', sc.encode(flagData))
 
   await nc.drain();
 }
 
-async function publishInit(data) {
-  const nc = await connect({ servers: "localhost:4222" });
-  const js = nc.jetstream();
-  
-  
-  // if streams have not already been created, then create them
-  if (! await streamsCreated()) {
-    await createStreams();
+async function subscribeToRuleSetRequests() {
+  if (!nc && !js) {
+    await createJetStreamConnect();
   }
 
-  await js.publish("DATA.init", jc.encode(data));
-  console.log("DATA.init msg sent");
+  const sub = await js.subscribe('DATA.FullRuleSetRequest', config('FullRuleSetRequest'));
+
+  (async (sub) => {
+    for await (const m of sub) {
+      publishUpdatedRules();
+      m.ack();
+    };
+  })(sub);
 }
 
-exports.publish = publish;
-exports.publishInit = publishInit;
+function config(subject) {
+  const opts = consumerOpts();
+  opts.durable(subject);
+  opts.manualAck();
+  opts.ackExplicit();
+  opts.deliverTo(createInbox());
+
+  return opts
+}
+
+exports.publishUpdatedRules = publishUpdatedRules;
+exports.subscribeToRuleSetRequests = subscribeToRuleSetRequests;

@@ -1,6 +1,6 @@
 const HttpError = require('../models/httpError');
 const { validationResult } = require('express-validator');
-const { publish } = require('../lib/nats-pub');
+const { publishUpdatedRules } = require('../lib/nats-pub');
 const { createFlagDb, fetchAllFlags, fetchFlag, updateFlagDb, deleteFlagDb } = require('../lib/postgres-flags');
 
 const getFlags = async (req, res, next) => {
@@ -31,7 +31,7 @@ const createFlag = async (req, res, next) => {
 		await createFlagDb(title, description)
 			.then((flag) => {
 				req.flag = flag;
-				publish('FLAG.created', `New flag created. Data: ${JSON.stringify(flag)}`);
+				publishUpdatedRules();
 				next();
 			})
 			.catch((err) => {
@@ -66,7 +66,7 @@ const updateFlag = async (req, res, next) => {
 				req.flag = flag;
 				req.toggleChange = toggleChange;
 
-				publish('FLAG.updated', `Flag updated. Data: ${JSON.stringify(flag)}`);
+				publishUpdatedRules();
 				next();
 			})
 			.catch((err) => next(new HttpError('Updating flag failed, please try again', 500)));
@@ -82,7 +82,7 @@ const deleteFlag = async (req, res, next) => {
 	await deleteFlagDb(id)
 		.then((deleteSuccess) => {
 			if (deleteSuccess) {
-				publish('FLAG.deleted', `${id}`);
+				publishUpdatedRules();
 
 				res.send({ id });
 			} else {
