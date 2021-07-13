@@ -17,13 +17,14 @@ const SingleFlag = (props) => {
   const dispatch = useDispatch();
 	const [ editingFlag, setEditingFlag ] = useState(false);
 	const [ deletingFlag, setDeletingFlag ] = useState(false);
+	// used for updating logs when feature is toggled
+	const [ flagToggled, setFlagToggled ] = useState(false);
 
   const flag = useSelector(state => state.flags).find(flag => flag.id === flagId);
   const logs = useSelector(state => state.eventLogs).filter(event => event.flag_id === flagId);
 
   const handleDeleteFlag = () => {
 		setDeletingFlag(true)
-    // dispatch(deleteFlag(flagId, () => {props.history.push("/flags")}));
   };
 
 	const handleEditFlag = () => {
@@ -33,13 +34,13 @@ const SingleFlag = (props) => {
 	const handleClickToggle = (e) => {
 		e.preventDefault();
 		const updatedFlag = { id: flag.id, title:flag.title, description:flag.description, is_active: !flag.is_active };
-		dispatch(updateFlag(updatedFlag));
+		dispatch(updateFlag(updatedFlag, true, () => setFlagToggled(!flagToggled)));
 	}
 
   useEffect(() => {
     dispatch(getFlag(flagId))
     dispatch(fetchLogs());
-  }, [flagId, editingFlag, dispatch]);
+  }, [flagId, editingFlag, flagToggled, dispatch]);
 
   if (!flag) { return null }
 
