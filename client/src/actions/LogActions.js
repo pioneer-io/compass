@@ -27,11 +27,15 @@ export function fetchLogs() {
   }
 }
 
-export function logFlagDeletion(flag) {
+export function logFlagDeletion(flag, callback) {
   return function(dispatch) {
     dispatch(logFlagDeletionRequest());
     apiClient.logFlagDeletion(flag, data => {
       dispatch(logFlagDeletionSuccess(data));
     });
+
+    if (callback) {
+      callback();
+    }
   }
 }
