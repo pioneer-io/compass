@@ -31,7 +31,7 @@ const EditFlagForm = ({ editingFlag, setEditingFlag, flag }) => {
 			is_active   : flag.is_active
 		};
 		dispatch(
-			updateFlag(editedFlag, () => {
+			updateFlag(editedFlag, false, () => {
 				setEditingFlag(false);
 				resetFields();
 			})
