@@ -2,6 +2,9 @@ const clearTestDb = require("../helper/clearTestDb");
 const { createFlagDb, fetchAllFlags, fetchFlag, updateFlagDb, deleteFlagDb } = require('../../lib/postgres-flags');
 
 describe("test flag controller", () => {
+  beforeEach(async () => {
+    await clearTestDb();
+  });
   
   afterEach(async () => {
     await clearTestDb();
@@ -25,6 +28,7 @@ describe("test flag controller", () => {
 
   test("fetching more than one flag", async () => {
     const titles = ["FROM_TEST", "FROM_TEST2", "FROM_TEST3"];
+    
     for (const title of titles) {
       await createFlagDb(title);
     }
