@@ -1,7 +1,14 @@
 const { connect, AckPolicy } = require("nats");
+let nc;
+let js;
+
+async function createJetStreamConnect() {
+  nc = await connect({ servers: "localhost:4222" });
+  js = nc.jetstream();
+}
 
 async function createStreams() {
-  const nc = await connect({ servers: "localhost:4222" });
+  await createJetStreamConnect();
   const jsm = await nc.jetstreamManager();
 
   jsm.streams.add({name: "DATA", subjects: ["DATA.*"], storage: "memory"})
@@ -21,7 +28,7 @@ async function addConsumers(jsm) {
 }
 
 async function streamsCreated() {
-  const nc = await connect({ servers: "localhost:4222" });
+  await createJetStreamConnect();
   const jsm = await nc.jetstreamManager();
 
   let data;
