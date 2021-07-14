@@ -10,6 +10,7 @@ export default function logs(state = [], action) {
 		case 'SERVER_SIDE_LOGS_ERROR': {
 			const error = action.error;
 			console.log("LOGGING ERROR FROM LOGS REDUCER: ", error);
+			return state;
 		}
 		default:
 			return state;

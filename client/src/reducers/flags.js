@@ -28,6 +28,7 @@ export default function flags(state = [], action) {
 		case 'SERVER_SIDE_FLAG_ERROR': {
 			const error = action.error;
 			console.log("LOGGING ERROR FROM FLAGS REDUCER: ", error);
+			return state;
 		}
 		default:
 			return state;
