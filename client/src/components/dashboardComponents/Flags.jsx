@@ -4,6 +4,8 @@ import { fetchFlags } from '../../actions/FlagActions';
 import Flag from './Flag';
 import FlagsHeader from './FlagsHeader';
 import NewFlagForm from './NewFlagForm';
+import { handleErrorRedirect } from '../../lib/helpers';
+
 
 const sortFlags = (flagList) => {
   flagList.sort((a, b) => {
@@ -21,12 +23,15 @@ const sortFlags = (flagList) => {
 
 const Flags = () => {
   const flagList = sortFlags(useSelector(state => state.flags));
+  const error = useSelector(state => state.errors);
   const dispatch = useDispatch();
   const [creatingNew, setCreatingNew] = useState(false);
 
   useEffect(() => {
     dispatch(fetchFlags());
   }, [dispatch, creatingNew]);
+
+  if (error.length > 0) { return handleErrorRedirect(error) }
 
   return (
     <>
