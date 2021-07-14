@@ -29,8 +29,8 @@ const EditFlagForm = ({ editingFlag, setEditingFlag, flag }) => {
 			return;
 		}
 
-		if (invalidRolloutPercentage) {
-			alertInvalidRolloutPercentage(flagRollout);
+		if (invalidRolloutPercentage()) {
+			alertInvalidRolloutPercentage();
 			return;
 		}
 
