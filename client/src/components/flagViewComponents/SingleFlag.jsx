@@ -4,7 +4,7 @@ import SingleFlagHeader from './SingleFlagHeader';
 import EditFlagForm from './EditFlagForm';
 import DeleteFlagModal from './DeleteFlagModal';
 import SingleFlagLogs from './SingleFlagLogs';
-import Toggle from '../Toggle';
+import Toggle from '../sharedComponents/Toggle';
 import { updateFlag } from '../../actions/FlagActions';
 import { getFlag } from '../../actions/FlagActions';
 import { fetchLogs } from '../../actions/LogActions';
