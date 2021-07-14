@@ -33,7 +33,14 @@ const SingleFlag = (props) => {
 
 	const handleClickToggle = (e) => {
 		e.preventDefault();
-		const updatedFlag = { id: flag.id, title:flag.title, description:flag.description, is_active: !flag.is_active };
+		const updatedFlag = {
+      id: flag.id,
+      title: flag.title,
+      description: flag.description,
+      is_active: !flag.is_active,
+      rollout: flag.rollout
+    };
+    
 		dispatch(updateFlag(updatedFlag, true, () => setFlagToggled(!flagToggled)));
 	}
 
