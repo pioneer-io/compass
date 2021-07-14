@@ -26,8 +26,7 @@ export default function flags(state = [], action) {
 			return state.filter((flag) => flag.id !== removedFlagId);
 		}
 		case 'SERVER_SIDE_FLAG_ERROR': {
-			const error = action.error;
-			console.log("LOGGING ERROR FROM FLAGS REDUCER: ", error);
+			state.error = action.error.messsage;
 			return state;
 		}
 		default:
