@@ -11,7 +11,7 @@ async function createStreams() {
   await createJetStreamConnect();
   const jsm = await nc.jetstreamManager();
 
-  jsm.streams.add({name: "DATA", subjects: ["DATA.*"], storage: "memory"})
+  jsm.streams.add({name: "DATA", subjects: ["DATA.*"], storage: "memory", max_msgs: 1}); //max_age: 300000000
   
   
   const dataStreamInfo = await jsm.streams.info("DATA")
