@@ -1,11 +1,11 @@
 const HttpError = require('../models/httpError');
 const { validationResult } = require('express-validator');
 const { createEventDb } = require('../lib/db/events');
-const { postgresQuery } = require("../lib/db/query");
+const { query } = require("../lib/db/query");
 
 const getEventLog = async (req, res, next) => {
 	const text = "SELECT * FROM logs";
-	const result = await postgresQuery(text).catch(err => {
+	const result = await query(text).catch(err => {
 		console.error(err);
 		next(new HttpError('Database problem. Could not get logs', 500));
 	});
@@ -17,7 +17,7 @@ const getEventsForFlag = async (req, res, next) => {
 	const text = "SELECT * FROM logs WHERE flag_id = $1";
 	const id = Number(req.flag.id);
 
-	const result = await postgresQuery(text, [id]).catch(err => {
+	const result = await query(text, [id]).catch(err => {
 		console.error(err);
 		next(new HttpError(`Database problem. Could not get logs for flag with id ${id}`, 500));
 	});
