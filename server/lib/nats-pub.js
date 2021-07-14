@@ -30,6 +30,10 @@ async function publishUpdatedRules() {
 async function subscribeToRuleSetRequests() {
   await createJetStreamConnect();
 
+  if (! await streamsCreated()) {
+    await createStreams();
+  }
+
   const sub = await js.subscribe('DATA.FullRuleSetRequest', config('FullRuleSetRequest'));
 
   (async (sub) => {

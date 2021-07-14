@@ -30,8 +30,8 @@ app.use((err, req, res, next) => {
 	res.json({ error: err.message || 'An unknown error occured' });
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
 	console.log(`Server listening on ${PORT}`);
-	publishUpdatedRules();
-	subscribeToRuleSetRequests();
+	await publishUpdatedRules();
+	await subscribeToRuleSetRequests();
 });
