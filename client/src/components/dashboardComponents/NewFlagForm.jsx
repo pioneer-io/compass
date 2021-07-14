@@ -43,6 +43,11 @@ const NewFlagForm = ({creatingNew, setCreatingNew, existingFlags}) => {
     }));
   };
 
+  const handleRolloutChange = (e) => {
+    e.preventDefault();
+    setFlagRollout(e.target.value)
+  };
+
   const handleFlagTitleKeyDown = (e) => {
     setFlagTitle(e.target.value);
   }
@@ -90,7 +95,7 @@ const NewFlagForm = ({creatingNew, setCreatingNew, existingFlags}) => {
                 Rollout percentage
               </label>
               <div className="mt-1 sm:mt-0 sm:col-span-2">
-                <input type="number" value={flagRollout} min="0" max="100" className="shadow-sm block focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"></input>
+                <input type="number" onInput={handleRolloutChange} value={flagRollout} min="0" max="100" className="shadow-sm block focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"></input>
                 <p className="mt-2 text-sm text-gray-500">
                   Rollout percentage must be between 0-100. If you do not provide a rollout percentage, a default of 0% will be assigned.
                 </p>
