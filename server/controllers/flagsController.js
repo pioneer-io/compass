@@ -10,7 +10,7 @@ const getFlags = async (req, res, next) => {
 		});
 	}).catch(err => {
 		console.error(err);
-		next(new HttpError('Could not retrieve flags. Try again later', 404));
+		next(new HttpError('Database problem. Could not retrieve flags.Contact an admin', 500));
 	});
 };
 
@@ -92,7 +92,7 @@ const deleteFlag = async (req, res, next) => {
 
 				res.send({ id });
 			} else {
-				next(new HttpError(`Deleting flag failed, flag ${id} not found.`, 404));
+				next(new HttpError(`Deleting flag failed, flag ${id} not found.`, 500));
 			}
 		})
 		.catch(err => {
