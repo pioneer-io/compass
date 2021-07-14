@@ -24,6 +24,13 @@ const NewFlagForm = ({ creatingNew, setCreatingNew, existingFlags }) => {
 		newFlagTitle = newFlagTitle.toLowerCase();
 		return existingFlags.every((flag) => flag.title.toLowerCase() !== newFlagTitle);
 	};
+	const invalidRolloutPercentage = (rollout) => {
+		return rollout < 0 || rollout > 100;
+	};
+
+	const alertInvalidRolloutPercentage = () => {
+		alert(`Flag rollout percentage must be 0-100`);
+	};
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -36,9 +43,13 @@ const NewFlagForm = ({ creatingNew, setCreatingNew, existingFlags }) => {
 			return;
 		}
 
-		if (flagRollout < 0 || flagRollout > 100) {
-			alert(`Flag rollout percentage must be 0-100`);
+		if (invalidRolloutPercentage) {
+			alertInvalidRolloutPercentage(flagRollout);
+			return;
 		}
+		// if (flagRollout < 0 || flagRollout > 100) {
+		// 	alert(`Flag rollout percentage must be 0-100`);
+		// }
 
 		const newFlag = { flag: { title: flagTitle, description: flagDescription, rollout: flagRollout } };
 		dispatch(
@@ -48,19 +59,6 @@ const NewFlagForm = ({ creatingNew, setCreatingNew, existingFlags }) => {
 			})
 		);
 	};
-
-	// const handleRolloutChange = (e) => {
-	// 	e.preventDefault();
-	// 	setFlagRollout(e.target.value);
-	// };
-
-	// const handleFlagTitleKeyDown = (e) => {
-	// 	setFlagTitle(e.target.value);
-	// };
-
-	// const handleFlagDescriptionKeydown = (e) => {
-	// 	setFlagDescription(e.target.value);
-	// };
 
 	return (
 		<FlagForm
