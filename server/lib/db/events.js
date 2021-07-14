@@ -1,4 +1,4 @@
-const { postgresQuery } = require("./postgres-query");
+const { postgresQuery } = require("./query");
 
 async function createEventDb(flagId, title, description) {
 	const insertText = 'INSERT INTO Logs (flag_id, title, description) VALUES($1, $2, $3) RETURNING *';

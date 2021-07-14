@@ -1,5 +1,5 @@
 const HttpError = require('../models/httpError');
-const { postgresQuery } = require('./postgres-query');
+const { postgresQuery } = require('./query');
 
 async function createFlagWithCustomDescription(title, description) {
 	const queryText = 'INSERT INTO Flags(title, description) VALUES($1, $2) RETURNING *';

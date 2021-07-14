@@ -1,6 +1,6 @@
 const {connect, StringCodec, consumerOpts, createInbox} = require("nats");
 const {createStreams, streamsCreated} = require("./jetstreamManager")
-const {fetchAllFlags} = require("../db/postgres-flags")
+const {fetchAllFlags} = require("../db/flags")
 let nc;
 let js;
 
