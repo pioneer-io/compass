@@ -1,7 +1,7 @@
 const HttpError = require('../models/httpError');
 const { validationResult } = require('express-validator');
-const { createEventDb } = require('../lib/postgres-events');
-const { postgresQuery } = require("../lib/postgres-query");
+const { createEventDb } = require('../lib/db/events');
+const { postgresQuery } = require("../lib/db/query");
 
 const getEventLog = async (req, res, next) => {
 	const text = "SELECT * FROM logs";

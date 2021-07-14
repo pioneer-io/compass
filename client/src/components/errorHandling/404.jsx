@@ -1,7 +1,6 @@
 import React from 'react';
 
 const NotFound = () => {
-  console.log("I AM IN THE NOT FOUND COMPONENT");
   return(
     <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
       <div className="mx-auto w-2/3 h-1/3 my-40 content-center">

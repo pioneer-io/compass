@@ -1,7 +1,7 @@
 const express = require('express');
 const HttpError = require('./models/httpError');
 const routes = require('./routes/api');
-const { publishUpdatedRules, subscribeToRuleSetRequests } = require('./lib/nats-pub');
+const { publishUpdatedRules, subscribeToRuleSetRequests } = require('./lib/nats/nats-pub');
 require('dotenv').config();
 
 const app = express();
