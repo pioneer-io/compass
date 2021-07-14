@@ -42,6 +42,7 @@ export function deleteFlagSuccess(flag) {
 }
 
 export function flagError(error) {
+	console.log("EXECUTING FLAG ERROR ACTION CREATOR");
 	return { type: types.SERVER_SIDE_FLAG_ERROR, error: error }
 }
 
@@ -71,7 +72,7 @@ export function getFlag(id) {
 		dispatch(fetchFlagRequest(id));
 		apiClient.getFlag(id, (data) => {
 			dispatch(fetchFlagSuccess(data));
-		});
+		}).catch(error => dispatch(flagError(error)));
 	};
 }
 

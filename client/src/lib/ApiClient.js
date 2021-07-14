@@ -26,7 +26,7 @@ const apiClient = {
 		return axios.put(`${routes.UPDATE_FLAG_URL}${id}`, flagData).then(unwrapData).then(callback).catch(logError);
 	},
 	getFlag    : function(id, callback) {
-		return axios.get(`${routes.GET_FLAG_URL}${id}`).then(unwrapData).then(callback).catch(logError);
+		return axios.get(`${routes.GET_FLAG_URL}${id}`).then(unwrapData).then(callback).catch((e) => { throw e });
 	},
 	deleteFlag : function(flag, callback) {
 		return axios.delete(`${routes.DELETE_FLAG_URL}${flag.id}`, flag).then(unwrapData).then(callback).catch(logError);

@@ -1,3 +1,4 @@
+const HttpError = require('../models/httpError');
 const { postgresQuery } = require('./postgres-query');
 
 async function createFlagWithCustomDescription(title, description) {
@@ -36,6 +37,11 @@ async function fetchFlag(id) {
 	const queryText = 'SELECT * FROM flags WHERE id = $1';
 	const vals = [ id ];
 	const result = await postgresQuery(queryText, vals);
+
+	if (result.rows.length < 1) {
+		throw new HttpError(`No flag with id ${id}.`, 404);
+	}
+
 	return result.rows[0];
 }
 
