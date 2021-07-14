@@ -1,4 +1,5 @@
 const { Client } = require("pg");
+const HttpError = require("../../models/httpError");
 
 const CLIENT_CONFIG = {
   user: "postgres",
@@ -9,24 +10,28 @@ const CLIENT_CONFIG = {
 }
 
 const logQuery = (statement, parameters) => {
-  let timeStamp = new Date();
-  let formattedTimeStamp = timeStamp.toString().substring(4, 24);
+  const timeStamp = new Date();
+  const formattedTimeStamp = timeStamp.toString().substring(4, 24);
+
   console.log(formattedTimeStamp, statement, parameters);
 };
 
-const postgresQuery = async(statement, parameters) => {
-  let client = new Client(CLIENT_CONFIG);
+const query = async(statement, parameters) => {
+  const client = new Client(CLIENT_CONFIG);
 
   await client.connect();
   logQuery(statement, parameters);
-  let result = await client.query(statement, parameters).catch(err => {
-    console.log("an error has occurred when querying", err);
-  });
+
+  const result = await client.query(statement, parameters)
+    .catch(err => {
+      console.error("an error has occurred when querying the database", err);
+      throw new HttpError('An error occurred when querying the database', 500);
+    });
   await client.end();
 
   return result;
 }
 
 module.exports = {
-  postgresQuery
+  query
 };

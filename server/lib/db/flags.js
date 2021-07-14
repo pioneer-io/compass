@@ -1,17 +1,17 @@
 const HttpError = require('../models/httpError');
-const { postgresQuery } = require('./query');
+const { query } = require('./query');
 
 async function createFlagWithCustomDescription(title, description) {
 	const queryText = 'INSERT INTO Flags(title, description) VALUES($1, $2) RETURNING *';
 	const vals = [ title, description];
-	const result = await postgresQuery(queryText, vals);
+	const result = await query(queryText, vals);
 	return result;
 }
 
 async function createFlagWithDefaultDescription(title) {
 	const queryText = 'INSERT INTO Flags(title) VALUES($1) RETURNING *';
 	const vals = [ title ];
-	const result = await postgresQuery(queryText, vals);
+	const result = await query(queryText, vals);
 	return result;
 }
 
@@ -29,14 +29,14 @@ async function createFlagDb(title, description) {
 
 async function fetchAllFlags() {
 	const queryText = 'SELECT * FROM flags';
-	const result = await postgresQuery(queryText);
+	const result = await query(queryText);
 	return result.rows;
 }
 
 async function fetchFlag(id) {
 	const queryText = 'SELECT * FROM flags WHERE id = $1';
 	const vals = [ id ];
-	const result = await postgresQuery(queryText, vals);
+	const result = await query(queryText, vals);
 
 	if (result.rows.length < 1) {
 		throw new HttpError(`No flag with id ${id}.`, 404);
@@ -50,7 +50,7 @@ async function updateFlagDb(id, title, description, isActive) {
 		'UPDATE Flags SET (title, description, is_active) = ($2, $3, $4) WHERE id = $1';
 
 	const vals = [ id, title, description, isActive ];
-	const result = await postgresQuery(queryText, vals);
+	const result = await query(queryText, vals);
 
 	const updateSuccess = result.rowCount === 1;
 
@@ -65,7 +65,7 @@ async function updateFlagDb(id, title, description, isActive) {
 async function deleteFlagDb(id) {
 	const queryText = 'DELETE from Flags WHERE id = $1';
 	const vals = [ id ];
-	const result = await postgresQuery(queryText, vals);
+	const result = await query(queryText, vals);
 	return result.rowCount === 1; // bool indicating success or not
 }
 
