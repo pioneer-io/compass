@@ -1,18 +1,13 @@
 import axios from 'axios';
 import * as routes from '../constants/ApiRoutes';
 
-function logError(errorResponse) {
-	const response = errorResponse.response;
-
-	if (response && response.data && response.data.error) {
-		console.error(`HTTP Error: ${response.data.error}`);
-	} else {
-		console.error('Error: ', errorResponse);
-	}
-}
-
 function unwrapData(response) {
 	return response.data;
+}
+
+function logError(err) {
+	console.error("Error: ", err);
+	throw err;
 }
 
 const apiClient = {
@@ -26,7 +21,7 @@ const apiClient = {
 		return axios.put(`${routes.UPDATE_FLAG_URL}${id}`, flagData).then(unwrapData).then(callback).catch(logError);
 	},
 	getFlag    : function(id, callback) {
-		return axios.get(`${routes.GET_FLAG_URL}${id}`).then(unwrapData).then(callback).catch((e) => { throw e });
+		return axios.get(`${routes.GET_FLAG_URL}${id}`).then(unwrapData).then(callback).catch(logError);
 	},
 	deleteFlag : function(flag, callback) {
 		return axios.delete(`${routes.DELETE_FLAG_URL}${flag.id}`, flag).then(unwrapData).then(callback).catch(logError);
