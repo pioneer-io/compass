@@ -5,10 +5,9 @@ import EditFlagForm from './EditFlagForm';
 import DeleteFlagModal from './DeleteFlagModal';
 import SingleFlagLogs from './SingleFlagLogs';
 import Toggle from '../sharedComponents/Toggle';
-import { updateFlag } from '../../actions/FlagActions';
-import { getFlag } from '../../actions/FlagActions';
+import { updateFlag, getFlag } from '../../actions/FlagActions';
 import { fetchLogs } from '../../actions/LogActions';
-import { parseDate } from '../../lib/helpers';
+import { parseDate, handleErrorRedirect } from '../../lib/helpers';
 
 
 const SingleFlag = (props) => {
@@ -20,19 +19,9 @@ const SingleFlag = (props) => {
 	// used for updating logs when feature is toggled
 	const [ flagToggled, setFlagToggled ] = useState(false);
 
+  const error = useSelector(state => state.errors);
   const flag = useSelector(state => state.flags).find(flag => flag.id === flagId);
   const logs = useSelector(state => state.eventLogs).filter(event => event.flag_id === flagId).reverse();
-  const error = useSelector(state => state.errors);
-
-  const handleErrorRedirect = (error) => {
-    if (error.includes('404')) {
-      props.history.push('/404');
-    } else if (error.includes('500')) {
-      props.history.push('/500');
-    } else {
-      props.history.push('/error');
-    }
-  }
 
   const handleDeleteFlag = () => {
 		setDeletingFlag(true)
@@ -53,7 +42,7 @@ const SingleFlag = (props) => {
     dispatch(fetchLogs());
   }, [flagId, editingFlag, flagToggled, dispatch]);
 
-  if (error.length > 0) { handleErrorRedirect(error) }
+  if (error.length > 0) { return handleErrorRedirect(error); }
   if (!flag) { return null }
 
   return (
