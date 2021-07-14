@@ -6,6 +6,7 @@ import { createFlag } from '../../actions/FlagActions';
 const NewFlagForm = ({creatingNew, setCreatingNew, existingFlags}) => {
   const [ flagTitle, setFlagTitle ] = useState('');
   const [ flagDescription, setFlagDescription ] = useState('');
+  const [ flagRollout, setFlagRollout ] = useState(0);
   const dispatch = useDispatch();
 
   const handleCancel = () => {
@@ -16,6 +17,7 @@ const NewFlagForm = ({creatingNew, setCreatingNew, existingFlags}) => {
   const resetFields = () => {
     setFlagDescription('');
     setFlagTitle('');
+    setFlagRollout(0);
   };
 
   const nameIsUnique = (newFlagTitle) => {
@@ -81,6 +83,17 @@ const NewFlagForm = ({creatingNew, setCreatingNew, existingFlags}) => {
                   <textarea onChange={handleFlagDescriptionKeydown} value={flagDescription} rows="3" className="max-w-lg shadow-sm block w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"></textarea>
                   <p className="mt-2 text-sm text-gray-500">Write a few sentences about the purpose of the flag.</p>
                 </div>
+              </div>
+            </div>
+            <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+              <label htmlFor="about" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                Rollout percentage
+              </label>
+              <div className="mt-1 sm:mt-0 sm:col-span-2">
+                <input type="number" value={flagRollout} min="0" max="100" className="shadow-sm block focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"></input>
+                <p className="mt-2 text-sm text-gray-500">
+                  Rollout percentage must be between 0-100. If you do not provide a rollout percentage, a default of 0% will be assigned.
+                </p>
               </div>
             </div>
             <div className="clear-both py-10 mb-10">
