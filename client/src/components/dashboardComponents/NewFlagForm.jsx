@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { createFlag } from '../../actions/FlagActions';
 import FlagForm from '../sharedComponents/FlagForm';
+import { invalidRolloutPercentage, alertInvalidRolloutPercentage } from '../../lib/formHelpers';
 
 const NewFlagForm = ({ creatingNew, setCreatingNew, existingFlags }) => {
 	const [ flagTitle, setFlagTitle ] = useState('');
@@ -23,13 +24,6 @@ const NewFlagForm = ({ creatingNew, setCreatingNew, existingFlags }) => {
 	const nameIsUnique = (newFlagTitle) => {
 		newFlagTitle = newFlagTitle.toLowerCase();
 		return existingFlags.every((flag) => flag.title.toLowerCase() !== newFlagTitle);
-	};
-	const invalidRolloutPercentage = (rollout) => {
-		return rollout < 0 || rollout > 100;
-	};
-
-	const alertInvalidRolloutPercentage = () => {
-		alert(`Flag rollout percentage must be 0-100`);
 	};
 
 	const handleSubmit = (e) => {
