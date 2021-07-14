@@ -9,7 +9,7 @@ $$ language 'plpgsql';
 
 CREATE TABLE IF NOT EXISTS Flags (
   id serial,
-  title varchar(100) NOT NULL,
+  title varchar(100) NOT NULL UNIQUE,
   description text NOT NULL DEFAULT 'No description provided.',
   is_active boolean DEFAULT false NOT NULL,
   version int DEFAULT 1,
