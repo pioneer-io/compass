@@ -5,6 +5,7 @@ import { updateFlag } from '../../actions/FlagActions';
 const EditFlagForm = ({ editingFlag, setEditingFlag, flag }) => {
 	const [ flagTitle, setFlagTitle ] = useState(flag.title);
 	const [ flagDescription, setFlagDescription ] = useState(flag.description);
+	const [ flagRollout, setFlagRollout ] = useState(flag.rollout);
 	const dispatch = useDispatch();
 
 	const handleCancel = () => {
@@ -16,6 +17,7 @@ const EditFlagForm = ({ editingFlag, setEditingFlag, flag }) => {
 	const resetFields = () => {
 		setFlagTitle(flagTitle);
 		setFlagDescription(flagDescription);
+		setFlagRollout(flagRollout);
 	};
 
 	const handleSubmit = (e) => {
@@ -25,12 +27,19 @@ const EditFlagForm = ({ editingFlag, setEditingFlag, flag }) => {
 			return;
 		}
 
+		if (flagRollout < 0 || flagRollout > 100) {
+			alert('Flag rollout percentage must be 0-100.');
+			return;
+		}
+
 		const editedFlag = {
 			id          : flag.id,
 			title       : flagTitle,
 			description : flagDescription,
-			is_active   : flag.is_active
+			is_active   : flag.is_active,
+			rollout     : flagRollout,
 		};
+
 		dispatch(
 			updateFlag(editedFlag, false, () => {
 				setEditingFlag(false);
@@ -38,6 +47,11 @@ const EditFlagForm = ({ editingFlag, setEditingFlag, flag }) => {
 			})
 		);
 	};
+
+  const handleRolloutChange = (e) => {
+    e.preventDefault();
+    setFlagRollout(e.target.value)
+  };
 
 	const handleFlagTitleKeyDown = (e) => {
 		setFlagTitle(e.target.value);
@@ -90,6 +104,17 @@ const EditFlagForm = ({ editingFlag, setEditingFlag, flag }) => {
 								</div>
 							</div>
 						</div>
+						<div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+              <label htmlFor="about" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                Rollout percentage
+              </label>
+              <div className="mt-1 sm:mt-0 sm:col-span-2">
+                <input type="number" onInput={handleRolloutChange} value={flagRollout} min="0" max="100" className="shadow-sm block focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"></input>
+                <p className="mt-2 text-sm text-gray-500">
+                  Rollout percentage must be between 0-100. If you do not provide a rollout percentage, a default of 0% will be assigned.
+                </p>
+              </div>
+            </div>
 						<div className="clear-both py-10 mb-10">
 							<button
 								onClick={handleSubmit}

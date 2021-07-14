@@ -1,9 +1,9 @@
 const HttpError = require('../../models/httpError');
 const { query } = require('./query');
 
-async function createFlagWithCustomDescription(title, description) {
-	const queryText = 'INSERT INTO Flags(title, description) VALUES($1, $2) RETURNING *';
-	const vals = [ title, description];
+async function createFlagWithCustomDescription(title, description, rollout) {
+	const queryText = 'INSERT INTO Flags(title, description, rollout) VALUES($1, $2, $3) RETURNING *';
+	const vals = [ title, description, rollout];
 	const result = await query(queryText, vals).catch(err => {
 		console.error(err);
 		throw new HttpError(`Database error. Creation failed.`, 500);
@@ -11,9 +11,9 @@ async function createFlagWithCustomDescription(title, description) {
 	return result;
 }
 
-async function createFlagWithDefaultDescription(title) {
-	const queryText = 'INSERT INTO Flags(title) VALUES($1) RETURNING *';
-	const vals = [ title ];
+async function createFlagWithDefaultDescription(title, rollout) {
+	const queryText = 'INSERT INTO Flags(title, rollout) VALUES($1, $2) RETURNING *';
+	const vals = [ title, rollout ];
 	const result = await query(queryText, vals).catch(err => {
 		console.error(err);
 		throw new HttpError(`Database error. Creation failed.`, 500);
@@ -21,16 +21,16 @@ async function createFlagWithDefaultDescription(title) {
 	return result;
 }
 
-async function createFlagDb(title, description) {
+async function createFlagDb(title, description, rollout) {
 	let result;
 
 	if (description.trim().length < 1) {
-		result = await createFlagWithDefaultDescription(title).catch(err => {
+		result = await createFlagWithDefaultDescription(title, rollout).catch(err => {
 			console.error(err);
 			throw new HttpError(`Database error. Creation failed.`, 500);
 		})
 	} else {
-		result = await createFlagWithCustomDescription(title, description).catch(err => {
+		result = await createFlagWithCustomDescription(title, description, rollout).catch(err => {
 			console.error(err);
 			throw new HttpError(`Database error. Creation failed.`, 500);
 		});
@@ -60,11 +60,11 @@ async function fetchFlag(id) {
 	return result.rows[0];
 }
 
-async function updateFlagDb(id, title, description, isActive) {
+async function updateFlagDb(id, title, description, isActive, rollout) {
 	const queryText =
-		'UPDATE Flags SET (title, description, is_active) = ($2, $3, $4) WHERE id = $1';
+		'UPDATE Flags SET (title, description, is_active, rollout) = ($2, $3, $4, $5) WHERE id = $1';
 
-	const vals = [ id, title, description, isActive ];
+	const vals = [ id, title, description, isActive, rollout ];
 	const result = await query(queryText, vals).catch(err => {
 		console.error(err);
 		throw new HttpError(`Database error. Update failed.`, 500);

@@ -33,7 +33,14 @@ const SingleFlag = (props) => {
 
 	const handleClickToggle = (e) => {
 		e.preventDefault();
-		const updatedFlag = { id: flag.id, title:flag.title, description:flag.description, is_active: !flag.is_active };
+		const updatedFlag = {
+      id: flag.id,
+      title: flag.title,
+      description: flag.description,
+      is_active: !flag.is_active,
+      rollout: flag.rollout
+    };
+    
 		dispatch(updateFlag(updatedFlag, true, () => setFlagToggled(!flagToggled)));
 	}
 
@@ -73,6 +80,14 @@ const SingleFlag = (props) => {
             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
               {flag.is_active ? "On" : "Off"}
 							<Toggle toggledOn={flag.is_active} _id={flag.id} handleClickToggle={handleClickToggle} />
+            </dd>
+          </div>
+          <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt className="text-sm font-medium text-gray-500">
+              Rollout
+            </dt>
+            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+              {flag.rollout}%
             </dd>
           </div>
           <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">

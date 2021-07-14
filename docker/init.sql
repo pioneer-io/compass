@@ -13,9 +13,11 @@ CREATE TABLE IF NOT EXISTS Flags (
   description text NOT NULL DEFAULT 'No description provided.',
   is_active boolean DEFAULT false NOT NULL,
   version int DEFAULT 1,
+  rollout int NOT NULL DEFAULT 0,
   updated_at timestamp with time zone NOT NULL DEFAULT current_timestamp,
   created_at timestamp with time zone NOT NULL DEFAULT current_timestamp,
-  PRIMARY KEY (id)
+  PRIMARY KEY (id),
+  constraint valid_rollout CHECK (rollout >= 0 AND rollout <= 100)
 );
 CREATE TABLE IF NOT EXISTS Strategies (
   id serial,
