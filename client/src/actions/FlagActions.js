@@ -46,7 +46,7 @@ export function fetchFlags() {
 	return function(dispatch) {
 		dispatch(fetchFlagsRequest());
 		apiClient.getFlags((data) => dispatch(fetchFlagsSuccess(data.flags)))
-						 .catch(error => dispatch(flagError(error)));;
+						 .catch(error => dispatch(flagError(error)));
 	};
 }
 
