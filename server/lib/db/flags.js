@@ -60,11 +60,11 @@ async function fetchFlag(id) {
 	return result.rows[0];
 }
 
-async function updateFlagDb(id, title, description, isActive) {
+async function updateFlagDb(id, title, description, isActive, rollout) {
 	const queryText =
-		'UPDATE Flags SET (title, description, is_active) = ($2, $3, $4) WHERE id = $1';
+		'UPDATE Flags SET (title, description, is_active, rollout) = ($2, $3, $4, $5) WHERE id = $1';
 
-	const vals = [ id, title, description, isActive ];
+	const vals = [ id, title, description, isActive, rollout ];
 	const result = await query(queryText, vals).catch(err => {
 		console.error(err);
 		throw new HttpError(`Database error. Update failed.`, 500);
