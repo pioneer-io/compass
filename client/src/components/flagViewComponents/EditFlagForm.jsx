@@ -48,7 +48,7 @@ const EditFlagForm = ({ editingFlag, setEditingFlag, flag }) => {
 	};
 
 	return (
-		<div id="modal-container" className={`${editingFlag ? '' : 'hidden'}`}>
+		<div id="modal-container" className={`overflow-scroll fixed ${editingFlag ? '' : 'hidden'}`}>
 			<div id="modal">
 				<form onSubmit={handleSubmit} className="space-y-8 divide-y divide-gray-200 m-8">
 					<div className="space-y-8 divide-y divide-gray-200 sm:space-y-5 p-6">

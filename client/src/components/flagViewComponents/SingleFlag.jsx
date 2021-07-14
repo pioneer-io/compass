@@ -4,11 +4,10 @@ import SingleFlagHeader from './SingleFlagHeader';
 import EditFlagForm from './EditFlagForm';
 import DeleteFlagModal from './DeleteFlagModal';
 import SingleFlagLogs from './SingleFlagLogs';
-import Toggle from '../Toggle';
-import { updateFlag } from '../../actions/FlagActions';
-import { getFlag } from '../../actions/FlagActions';
+import Toggle from '../sharedComponents/Toggle';
+import { updateFlag, getFlag } from '../../actions/FlagActions';
 import { fetchLogs } from '../../actions/LogActions';
-import { parseDate } from '../../lib/helpers';
+import { parseDate, handleErrorRedirect } from '../../lib/helpers';
 
 
 const SingleFlag = (props) => {
@@ -20,6 +19,7 @@ const SingleFlag = (props) => {
 	// used for updating logs when feature is toggled
 	const [ flagToggled, setFlagToggled ] = useState(false);
 
+  const error = useSelector(state => state.errors);
   const flag = useSelector(state => state.flags).find(flag => flag.id === flagId);
   const logs = useSelector(state => state.eventLogs).filter(event => event.flag_id === flagId).reverse();
 
@@ -42,6 +42,7 @@ const SingleFlag = (props) => {
     dispatch(fetchLogs());
   }, [flagId, editingFlag, flagToggled, dispatch]);
 
+  if (error.length > 0) { return handleErrorRedirect(error); }
   if (!flag) { return null }
 
   return (

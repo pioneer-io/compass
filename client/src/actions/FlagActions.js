@@ -1,5 +1,6 @@
 import * as types from '../constants/ActionTypes';
 import apiClient from '../lib/ApiClient';
+import { flagError } from './ErrorActions';
 
 export function createFlagRequest() {
 	return { type: types.CREATE_FLAG_REQUEST };
@@ -44,7 +45,8 @@ export function deleteFlagSuccess(flag) {
 export function fetchFlags() {
 	return function(dispatch) {
 		dispatch(fetchFlagsRequest());
-		apiClient.getFlags((data) => dispatch(fetchFlagsSuccess(data.flags)));
+		apiClient.getFlags((data) => dispatch(fetchFlagsSuccess(data.flags)))
+						 .catch(error => dispatch(flagError(error)));
 	};
 }
 
@@ -58,7 +60,7 @@ export function updateFlag({ id, title, description, is_active }, toggleChange, 
 			if (callback) {
 				callback();
 			}
-		});
+		}).catch(error => dispatch(flagError(error)));
 	};
 }
 
@@ -67,7 +69,7 @@ export function getFlag(id) {
 		dispatch(fetchFlagRequest(id));
 		apiClient.getFlag(id, (data) => {
 			dispatch(fetchFlagSuccess(data));
-		});
+		}).catch(error => dispatch(flagError(error)));
 	};
 }
 
@@ -81,7 +83,7 @@ export function deleteFlag(flag, callback) {
 			if (callback) {
 				callback();
 			}
-		});
+		}).catch(error => dispatch(flagError(error)));
 	};
 }
 
@@ -94,6 +96,6 @@ export function createFlag(flagData, callback) {
 			if (callback) {
 				callback();
 			}
-		});
+		}).catch(error => dispatch(flagError(error)));
 	};
 }

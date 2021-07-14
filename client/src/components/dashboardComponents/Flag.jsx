@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import Toggle from '../Toggle';
+import Toggle from '../sharedComponents/Toggle';
 import { updateFlag } from '../../actions/FlagActions';
 import { parseDate, truncate } from '../../lib/helpers';
 
