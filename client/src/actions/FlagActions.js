@@ -1,6 +1,6 @@
 import * as types from '../constants/ActionTypes';
 import apiClient from '../lib/ApiClient';
-import flagError from './ErrorActions';
+import { flagError } from './ErrorActions';
 
 export function createFlagRequest() {
 	return { type: types.CREATE_FLAG_REQUEST };
