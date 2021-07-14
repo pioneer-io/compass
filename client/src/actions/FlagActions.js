@@ -1,5 +1,6 @@
 import * as types from '../constants/ActionTypes';
 import apiClient from '../lib/ApiClient';
+import flagError from './ErrorActions';
 
 export function createFlagRequest() {
 	return { type: types.CREATE_FLAG_REQUEST };
@@ -39,11 +40,6 @@ export function deleteFlagRequest() {
 
 export function deleteFlagSuccess(flag) {
 	return { type: types.DELETE_FLAG_SUCCESS, flag: flag };
-}
-
-export function flagError(error) {
-	console.log("EXECUTING FLAG ERROR ACTION CREATOR");
-	return { type: types.SERVER_SIDE_FLAG_ERROR, error: error }
 }
 
 export function fetchFlags() {

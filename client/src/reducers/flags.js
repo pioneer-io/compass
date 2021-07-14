@@ -25,10 +25,6 @@ export default function flags(state = [], action) {
 			const removedFlagId = action.flag.id;
 			return state.filter((flag) => flag.id !== removedFlagId);
 		}
-		case 'SERVER_SIDE_FLAG_ERROR': {
-			state.error = action.error.messsage;
-			return state;
-		}
 		default:
 			return state;
 	}

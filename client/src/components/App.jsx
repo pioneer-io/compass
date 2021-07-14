@@ -7,6 +7,8 @@ import Flags from './dashboardComponents/Flags';
 import Logs from  './logComponents/Logs';
 import SingleFlag from './flagViewComponents/SingleFlag';
 import NotFound from './errorHandling/404';
+import ServerError from './errorHandling/500';
+import UnknownError from './errorHandling/unknown';
 
 function App() {
   return (
@@ -19,6 +21,9 @@ function App() {
             <Route path="/flags" exact component={Flags} />
             <Route path="/flags/:id" exact component={SingleFlag} />
             <Route path="/logs" exact component={Logs} />
+            <Route path="/404" exact component={NotFound} />
+            <Route path="/500" exact component={ServerError} />
+            <Route path="/error" exact component={UnknownError} />
             <Route path="*" component={NotFound} />
           </Switch>
         </div>

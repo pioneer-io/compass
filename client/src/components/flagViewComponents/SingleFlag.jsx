@@ -22,6 +22,17 @@ const SingleFlag = (props) => {
 
   const flag = useSelector(state => state.flags).find(flag => flag.id === flagId);
   const logs = useSelector(state => state.eventLogs).filter(event => event.flag_id === flagId).reverse();
+  const error = useSelector(state => state.errors);
+
+  const handleErrorRedirect = (error) => {
+    if (error.includes('404')) {
+      props.history.push('/404');
+    } else if (error.includes('500')) {
+      props.history.push('/500');
+    } else {
+      props.history.push('/error');
+    }
+  }
 
   const handleDeleteFlag = () => {
 		setDeletingFlag(true)
@@ -42,6 +53,7 @@ const SingleFlag = (props) => {
     dispatch(fetchLogs());
   }, [flagId, editingFlag, flagToggled, dispatch]);
 
+  if (error.length > 0) { handleErrorRedirect(error) }
   if (!flag) { return null }
 
   return (
