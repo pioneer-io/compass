@@ -1,9 +1,10 @@
 const {connect, StringCodec, consumerOpts, createInbox} = require("nats");
-const sc = StringCodec();
-const   {createStreams, streamsCreated} = require("./jetstreamManager")
-const {fetchAllFlags} = require("./postgres-flags")
+const {createStreams, streamsCreated} = require("./jetstreamManager")
+const {fetchAllFlags} = require("../db/postgres-flags")
 let nc;
 let js;
+
+const sc = StringCodec();
 
 async function createJetStreamConnect() {
   nc = await connect({ servers: "localhost:4222" });
