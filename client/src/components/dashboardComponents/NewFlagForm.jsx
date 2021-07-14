@@ -2,7 +2,13 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { createFlag } from '../../actions/FlagActions';
 import FlagForm from '../sharedComponents/FlagForm';
-import { invalidRolloutPercentage, alertInvalidRolloutPercentage, nameIsUnique } from '../../lib/formHelpers';
+import {
+	invalidRolloutPercentage,
+	alertInvalidRolloutPercentage,
+	nameIsUnique,
+	alertEmptyTitle,
+	alertRedundantTitle
+} from '../../lib/formHelpers';
 
 const NewFlagForm = ({ creatingNew, setCreatingNew, existingFlags }) => {
 	const [ flagTitle, setFlagTitle ] = useState('');
@@ -25,10 +31,10 @@ const NewFlagForm = ({ creatingNew, setCreatingNew, existingFlags }) => {
 		e.preventDefault();
 
 		if (flagTitle === '') {
-			alert('You must have a flag title');
+			alertEmptyTitle();
 			return;
 		} else if (!nameIsUnique(flagTitle, existingFlags)) {
-			alert(`The flag name ${flagTitle} has already been used. Please choose another.`);
+			alertRedundantTitle(flagTitle);
 			return;
 		}
 

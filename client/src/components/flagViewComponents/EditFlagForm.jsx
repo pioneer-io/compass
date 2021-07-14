@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateFlag } from '../../actions/FlagActions';
 import FlagForm from '../sharedComponents/FlagForm';
-import { invalidRolloutPercentage, alertInvalidRolloutPercentage, alertRedundantTitle } from '../../lib/formHelpers';
+import { invalidRolloutPercentage, alertInvalidRolloutPercentage, alertEmptyTitle } from '../../lib/formHelpers';
 
 const EditFlagForm = ({ editingFlag, setEditingFlag, flag }) => {
 	const [ flagTitle, setFlagTitle ] = useState(flag.title);
@@ -25,7 +25,7 @@ const EditFlagForm = ({ editingFlag, setEditingFlag, flag }) => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		if (flagTitle === '') {
-			alertRedundantTitle();
+			alertEmptyTitle();
 			return;
 		}
 

@@ -8,8 +8,12 @@ const alertInvalidRolloutPercentage = () => {
 	alert(`Flag rollout percentage must be 0-100`);
 };
 
-const alertRedundantTitle = () => {
+const alertEmptyTitle = () => {
 	alert('You must have a flag title');
+};
+
+const alertRedundantTitle = (flagTitle) => {
+	alert(`The flag name ${flagTitle} has already been used. Please choose another.`);
 };
 
 // check if name is unique among array of flags
@@ -18,4 +22,4 @@ const nameIsUnique = (newFlagTitle, existingFlags = []) => {
 	return existingFlags.every((flag) => flag.title.toLowerCase() !== newFlagTitle);
 };
 
-export { invalidRolloutPercentage, alertInvalidRolloutPercentage, nameIsUnique, alertRedundantTitle };
+export { invalidRolloutPercentage, alertInvalidRolloutPercentage, nameIsUnique, alertEmptyTitle, alertRedundantTitle };
