@@ -32,8 +32,8 @@ const NewFlagForm = ({ creatingNew, setCreatingNew, existingFlags }) => {
 			return;
 		}
 
-		if (invalidRolloutPercentage) {
-			alertInvalidRolloutPercentage(flagRollout);
+		if (invalidRolloutPercentage(flagRollout)) {
+			alertInvalidRolloutPercentage();
 			return;
 		}
 
