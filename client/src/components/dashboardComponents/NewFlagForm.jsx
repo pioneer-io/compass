@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { createFlag } from '../../actions/FlagActions';
 import FlagForm from '../sharedComponents/FlagForm';
-import { invalidRolloutPercentage, alertInvalidRolloutPercentage } from '../../lib/formHelpers';
+import { invalidRolloutPercentage, alertInvalidRolloutPercentage, nameIsUnique } from '../../lib/formHelpers';
 
 const NewFlagForm = ({ creatingNew, setCreatingNew, existingFlags }) => {
 	const [ flagTitle, setFlagTitle ] = useState('');
@@ -21,18 +21,13 @@ const NewFlagForm = ({ creatingNew, setCreatingNew, existingFlags }) => {
 		setFlagRollout(0);
 	};
 
-	const nameIsUnique = (newFlagTitle) => {
-		newFlagTitle = newFlagTitle.toLowerCase();
-		return existingFlags.every((flag) => flag.title.toLowerCase() !== newFlagTitle);
-	};
-
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
 		if (flagTitle === '') {
 			alert('You must have a flag title');
 			return;
-		} else if (!nameIsUnique(flagTitle)) {
+		} else if (!nameIsUnique(flagTitle, existingFlags)) {
 			alert(`The flag name ${flagTitle} has already been used. Please choose another.`);
 			return;
 		}
@@ -41,9 +36,6 @@ const NewFlagForm = ({ creatingNew, setCreatingNew, existingFlags }) => {
 			alertInvalidRolloutPercentage(flagRollout);
 			return;
 		}
-		// if (flagRollout < 0 || flagRollout > 100) {
-		// 	alert(`Flag rollout percentage must be 0-100`);
-		// }
 
 		const newFlag = { flag: { title: flagTitle, description: flagDescription, rollout: flagRollout } };
 		dispatch(

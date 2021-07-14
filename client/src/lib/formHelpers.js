@@ -8,4 +8,9 @@ const alertInvalidRolloutPercentage = () => {
 	alert(`Flag rollout percentage must be 0-100`);
 };
 
-export { invalidRolloutPercentage, alertInvalidRolloutPercentage };
+const nameIsUnique = (newFlagTitle, existingFlags = []) => {
+	newFlagTitle = newFlagTitle.toLowerCase();
+	return existingFlags.every((flag) => flag.title.toLowerCase() !== newFlagTitle);
+};
+
+export { invalidRolloutPercentage, alertInvalidRolloutPercentage, nameIsUnique };
