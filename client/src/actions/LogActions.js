@@ -23,7 +23,6 @@ export function fetchLogs() {
   return function(dispatch) {
     dispatch(getLogsRequest());
     apiClient.getLogs(data => {
-      // data: [{}, {}]
       dispatch(getLogsSuccess(data))
     }).catch(err => dispatch(logsError(err)));
   }
