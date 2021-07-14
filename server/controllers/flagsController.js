@@ -30,8 +30,8 @@ const getFlag = async (req, res, next) => {
 const createFlag = async (req, res, next) => {
 	const errors = validationResult(req);
 	if (errors.isEmpty()) {
-		const { title, description } = req.body.flag;
-		await createFlagDb(title, description)
+		const { title, description, rollout } = req.body.flag;
+		await createFlagDb(title, description, rollout)
 			.then((flag) => {
 				req.flag = flag;
 				publishUpdatedRules();

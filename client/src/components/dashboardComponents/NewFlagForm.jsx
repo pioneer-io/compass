@@ -40,7 +40,7 @@ const NewFlagForm = ({creatingNew, setCreatingNew, existingFlags}) => {
       alert(`Flag rollout percentage must be 0-100`);
     }
 
-    const newFlag = { flag: { title: flagTitle, description: flagDescription }};
+    const newFlag = { flag: { title: flagTitle, description: flagDescription, rollout: flagRollout }};
     dispatch(createFlag(newFlag, () => {
       setCreatingNew(false)
       resetFields();
