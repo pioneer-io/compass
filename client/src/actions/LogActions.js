@@ -17,6 +17,10 @@ export function logFlagDeletionSuccess(logs) {
   return { type: types.LOG_FLAG_DELETION_SUCCESS, logs: logs};
 }
 
+export function logsError(error) {
+	return { type: types.SERVER_SIDE_LOGS_ERROR, error: error }
+}
+
 export function fetchLogs() {
   return function(dispatch) {
     dispatch(getLogsRequest());

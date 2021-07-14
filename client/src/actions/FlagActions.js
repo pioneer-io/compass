@@ -41,6 +41,10 @@ export function deleteFlagSuccess(flag) {
 	return { type: types.DELETE_FLAG_SUCCESS, flag: flag };
 }
 
+export function flagError(error) {
+	return { type: types.SERVER_SIDE_FLAG_ERROR, error: error }
+}
+
 export function fetchFlags() {
 	return function(dispatch) {
 		dispatch(fetchFlagsRequest());
