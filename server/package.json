@@ -7,7 +7,7 @@
 		"test": "set PORT=5430 && jest --runInBand",
 		"start": "node index.js",
 		"start-watch": "nodemon index.js",
-		"dev": "set PORT=5432 concurrently \"npm run start-watch\" \"cd ../client && npm start\""
+		"dev": "set PORT=5432 && concurrently \"npm run start-watch\" \"cd ../client && npm start\""
 	},
 	"author": "",
 	"license": "ISC",
