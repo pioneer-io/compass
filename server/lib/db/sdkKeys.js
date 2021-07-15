@@ -52,15 +52,3 @@ async function fetchUsersSdkKey() {
 
 exports.generateNewSdkKey = generateNewSdkKey;
 exports.fetchUsersSdkKey = fetchUsersSdkKey;
-
-/*
-async function createFlagWithDefaultDescription(title, rollout) {
-	const queryText = 'INSERT INTO Flags(title, rollout) VALUES($1, $2) RETURNING *';
-	const vals = [ title, rollout ];
-	const result = await query(queryText, vals).catch(err => {
-		console.error(err);
-		throw new HttpError(`Database error. Creation failed.`, 500);
-	});
-	return result;
-}
-*/
