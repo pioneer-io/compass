@@ -45,11 +45,31 @@ describe('Test Flag Controller Methods', () => {
 				responseObject = result;
 			})
 		};
-		// some code here
+
 		await getFlags(mockRequest, mockResponse, noop);
-		console.log(responseObject);
+
 		expect(responseObject).toHaveProperty('flags');
 		expect(responseObject.flags).toHaveLength(3);
 		expect(responseObject.flags[0]).toHaveProperty('title', 'FROM_TEST');
+		expect(responseObject.flags[1]).toHaveProperty('title', 'FROM_TEST2');
+		expect(responseObject.flags[2]).toHaveProperty('title', 'FROM_TEST3');
+	});
+
+	test('getFlag should return one flag', async () => {
+		// create a new flag so we can capture the id an use it for query
+		const newFlag = await createFlagDb('FROM_TEST4', 'created for id', 4);
+
+		const mockRequest = {
+			params : { id: newFlag.id }
+		};
+
+		const mockResponse = {};
+
+		await getFlag(mockRequest, mockResponse, noop);
+		expect(mockRequest.flag).toHaveProperty('id');
+		expect(mockRequest.flag).toHaveProperty('title', 'FROM_TEST4');
+		expect(mockRequest.flag).toHaveProperty('description', 'created for id');
+		expect(mockRequest.flag).toHaveProperty('is_active');
+		expect(mockRequest.flag).toHaveProperty('rollout');
 	});
 });
