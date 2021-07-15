@@ -9,8 +9,14 @@ const {
 	updateFlag,
 	deleteFlag
 } = require('../../controllers/flagsController');
+const { createFlagDb, fetchAllFlags } = require('../../lib/db/flags');
 
 describe('Test Flag Controller Methods', () => {
+	// no-op function for mocks
+	const noop = () => {
+		// do nothing
+	};
+
 	// populate data in the table for each test
 	beforeEach(async () => {
 		const flagsToInsert = [
@@ -29,7 +35,12 @@ describe('Test Flag Controller Methods', () => {
 		await clearTable([ 'Flags' ]);
 	});
 
-	test('getFlags should return multiple flags', () => {
+	test('getFlags should return multiple flags', async () => {
 		// some code here
+		let mockReq = {};
+		let mockRes = {};
+		await fetchAllFlags(mockReq, mockRes, noop);
+		console.log(mockRes);
+		expect(mockRes).toBeDefined();
 	});
 });
