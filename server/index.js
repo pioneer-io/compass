@@ -2,6 +2,7 @@ const express = require('express');
 const HttpError = require('./models/httpError');
 const routes = require('./routes/api');
 const { publishUpdatedRules, subscribeToRuleSetRequests } = require('./lib/nats/nats-pub');
+const {fetchUsersSdkKey} = require('./lib/db/sdkKeys');
 require('dotenv').config();
 
 const app = express();
@@ -32,6 +33,7 @@ app.use((err, req, res, next) => {
 
 app.listen(PORT, async () => {
 	console.log(`Server listening on ${PORT}`);
+	await fetchUsersSdkKey();
 	await publishUpdatedRules();
 	await subscribeToRuleSetRequests();
 });
