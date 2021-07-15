@@ -36,11 +36,17 @@ describe('Test Flag Controller Methods', () => {
 	});
 
 	test('getFlags should return multiple flags', async () => {
+		const mockRequest = {};
+
+		let responseObject = {};
+
+		const mockResponse = {
+			json : jest.fn().mockImplementation((result) => {
+				responseObject = result;
+			})
+		};
 		// some code here
-		let mockReq = {};
-		let mockRes = {};
-		await fetchAllFlags(mockReq, mockRes, noop);
-		console.log(mockRes);
-		expect(mockRes).toBeDefined();
+		await getFlags(mockRequest, mockResponse, noop);
+		expect(responseObject).toHaveLength(3);
 	});
 });
