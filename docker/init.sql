@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS Logs (
 CREATE TABLE IF NOT EXISTS Keys (
   id serial,
   sdk_key varchar(36),
-  is_valid boolean DEFAULT true NOT NULL,
+  is_valid boolean DEFAULT false NOT NULL,
   created_at timestamp DEFAULT NOW()
 );
 
