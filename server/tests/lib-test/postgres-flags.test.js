@@ -10,8 +10,29 @@ const {
 } = require('../../lib/db/flags');
 
 describe('test flag controller', () => {
+	const title = 'FROM_TEST';
+	const description = 'A custom test description';
+	const rollout = 25;
+
 	afterEach(async () => {
 		await clearTable([ 'Flags' ]);
+	});
+
+	test('createFlagWithCustomDescription inserts new row', async () => {
+		await createFlagWithCustomDescription(title, description, rollout).then((res) => {
+			const result = res.rows[res.rows.length - 1];
+			expect(result.title).toEqual('FROM_TEST');
+			expect(result.description).toEqual('A custom test description');
+			expect(result.rollout).toEqual(25);
+		});
+
+		await fetchAllFlags().then((rows) => {
+			expect(rows).toHaveLength(1);
+		});
+	});
+
+	test('createFlagWithCustomDescription should raise error with invalid args', () => {
+		expect(createFlagWithCustomDescription).toThrow();
 	});
 
 	xtest('insert data test', async () => {
