@@ -10,6 +10,7 @@ const {
 	deleteFlag
 } = require('../../controllers/flagsController');
 const { createFlagDb, fetchAllFlags } = require('../../lib/db/flags');
+const { publishUpdatedRules } = require('../../lib/nats/nats-pub');
 
 describe('Test Flag Controller Methods', () => {
 	// no-op function for mocks
@@ -35,7 +36,7 @@ describe('Test Flag Controller Methods', () => {
 		await clearTable([ 'Flags' ]);
 	});
 
-	test('getFlags should return multiple flags', async () => {
+	xtest('getFlags should return multiple flags', async () => {
 		const mockRequest = {};
 
 		let responseObject = {};
@@ -55,7 +56,7 @@ describe('Test Flag Controller Methods', () => {
 		expect(responseObject.flags[2]).toHaveProperty('title', 'FROM_TEST3');
 	});
 
-	test('getFlag should return one flag', async () => {
+	xtest('getFlag should return one flag', async () => {
 		// create a new flag so we can capture the id an use it for query
 		const newFlag = await createFlagDb('FROM_TEST4', 'created for id', 4);
 
@@ -73,29 +74,7 @@ describe('Test Flag Controller Methods', () => {
 		expect(mockRequest.flag).toHaveProperty('rollout');
 	});
 
-	// not sure how to extricate all of the calls for nats messaging
-	xtest('createFlag should return one flag', async () => {
-		const mockRequest = {
-			body : {
-				flag : {
-					title       : 'FROM_TEST4',
-					description : 'testing creation',
-					rollout     : 4
-				}
-			}
-		};
-
-		const mockResponse = {};
-
-		await createFlag(mockRequest, mockResponse, noop);
-		expect(mockRequest.flag).toHaveProperty('id');
-		expect(mockRequest.flag).toHaveProperty('title', 'FROM_TEST4');
-		expect(mockRequest.flag).toHaveProperty('description', 'created for id');
-		expect(mockRequest.flag).toHaveProperty('is_active');
-		expect(mockRequest.flag).toHaveProperty('rollout');
-	});
-
-	test('sendFlag should respond with a flag in json format', async () => {
+	xtest('sendFlag should respond with a flag in json format', async () => {
 		const mockRequest = {
 			flag : {
 				title       : 'TEST',
@@ -121,7 +100,7 @@ describe('Test Flag Controller Methods', () => {
 		expect(responseObject.flag).toHaveProperty('version', 1);
 	});
 
-	test('sendFlagWithEvents should respond with a flag and eventLog in json format', async () => {
+	xtest('sendFlagWithEvents should respond with a flag and eventLog in json format', async () => {
 		const mockRequest = {
 			flag     : {
 				title       : 'TEST',
@@ -151,5 +130,52 @@ describe('Test Flag Controller Methods', () => {
 		expect(responseObject.flag).toHaveProperty('is_active', false);
 		expect(responseObject.flag).toHaveProperty('version', 1);
 		expect(responseObject.eventLog).toHaveProperty('1', 'test log 1');
+	});
+
+	// not sure how to extricate all of the calls for nats messaging
+	test('createFlag should return one flag', async () => {
+		global.publishUpdatedRules = () => {
+			console.log('publish called');
+		};
+
+		const mockRequest = {
+			body : {
+				flag : {
+					title       : 'FROM_TEST4',
+					description : 'testing creation',
+					rollout     : 4
+				}
+			}
+		};
+
+		const mockResponse = {};
+
+		await createFlag(mockRequest, mockResponse, noop);
+		expect(mockRequest.flag).toHaveProperty('id');
+		expect(mockRequest.flag).toHaveProperty('title', 'FROM_TEST4');
+		expect(mockRequest.flag).toHaveProperty('description', 'testing creation');
+		expect(mockRequest.flag).toHaveProperty('is_active', false);
+		expect(mockRequest.flag).toHaveProperty('rollout', 4);
+	});
+
+	xtest('updateFlag should ', async () => {
+		const mockRequest = {
+			body : {
+				flag : {
+					title       : 'FROM_TEST4',
+					description : 'testing creation',
+					rollout     : 4
+				}
+			}
+		};
+
+		const mockResponse = {};
+
+		await createFlag(mockRequest, mockResponse, noop);
+		expect(mockRequest.flag).toHaveProperty('id');
+		expect(mockRequest.flag).toHaveProperty('title', 'FROM_TEST4');
+		expect(mockRequest.flag).toHaveProperty('description', 'created for id');
+		expect(mockRequest.flag).toHaveProperty('is_active');
+		expect(mockRequest.flag).toHaveProperty('rollout');
 	});
 });
