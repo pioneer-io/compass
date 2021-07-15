@@ -97,7 +97,6 @@ describe('test flag lib', () => {
 		// create with duplicate title should error
 
 		test('fetchAllFlags should retrieve three distinct flags', async () => {
-			const titles = [ 'FROM_TEST', 'FROM_TEST2', 'FROM_TEST3' ];
 			const flagsToInsert = [
 				{ title: 'FROM_TEST', description: 'desc 1', rollout: 1 },
 				{ title: 'FROM_TEST2', description: 'desc 2', rollout: 2 },
@@ -117,45 +116,41 @@ describe('test flag lib', () => {
 			});
 		});
 
-		test('fetchFlag returns flag by id', async () => {
+		describe('testing functions based on id', () => {
+			// set an id variable that can be updated on each test
 			let id;
-			await createFlagDb(title, description, rollout).then((res) => {
-				id = res.id;
+
+			beforeEach(async () => {
+				await createFlagDb(title, description, rollout).then((res) => {
+					id = res.id;
+				});
 			});
 
-			await fetchFlag(id).then((res) => {
-				expect(res.title).toEqual(title);
-				expect(res.description).toEqual(description);
-				expect(res.rollout).toEqual(rollout);
-			});
-		});
-
-		test('updateFlagDb updates flag properties', async () => {
-			let id;
-			await createFlagDb(title, description, rollout).then((res) => {
-				id = res.id;
+			test('fetchFlag returns flag by id', async () => {
+				await fetchFlag(id).then((res) => {
+					expect(res.title).toEqual(title);
+					expect(res.description).toEqual(description);
+					expect(res.rollout).toEqual(rollout);
+				});
 			});
 
-			await updateFlagDb(id, 'FROM_TEST updated', 'hello world', true, 99).then((res) => {
-				expect(res.title).toEqual('FROM_TEST updated');
-				expect(res.description).toEqual('hello world');
-				expect(res.is_active).toEqual(true);
-			});
-		});
-
-		test('deleteFlagDb deletes solo entry', async () => {
-			let id;
-			await createFlagDb(title, description, rollout).then((res) => {
-				id = res.id;
+			test('updateFlagDb updates flag properties', async () => {
+				await updateFlagDb(id, 'FROM_TEST updated', 'hello world', true, 99).then((res) => {
+					expect(res.title).toEqual('FROM_TEST updated');
+					expect(res.description).toEqual('hello world');
+					expect(res.is_active).toEqual(true);
+				});
 			});
 
-			await deleteFlagDb(id).then((res) => {
-				expect(res).toEqual(true);
-			});
+			test('deleteFlagDb deletes solo entry', async () => {
+				await deleteFlagDb(id).then((res) => {
+					expect(res).toEqual(true);
+				});
 
-			// deleting a flag a second time returns false
-			await deleteFlagDb(id).then((res) => {
-				expect(res).toEqual(false);
+				// deleting a flag a second time returns false
+				await deleteFlagDb(id).then((res) => {
+					expect(res).toEqual(false);
+				});
 			});
 		});
 	});
