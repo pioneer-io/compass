@@ -19,13 +19,7 @@ CREATE TABLE IF NOT EXISTS Flags (
   PRIMARY KEY (id),
   constraint valid_rollout CHECK (rollout >= 0 AND rollout <= 100)
 );
-CREATE TABLE IF NOT EXISTS Strategies (
-  id serial,
-  flag_id int NOT NULL,
-  percentage float NOT NULL,
-  PRIMARY KEY (id),
-  FOREIGN KEY (flag_id) REFERENCES Flags(id) ON DELETE CASCADE
-);
+
 CREATE TABLE IF NOT EXISTS Logs (
   id serial,
   flag_id int NOT NULL,
@@ -42,5 +36,4 @@ CREATE TRIGGER tg_flags_updated_at
   EXECUTE PROCEDURE update_updated_at_column();
 
 INSERT INTO Flags(title, description, is_active) VALUES ('LOGIN_MICROSERVICE', 'Redirects users to the login microservice', FALSE);
-INSERT INTO Strategies(flag_id, percentage) VALUES (1, 0.1);
 INSERT INTO Logs(flag_id, title, description) VALUES (1, 'LOGIN_MICROSERVICE', 'Created new flag: LOGIN_MICROSERVICE');
