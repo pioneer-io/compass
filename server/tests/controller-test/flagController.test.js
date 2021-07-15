@@ -72,4 +72,84 @@ describe('Test Flag Controller Methods', () => {
 		expect(mockRequest.flag).toHaveProperty('is_active');
 		expect(mockRequest.flag).toHaveProperty('rollout');
 	});
+
+	// not sure how to extricate all of the calls for nats messaging
+	xtest('createFlag should return one flag', async () => {
+		const mockRequest = {
+			body : {
+				flag : {
+					title       : 'FROM_TEST4',
+					description : 'testing creation',
+					rollout     : 4
+				}
+			}
+		};
+
+		const mockResponse = {};
+
+		await createFlag(mockRequest, mockResponse, noop);
+		expect(mockRequest.flag).toHaveProperty('id');
+		expect(mockRequest.flag).toHaveProperty('title', 'FROM_TEST4');
+		expect(mockRequest.flag).toHaveProperty('description', 'created for id');
+		expect(mockRequest.flag).toHaveProperty('is_active');
+		expect(mockRequest.flag).toHaveProperty('rollout');
+	});
+
+	test('sendFlag should respond with a flag in json format', async () => {
+		const mockRequest = {
+			flag : {
+				title       : 'TEST',
+				description : 'testing',
+				rollout     : 33,
+				is_active   : false,
+				version     : 1
+			}
+		};
+		let responseObject = {};
+		const mockResponse = {
+			json : jest.fn().mockImplementation((result) => {
+				responseObject = result;
+			})
+		};
+
+		await sendFlag(mockRequest, mockResponse, noop);
+
+		expect(responseObject.flag).toHaveProperty('title', 'TEST');
+		expect(responseObject.flag).toHaveProperty('description', 'testing');
+		expect(responseObject.flag).toHaveProperty('rollout', 33);
+		expect(responseObject.flag).toHaveProperty('is_active', false);
+		expect(responseObject.flag).toHaveProperty('version', 1);
+	});
+
+	test('sendFlagWithEvents should respond with a flag and eventLog in json format', async () => {
+		const mockRequest = {
+			flag     : {
+				title       : 'TEST',
+				description : 'testing',
+				rollout     : 33,
+				is_active   : false,
+				version     : 1
+			},
+			eventLog : {
+				1 : 'test log 1',
+				2 : 'test log 2',
+				3 : 'test log 3'
+			}
+		};
+		let responseObject = {};
+		const mockResponse = {
+			json : jest.fn().mockImplementation((result) => {
+				responseObject = result;
+			})
+		};
+
+		await sendFlagWithEvents(mockRequest, mockResponse, noop);
+
+		expect(responseObject.flag).toHaveProperty('title', 'TEST');
+		expect(responseObject.flag).toHaveProperty('description', 'testing');
+		expect(responseObject.flag).toHaveProperty('rollout', 33);
+		expect(responseObject.flag).toHaveProperty('is_active', false);
+		expect(responseObject.flag).toHaveProperty('version', 1);
+		expect(responseObject.eventLog).toHaveProperty('1', 'test log 1');
+	});
 });
