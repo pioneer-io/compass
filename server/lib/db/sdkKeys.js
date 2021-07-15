@@ -26,7 +26,6 @@ async function generateNewSdkKey() {
 		throw new HttpError('Database error. Failed to create SDK key', 500);
 	});
 
-	console.log('new sdk key created');
 	return newKey;
 }
 
@@ -46,7 +45,6 @@ async function fetchUsersSdkKey() {
 	if (!key) {
 		key = await generateNewSdkKey(); 
 	}
-	console.log(`val of users key is: ${key}`)
 	return key;
 }
 
