@@ -30,7 +30,7 @@ describe('test flag controller', () => {
 		});
 	});
 
-	test('fetching more than one flag', async () => {
+	xtest('fetching more than one flag', async () => {
 		const titles = [ 'FROM_TEST', 'FROM_TEST2', 'FROM_TEST3' ];
 
 		for (const title of titles) {
