@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchFlags } from '../../actions/FlagActions';
 import Flag from './Flag';
-import FlagsHeader from './FlagsHeader';
+import PageHead from '../sharedComponents/PageHead';
 import NewFlagForm from './NewFlagForm';
 import { handleErrorRedirect } from '../../lib/helpers';
 
@@ -32,16 +32,18 @@ const Flags = () => {
   }, [dispatch, creatingNew]);
 
   if (error.length > 0) { return handleErrorRedirect(error) }
+  const pageDesc = 'Click a flag title to view full details. The most recently updated flags can be found at the top of this list.';
 
   return (
     <>
-        <FlagsHeader setCreatingNew={setCreatingNew} />
-        <NewFlagForm creatingNew={creatingNew} setCreatingNew={setCreatingNew} existingFlags={flagList} />
-        <section className="flag-container">
-          <ul className="p-8 flag-tiles divide-y divide-gray-200">
-            {flagList.map(flag => <Flag {...flag} key={flag.id} />)}
-          </ul>
-        </section>
+      <PageHead title={'Feature Flags'} description={pageDesc} setCreatingNew={setCreatingNew} />
+
+      <NewFlagForm creatingNew={creatingNew} setCreatingNew={setCreatingNew} existingFlags={flagList} />
+      <section className="flag-container">
+        <ul className="p-8 flag-tiles divide-y divide-gray-200">
+          {flagList.map(flag => <Flag {...flag} key={flag.id} />)}
+        </ul>
+      </section>
     </>
   );
 }
