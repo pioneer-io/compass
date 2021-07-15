@@ -41,7 +41,7 @@ describe('Test Flag Controller Methods', () => {
 		await clearTable([ 'Flags' ]);
 	});
 
-	xtest('getFlags should return multiple flags', async () => {
+	test('getFlags should return multiple flags', async () => {
 		const mockRequest = {};
 
 		let responseObject = {};
@@ -61,7 +61,7 @@ describe('Test Flag Controller Methods', () => {
 		expect(responseObject.flags[2]).toHaveProperty('title', 'FROM_TEST3');
 	});
 
-	xtest('getFlag should return one flag', async () => {
+	test('getFlag should return one flag', async () => {
 		// create a new flag so we can capture the id an use it for query
 		const newFlag = await createFlagDb('FROM_TEST4', 'created for id', 4);
 
@@ -79,7 +79,7 @@ describe('Test Flag Controller Methods', () => {
 		expect(mockRequest.flag).toHaveProperty('rollout');
 	});
 
-	xtest('sendFlag should respond with a flag in json format', async () => {
+	test('sendFlag should respond with a flag in json format', async () => {
 		const mockRequest = {
 			flag : {
 				title       : 'TEST',
@@ -105,7 +105,7 @@ describe('Test Flag Controller Methods', () => {
 		expect(responseObject.flag).toHaveProperty('version', 1);
 	});
 
-	xtest('sendFlagWithEvents should respond with a flag and eventLog in json format', async () => {
+	test('sendFlagWithEvents should respond with a flag and eventLog in json format', async () => {
 		const mockRequest = {
 			flag     : {
 				title       : 'TEST',
@@ -138,7 +138,7 @@ describe('Test Flag Controller Methods', () => {
 	});
 
 	// not sure how to extricate all of the calls for nats messaging
-	xtest('createFlag should return one flag', async () => {
+	test('createFlag should return one flag', async () => {
 		const mockRequest = {
 			body : {
 				flag : {
@@ -194,16 +194,12 @@ describe('Test Flag Controller Methods', () => {
 
 		let responseObject = {};
 		const mockResponse = {
-			json : jest.fn().mockImplementation((result) => {
+			send : jest.fn().mockImplementation((result) => {
 				responseObject = result;
 			})
 		};
 
-		await updateFlag(mockRequest, mockResponse, noop);
-		expect(mockRequest.flag).toHaveProperty('id', mockRequest.params.id);
-		expect(mockRequest.flag).toHaveProperty('title', 'FROM_TEST4');
-		expect(mockRequest.flag).toHaveProperty('description', 'updated flag');
-		expect(mockRequest.flag).toHaveProperty('is_active', true);
-		expect(mockRequest.flag).toHaveProperty('rollout', 5);
+		await deleteFlag(mockRequest, mockResponse, noop);
+		expect(responseObject).toHaveProperty('id', String(mockRequest.params.id));
 	});
 });
