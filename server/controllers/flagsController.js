@@ -29,8 +29,9 @@ const getFlag = async (req, res, next) => {
 
 const createFlag = async (req, res, next) => {
 	const errors = validationResult(req);
-	if (errors.isEmpty()) {
-		const { title, description, rollout } = req.body.flag;
+	const { title, description, rollout } = req.body.flag;
+
+	if (errors.isEmpty() && rollout !== '') {
 		await createFlagDb(title, description, rollout)
 			.then((flag) => {
 				req.flag = flag;
@@ -62,8 +63,6 @@ const updateFlag = async (req, res, next) => {
 	const flag = req.body.flag;
 	const toggleChange = req.body.toggleChange;
 	const errors = validationResult(req);
-
-	console.log("\n\n flag: ", flag);
 
 	if (errors.isEmpty()) {
 		await updateFlagDb(id, flag.title, flag.description, flag.is_active, flag.rollout)
