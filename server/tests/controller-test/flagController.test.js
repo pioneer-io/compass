@@ -47,6 +47,9 @@ describe('Test Flag Controller Methods', () => {
 		};
 		// some code here
 		await getFlags(mockRequest, mockResponse, noop);
-		expect(responseObject).toHaveLength(3);
+		console.log(responseObject);
+		expect(responseObject).toHaveProperty('flags');
+		expect(responseObject.flags).toHaveLength(3);
+		expect(responseObject.flags[0]).toHaveProperty('title', 'FROM_TEST');
 	});
 });
