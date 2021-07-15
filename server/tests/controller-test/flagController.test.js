@@ -133,7 +133,7 @@ describe('Test Flag Controller Methods', () => {
 	});
 
 	// not sure how to extricate all of the calls for nats messaging
-	test('createFlag should return one flag', async () => {
+	xtest('createFlag should return one flag', async () => {
 		global.publishUpdatedRules = () => {
 			console.log('publish called');
 		};
@@ -158,24 +158,55 @@ describe('Test Flag Controller Methods', () => {
 		expect(mockRequest.flag).toHaveProperty('rollout', 4);
 	});
 
-	xtest('updateFlag should ', async () => {
+	test('updateFlag should return updated flag object', async () => {
+		const newFlag = await createFlagDb('FROM_TEST4', 'created for id', 4);
+
 		const mockRequest = {
-			body : {
+			params       : { id: newFlag.id },
+			body         : {
 				flag : {
 					title       : 'FROM_TEST4',
-					description : 'testing creation',
-					rollout     : 4
+					description : 'updated flag',
+					rollout     : 5,
+					is_active   : true
 				}
-			}
+			},
+			toggleChange : true
 		};
 
 		const mockResponse = {};
 
-		await createFlag(mockRequest, mockResponse, noop);
-		expect(mockRequest.flag).toHaveProperty('id');
+		await updateFlag(mockRequest, mockResponse, noop);
+		expect(mockRequest.flag).toHaveProperty('id', mockRequest.params.id);
 		expect(mockRequest.flag).toHaveProperty('title', 'FROM_TEST4');
-		expect(mockRequest.flag).toHaveProperty('description', 'created for id');
-		expect(mockRequest.flag).toHaveProperty('is_active');
-		expect(mockRequest.flag).toHaveProperty('rollout');
+		expect(mockRequest.flag).toHaveProperty('description', 'updated flag');
+		expect(mockRequest.flag).toHaveProperty('is_active', true);
+		expect(mockRequest.flag).toHaveProperty('rollout', 5);
+	});
+
+	test('updateFlag should ', async () => {
+		const newFlag = await createFlagDb('FROM_TEST4', 'created for id', 4);
+
+		const mockRequest = {
+			params       : { id: newFlag.id },
+			body         : {
+				flag : {
+					title       : 'FROM_TEST4',
+					description : 'updated flag',
+					rollout     : 5,
+					is_active   : true
+				}
+			},
+			toggleChange : true
+		};
+
+		const mockResponse = {};
+
+		await updateFlag(mockRequest, mockResponse, noop);
+		expect(mockRequest.flag).toHaveProperty('id', mockRequest.params.id);
+		expect(mockRequest.flag).toHaveProperty('title', 'FROM_TEST4');
+		expect(mockRequest.flag).toHaveProperty('description', 'updated flag');
+		expect(mockRequest.flag).toHaveProperty('is_active', true);
+		expect(mockRequest.flag).toHaveProperty('rollout', 5);
 	});
 });
