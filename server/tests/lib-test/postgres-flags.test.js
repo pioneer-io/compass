@@ -31,7 +31,13 @@ describe('test flag lib', () => {
 			() => (console.error = originalError);
 		});
 
-		xtest('createFlagWithCustomDescription inserts new row', async () => {
+		test('flag table data is clearing', async () => {
+			await fetchAllFlags().then((rows) => {
+				expect(rows).toHaveLength(0);
+			});
+		});
+
+		test('createFlagWithCustomDescription inserts new row', async () => {
 			await createFlagWithCustomDescription(title, description, rollout).then((res) => {
 				const result = res.rows[res.rows.length - 1];
 				expect(result.title).toEqual('FROM_TEST');
@@ -44,6 +50,7 @@ describe('test flag lib', () => {
 			});
 		});
 
+		// not functional yet
 		xtest('createFlagWithCustomDescription should raise error with invalid args', async () => {
 			expect(() => {
 				createFlagWithCustomDescription(undefined, description, rollout);
@@ -87,55 +94,58 @@ describe('test flag lib', () => {
 			});
 		});
 
-		xtest('test data has cleared', async () => {
-			await fetchAllFlags().then((rows) => {
-				expect(rows.length).toEqual(0);
-			});
-		});
+		// create with duplicate title should error
 
-		xtest('fetching more than one flag', async () => {
+		test('fetchAllFlags should retrieve three distinct flags', async () => {
 			const titles = [ 'FROM_TEST', 'FROM_TEST2', 'FROM_TEST3' ];
+			const flagsToInsert = [
+				{ title: 'FROM_TEST', description: 'desc 1', rollout: 1 },
+				{ title: 'FROM_TEST2', description: 'desc 2', rollout: 2 },
+				{ title: 'FROM_TEST3', description: 'desc 3', rollout: 3 }
+			];
 
-			for (const title of titles) {
-				await createFlagDb(title);
+			for (const flag of flagsToInsert) {
+				await createFlagDb(flag.title, flag.description, flag.rollout);
 			}
 
 			await fetchAllFlags().then((rows) => {
 				console.log(rows);
 				expect(rows.length).toEqual(3);
-				titles.forEach((title, index) => {
-					expect(rows[index].title).toBe(title);
+				flagsToInsert.forEach((flag, index) => {
+					expect(rows[index].title).toBe(flag.title);
 				});
 			});
 		});
 
-		xtest('fetching flag by id', async () => {
+		test('fetchFlag returns flag by id', async () => {
 			let id;
-			await createFlagDb('FROM_TEST').then((res) => {
+			await createFlagDb(title, description, rollout).then((res) => {
 				id = res.id;
 			});
 
 			await fetchFlag(id).then((res) => {
-				expect(res.title).toEqual('FROM_TEST');
+				expect(res.title).toEqual(title);
+				expect(res.description).toEqual(description);
+				expect(res.rollout).toEqual(rollout);
 			});
 		});
 
-		xtest('updating flag', async () => {
+		test('updateFlagDb updates flag properties', async () => {
 			let id;
-			await createFlagDb('FROM_TEST').then((res) => {
+			await createFlagDb(title, description, rollout).then((res) => {
 				id = res.id;
 			});
 
-			await updateFlagDb(id, 'FROM_TEST2', 'hello world', true).then((res) => {
-				expect(res.title).toEqual('FROM_TEST2');
+			await updateFlagDb(id, 'FROM_TEST updated', 'hello world', true, 99).then((res) => {
+				expect(res.title).toEqual('FROM_TEST updated');
 				expect(res.description).toEqual('hello world');
 				expect(res.is_active).toEqual(true);
 			});
 		});
 
-		xtest('deleting flag', async () => {
+		test('deleteFlagDb deletes solo entry', async () => {
 			let id;
-			await createFlagDb('FROM_TEST').then((res) => {
+			await createFlagDb(title, description, rollout).then((res) => {
 				id = res.id;
 			});
 
