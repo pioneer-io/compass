@@ -18,17 +18,20 @@ describe('test flag lib', () => {
 		const description = 'A custom test description';
 		const rollout = 25;
 
+		// for mocking console.error
 		let consoleOutput = [];
 		const mockedConsoleError = (output) => consoleOutput.push(output);
 
+		// mock console error
 		beforeEach(() => (console.error = mockedConsoleError));
 
+		// clear data from tables and reset console.error to non-mocked original function
 		afterEach(async () => {
 			await clearTable([ 'Flags' ]);
 			() => (console.error = originalError);
 		});
 
-		test('createFlagWithCustomDescription inserts new row', async () => {
+		xtest('createFlagWithCustomDescription inserts new row', async () => {
 			await createFlagWithCustomDescription(title, description, rollout).then((res) => {
 				const result = res.rows[res.rows.length - 1];
 				expect(result.title).toEqual('FROM_TEST');
@@ -41,17 +44,35 @@ describe('test flag lib', () => {
 			});
 		});
 
-		xtest('createFlagWithCustomDescription should raise error with invalid args', () => {
-			expect(createFlagWithCustomDescription).toThrow();
+		xtest('createFlagWithCustomDescription should raise error with invalid args', async () => {
+			expect(() => {
+				createFlagWithCustomDescription(undefined, description, rollout);
+			}).rejects.toThrow();
 		});
 
-		xtest('insert data test', async () => {
-			await createFlagDb('FROM_TEST').then((res) => {
-				expect(res.title).toEqual('FROM_TEST');
+		test('createFlagWithDefaultDescription inserts new row', async () => {
+			await createFlagWithDefaultDescription(title, rollout).then((res) => {
+				const result = res.rows[res.rows.length - 1];
+				expect(result.title).toEqual('FROM_TEST');
+				expect(result.description).toEqual('No description provided.');
+				expect(result.rollout).toEqual(25);
 			});
 
 			await fetchAllFlags().then((rows) => {
-				expect(rows.length).toEqual(1);
+				expect(rows).toHaveLength(1);
+			});
+		});
+
+		xtest('createFlagDb with description', async () => {
+			await createFlagDb(title, description, rollout).then((res) => {
+				const result = res.rows[res.rows.length - 1];
+				expect(result.title).toEqual('FROM_TEST');
+				expect(result.description).toEqual('A custom test description');
+				expect(result.rollout).toEqual(25);
+			});
+
+			await fetchAllFlags().then((rows) => {
+				expect(rows).toHaveLength(1);
 			});
 		});
 
