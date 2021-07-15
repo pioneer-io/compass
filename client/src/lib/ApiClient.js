@@ -1,18 +1,13 @@
 import axios from 'axios';
 import * as routes from '../constants/ApiRoutes';
 
-function logError(errorResponse) {
-	const response = errorResponse.response;
-
-	if (response && response.data && response.data.error) {
-		console.error(`HTTP Error: ${response.data.error}`);
-	} else {
-		console.error('Error: ', errorResponse);
-	}
-}
-
 function unwrapData(response) {
 	return response.data;
+}
+
+function logError(err) {
+	console.error("Error: ", err);
+	throw err;
 }
 
 const apiClient = {

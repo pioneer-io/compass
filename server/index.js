@@ -1,7 +1,7 @@
 const express = require('express');
 const HttpError = require('./models/httpError');
 const routes = require('./routes/api');
-const { publishInit } = require('./lib/nats-pub');
+const { publishUpdatedRules, subscribeToRuleSetRequests } = require('./lib/nats/nats-pub');
 require('dotenv').config();
 
 const app = express();
@@ -30,7 +30,8 @@ app.use((err, req, res, next) => {
 	res.json({ error: err.message || 'An unknown error occured' });
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
 	console.log(`Server listening on ${PORT}`);
-	publishInit();
+	await publishUpdatedRules();
+	await subscribeToRuleSetRequests();
 });

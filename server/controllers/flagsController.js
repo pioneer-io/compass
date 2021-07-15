@@ -1,13 +1,16 @@
 const HttpError = require('../models/httpError');
 const { validationResult } = require('express-validator');
-const { publish } = require('../lib/nats-pub');
-const { createFlagDb, fetchAllFlags, fetchFlag, updateFlagDb, deleteFlagDb } = require('../lib/postgres-flags');
+const { publishUpdatedRules } = require('../lib/nats/nats-pub');
+const { createFlagDb, fetchAllFlags, fetchFlag, updateFlagDb, deleteFlagDb } = require('../lib/db/flags');
 
 const getFlags = async (req, res, next) => {
-	await fetchAllFlags().then((flags) => {
+	await fetchAllFlags().then(flags => {
 		res.json({
 			flags
 		});
+	}).catch(err => {
+		console.error(err);
+		next(new HttpError('Database problem. Could not retrieve flags.Contact an admin', 500));
 	});
 };
 
@@ -18,28 +21,29 @@ const getFlag = async (req, res, next) => {
 			req.flag = flag;
 			next();
 		})
-		.catch((err) => {
-			console.log(err);
-			next(new HttpError('Flag id not found, please try again.', 404));
+		.catch(err => {
+			console.error(err);
+			next(new HttpError(`Flag id ${id} not found in database.`, 404));
 		});
 };
 
 const createFlag = async (req, res, next) => {
 	const errors = validationResult(req);
-	if (errors.isEmpty()) {
-		const { title, description } = req.body.flag;
-		await createFlagDb(title, description)
+	const { title, description, rollout } = req.body.flag;
+
+	if (errors.isEmpty() && rollout !== '') {
+		await createFlagDb(title, description, rollout)
 			.then((flag) => {
 				req.flag = flag;
-				publish('FLAG.created', `New flag created. Data: ${JSON.stringify(flag)}`);
+				publishUpdatedRules();
 				next();
 			})
 			.catch((err) => {
 				console.log(err);
-				next(new HttpError('Creating flag failed, please try again'));
+				next(new HttpError('Creating flag failed. Contact server admin.', 500));
 			});
 	} else {
-		return next(new HttpError('missing input.', 404));
+		next(new HttpError('Could not create flag. Missing input.', 500));
 	}
 };
 
@@ -61,18 +65,21 @@ const updateFlag = async (req, res, next) => {
 	const errors = validationResult(req);
 
 	if (errors.isEmpty()) {
-		await updateFlagDb(id, flag.title, flag.description, flag.is_active)
+		await updateFlagDb(id, flag.title, flag.description, flag.is_active, flag.rollout)
 			.then((flag) => {
 				req.flag = flag;
 				req.toggleChange = toggleChange;
 
-				publish('FLAG.updated', `Flag updated. Data: ${JSON.stringify(flag)}`);
+				publishUpdatedRules();
 				next();
 			})
-			.catch((err) => next(new HttpError('Updating flag failed, please try again', 500)));
+			.catch(err => {
+				console.error(err);
+				next(new HttpError('Updating flag failed, contact admin.', 500))
+			});
 	} else {
-		console.log(errors);
-		return next(new HttpError('The input field is empty.', 404));
+		console.error(errors);
+		return next(new HttpError('Could not update flag. Missing required input.', 500));
 	}
 };
 
@@ -82,14 +89,17 @@ const deleteFlag = async (req, res, next) => {
 	await deleteFlagDb(id)
 		.then((deleteSuccess) => {
 			if (deleteSuccess) {
-				publish('FLAG.deleted', `${id}`);
+				publishUpdatedRules();
 
 				res.send({ id });
 			} else {
-				next(new HttpError('Deleting flag failed, not found.', 400));
+				next(new HttpError(`Deleting flag failed, flag ${id} not found.`, 500));
 			}
 		})
-		.catch((err) => next(new HttpError('Deleting flag failed, try again.', 500)));
+		.catch(err => {
+			console.error(err);
+			next(new HttpError('Deleting flag failed, contact your admin.', 500))
+		});
 };
 
 module.exports.getFlags = getFlags;

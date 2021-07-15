@@ -19,7 +19,7 @@ const DeleteConfirmationModal = ({ deletingFlag, setDeletingFlag, flag, history 
 	};
 
 	return (
-		<div id="modal-container" className={`${deletingFlag ? '' : 'hidden'}`}>
+		<div id="modal-container" className={`overflow-scroll fixed ${deletingFlag ? '' : 'hidden'}`}>
 			<div id="modal">
 				<form className="space-y-8 divide-y divide-gray-200 m-8">
 					<div className="space-y-8 divide-y divide-gray-200 sm:space-y-5 p-6">
