@@ -1,37 +1,43 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PageHead from '../sharedComponents/PageHead';
-
-const sdkKey = () => {
-  // query db here. return null if no key yet.
-  //return null;
-  return '12345-123235-123234-sgfsdg-gsf';
-}
-
-const generateSDKKey = () => {
-  // generate new and save to DB
-  // then we want to rerender the page with SDK key showing
-}
-
-const renderText = () => {
-  const key = sdkKey();
-  const copyText = (e) =>{
-    e.preventDefault();
-    navigator.clipboard.writeText(key)
-  };
-
-  if (key) {
-    return (
-      <p>{key}
-        <button onClick={copyText} className="ml-3 text-sm text-green-900">Copy to Clipboard</button>
-      </p>);
-  } else {
-    return <p>You don't have an SDK key yet. You can click below to generate one.</p>
-  }
-}
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchSdkKey } from '../../actions/sdkKeyActions';
 
 const Account = () => {
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    dispatch(fetchSdkKey());
+  })
+
+  
+  const generateSDKKey = () => {
+    // generate new and save to DB
+    // then we want to rerender the page with SDK key showing
+  }
+  
+  const sdkKey = 'placeholder';
+
+  const renderText = () => {
+    const copyText = (e) =>{
+      e.preventDefault();
+      navigator.clipboard.writeText(sdkKey)
+    };
+  
+    if (sdkKey) {
+      return (
+        <p>{sdkKey}
+          <button onClick={copyText} className="ml-3 text-sm text-green-900">Copy to Clipboard</button>
+        </p>);
+    } else {
+      return <p>You don't have an SDK key yet. You can click below to generate one.</p>
+    }
+  }
+  
+  
   const pageDesc = 'In your application, provide the SDK key to create an SDK client connection to Scout. This will allow you to receive updated rulesets related to your feature flags.';
-  return(
+  
+  return (
     <>
       <PageHead title={'Your Account'} description={pageDesc} />
       <div className="p-8 max-w-7xl mx-auto sm:px-6 lg:px-8">

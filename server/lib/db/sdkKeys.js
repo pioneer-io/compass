@@ -38,7 +38,7 @@ async function fetchSdkKey() {
 			throw new HttpError('Database error. Failed to fetch SDK key', 500);
 	});
 	
-	return result.rows[0];
+	return JSON.stringify(result.rows[0].sdk_key);
 }
 
 async function fetchUsersSdkKey() {
@@ -46,7 +46,7 @@ async function fetchUsersSdkKey() {
 	if (!key) {
 		key = await generateNewSdkKey(); 
 	}
-	console.log(`val of users key is: ${key.toString()}`)
+	console.log(`val of users key is: ${key}`)
 	return key;
 }
 

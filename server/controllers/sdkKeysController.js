@@ -5,7 +5,8 @@ const {generateNewSdkKey, fetchUsersSdkKey} = require('../lib/db/sdkKeys');
 
 const getSdkKey = async (req, res, next) => {
     await fetchUsersSdkKey().then(key => {
-        res.sdkKey = key;
+        const sdkKey = key
+        res.json({sdkKey});
     }).catch(err => {
 		console.error(err);
 		next(new HttpError('Database problem. Could not retrieve SDK key.Contact an admin', 500));
