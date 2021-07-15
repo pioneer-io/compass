@@ -42,7 +42,7 @@ async function fetchSdkKey() {
 }
 
 async function fetchUsersSdkKey() {
-	const key = await fetchSdkKey();
+	let key = await fetchSdkKey();
 	if (!key) {
 		key = await generateNewSdkKey(); 
 	}
