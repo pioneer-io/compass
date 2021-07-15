@@ -29,6 +29,11 @@ CREATE TABLE IF NOT EXISTS Logs (
   PRIMARY KEY (id)
 );
 
+CREATE TABLE IF NOT EXISTS Keys (
+  id serial,
+  sdk_key varchar(100)
+);
+
 CREATE TRIGGER tg_flags_updated_at
   BEFORE UPDATE
   ON flags
