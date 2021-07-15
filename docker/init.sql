@@ -31,7 +31,8 @@ CREATE TABLE IF NOT EXISTS Logs (
 
 CREATE TABLE IF NOT EXISTS Keys (
   id serial,
-  sdk_key varchar(100)
+  sdk_key varchar(36),
+  created_at timestamp DEFAULT NOW()
 );
 
 CREATE TRIGGER tg_flags_updated_at
