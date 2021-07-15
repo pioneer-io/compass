@@ -18,6 +18,11 @@ describe('Test Flag Controller Methods', () => {
 		// do nothing
 	};
 
+	// override publishing function to prevent nats complications with test
+	global.publishUpdatedRules = () => {
+		console.log('publish called');
+	};
+
 	// populate data in the table for each test
 	beforeEach(async () => {
 		const flagsToInsert = [
@@ -134,10 +139,6 @@ describe('Test Flag Controller Methods', () => {
 
 	// not sure how to extricate all of the calls for nats messaging
 	xtest('createFlag should return one flag', async () => {
-		global.publishUpdatedRules = () => {
-			console.log('publish called');
-		};
-
 		const mockRequest = {
 			body : {
 				flag : {
@@ -184,23 +185,19 @@ describe('Test Flag Controller Methods', () => {
 		expect(mockRequest.flag).toHaveProperty('rollout', 5);
 	});
 
-	test('updateFlag should ', async () => {
+	test('deleteFlag should return deleted flags id', async () => {
 		const newFlag = await createFlagDb('FROM_TEST4', 'created for id', 4);
 
 		const mockRequest = {
-			params       : { id: newFlag.id },
-			body         : {
-				flag : {
-					title       : 'FROM_TEST4',
-					description : 'updated flag',
-					rollout     : 5,
-					is_active   : true
-				}
-			},
-			toggleChange : true
+			params : { id: newFlag.id }
 		};
 
-		const mockResponse = {};
+		let responseObject = {};
+		const mockResponse = {
+			json : jest.fn().mockImplementation((result) => {
+				responseObject = result;
+			})
+		};
 
 		await updateFlag(mockRequest, mockResponse, noop);
 		expect(mockRequest.flag).toHaveProperty('id', mockRequest.params.id);
