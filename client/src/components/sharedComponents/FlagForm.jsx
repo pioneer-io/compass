@@ -97,8 +97,7 @@ const FlagForm = ({
 									className="shadow-sm block focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"
 								/>
 								<p className="mt-2 text-sm text-gray-500">
-									Rollout percentage must be between 0-100. If you do not provide a rollout percentage, a default of 0%
-									will be assigned.
+									Rollout percentage must be between 0-100.
 								</p>
 							</div>
 						</div>

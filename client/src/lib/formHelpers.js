@@ -1,6 +1,9 @@
 // is the rollout value given within the valid parameters?
 const invalidRolloutPercentage = (rollout) => {
-	return rollout < 0 || rollout > 100;
+	return rollout === '' ||
+				 	isNaN(rollout) ||
+				 	Number(rollout) < 0 ||
+					Number(rollout) > 100;
 };
 
 // alert the client if invalid rollout was given
