@@ -1,6 +1,6 @@
 const clearTable = require('../helper/clearTable');
 const { createEventDb } = require('../../lib/db/events');
-const { createFlagDb, fetchAllFlags, fetchFlag, updateFlagDb, deleteFlagDb } = require('../../lib/db/flags');
+const { createFlagDb } = require('../../lib/db/flags');
 
 describe('createEventDb', () => {
 	let flagId;
