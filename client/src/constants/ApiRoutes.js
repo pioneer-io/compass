@@ -5,3 +5,4 @@ export const UPDATE_FLAG_URL = '/flags/';
 export const DELETE_FLAG_URL = '/flags/';
 export const GET_EVENTS_LOG_URL  = '/logs';
 export const POST_EVENTS_LOG_URL = '/logs';
+export const GET_SDK_KEY_URL = '/account';
