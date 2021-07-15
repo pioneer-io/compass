@@ -63,12 +63,23 @@ describe('test flag lib', () => {
 			});
 		});
 
-		xtest('createFlagDb with description', async () => {
+		test('createFlagDb with description', async () => {
 			await createFlagDb(title, description, rollout).then((res) => {
-				const result = res.rows[res.rows.length - 1];
-				expect(result.title).toEqual('FROM_TEST');
-				expect(result.description).toEqual('A custom test description');
-				expect(result.rollout).toEqual(25);
+				expect(res.title).toEqual('FROM_TEST');
+				expect(res.description).toEqual('A custom test description');
+				expect(res.rollout).toEqual(25);
+			});
+
+			await fetchAllFlags().then((rows) => {
+				expect(rows).toHaveLength(1);
+			});
+		});
+
+		test('createFlagDb without description', async () => {
+			await createFlagDb(title, '', rollout).then((res) => {
+				expect(res.title).toEqual('FROM_TEST');
+				expect(res.description).toEqual('No description provided.');
+				expect(res.rollout).toEqual(25);
 			});
 
 			await fetchAllFlags().then((rows) => {
