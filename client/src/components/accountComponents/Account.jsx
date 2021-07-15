@@ -15,8 +15,7 @@ const Account = () => {
     // generate new and save to DB
     // then we want to rerender the page with SDK key showing
   }
-  
-  const sdkKey = 'placeholder';
+  const sdkKey = useSelector(state => state.sdkKey);
 
   const renderText = () => {
     const copyText = (e) =>{

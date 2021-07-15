@@ -14,7 +14,9 @@ export function fetchSdkKeySuccess(data) {
 export function fetchSdkKey() {
   return function(dispatch) {
     dispatch(fetchSdkKeyRequest());
-		apiClient.getSdkKey((data) => dispatch(fetchSdkKeySuccess(data)))
-					   .catch(error => dispatch(sdkKeyError(error)))
+		apiClient.getSdkKey((data) => {
+			dispatch(fetchSdkKeySuccess(data))
+		})
+		.catch(error => dispatch(sdkKeyError(error)))
   };
 }

@@ -2,8 +2,8 @@ import { combineReducers } from 'redux';
 import flags from './flags';
 import eventLogs from  './eventLogs';
 import errors from './errors';
-import sdkKeys from './sdkKeys'
+import sdkKey from './sdkKeys'
 
-const rootReducer = combineReducers({ flags, eventLogs, errors, sdkKeys });
+const rootReducer = combineReducers({ flags, eventLogs, errors, sdkKey });
 
 export default rootReducer;
