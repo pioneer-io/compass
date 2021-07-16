@@ -62,6 +62,28 @@ async function subscribeToRuleSetRequests() {
   })(sub);
 }
 
+async function subscribeToSdkKeyRequests() {
+  await createJetStreamConnect();
+
+  if (! await streamsCreated()) {
+    await createStreams();
+  }
+
+  const sub = await js.subscribe('KEY.sdkKeyRequest', config('sdkKeyRequest'));
+
+  (async (sub) => {
+    for await (const m of sub) {
+      publishSdkKey();
+      m.ack();
+    };
+  })(sub);
+}
+
+async function initSubscriptions() {
+  await subscribeToRuleSetRequests();
+  await subscribeToSdkKeyRequests();
+}
+
 function config(subject) {
   const opts = consumerOpts();
   opts.durable(subject);
@@ -73,5 +95,5 @@ function config(subject) {
 }
 
 exports.publishUpdatedRules = publishUpdatedRules;
-exports.subscribeToRuleSetRequests = subscribeToRuleSetRequests;
+exports.initSubscriptions = initSubscriptions;
 exports.publishSdkKey = publishSdkKey;
