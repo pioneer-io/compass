@@ -60,6 +60,23 @@ describe('Test Flag Controller Methods', () => {
 		expect(responseObject.flags[2]).toHaveProperty('title', 'FROM_TEST3');
 	});
 
+	test('getFlag should return single flag in json', async () => {
+		const newFlag = await createFlagDb('FROM_TEST4', 'created for id', 4);
+
+		const mockRequest = {
+			params : { id: newFlag.id }
+		};
+
+		const mockResponse = {};
+
+		await getFlag(mockRequest, mockResponse, noop);
+
+		expect(mockRequest).toHaveProperty('flag');
+		expect(mockRequest.flag).toHaveProperty('title', 'FROM_TEST4');
+		expect(mockRequest.flag).toHaveProperty('description', 'created for id');
+		expect(mockRequest.flag).toHaveProperty('rollout', 4);
+	});
+
 	test('sendFlag should respond with a flag in json format', async () => {
 		const mockRequest = {
 			flag : {
