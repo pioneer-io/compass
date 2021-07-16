@@ -33,7 +33,6 @@ app.use((err, req, res, next) => {
 
 app.listen(PORT, async () => {
 	console.log(`Server listening on ${PORT}`);
-	await fetchUsersSdkKey();
 	await publishUpdatedRules();
 	await subscribeToRuleSetRequests();
 });
