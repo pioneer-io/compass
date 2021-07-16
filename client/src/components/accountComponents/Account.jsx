@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import PageHead from '../sharedComponents/PageHead';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchSdkKey, createNewSdkKey } from '../../actions/SdkKeyActions';
+import { fetchSdkKey, createNewSdkKey } from '../../actions/sdkKeyActions';
 
 const Account = () => {
   const dispatch = useDispatch();
