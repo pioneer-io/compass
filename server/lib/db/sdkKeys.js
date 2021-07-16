@@ -37,7 +37,11 @@ async function fetchSdkKey() {
 			throw new HttpError('Database error. Failed to fetch SDK key', 500);
 	});
 	
-	return JSON.stringify(result.rows[0].sdk_key);
+	if (result.rows[0] == undefined) {
+		return false;
+	}
+	
+	return result.rows[0].sdk_key;
 }
 
 async function fetchUsersSdkKey() {

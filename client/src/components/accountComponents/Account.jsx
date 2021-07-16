@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import PageHead from '../sharedComponents/PageHead';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchSdkKey } from '../../actions/sdkKeyActions';
+import { fetchSdkKey, createNewSdkKey } from '../../actions/SdkKeyActions';
 
 const Account = () => {
   const dispatch = useDispatch();
@@ -12,6 +12,7 @@ const Account = () => {
 
   
   const generateSDKKey = () => {
+    dispatch(createNewSdkKey());
     // generate new and save to DB
     // then we want to rerender the page with SDK key showing
   }

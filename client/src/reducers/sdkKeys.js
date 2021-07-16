@@ -3,7 +3,7 @@ export default function sdkKey(state = "", action) {
 		case 'FETCH_SDK_KEY_SUCCESS': {
 			return action.sdkKey;
 		}
-		case 'UPDATE_SDK_KEY_SUCCESS': {
+		case 'CREATE_SDK_KEY_SUCCESS': {
 			return action.sdkKey;
 		}
 		default:

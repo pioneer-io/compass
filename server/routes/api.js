@@ -23,6 +23,8 @@ router.get('/logs', eventLogController.getEventLog);
 
 router.post('/logs', eventLogController.addDeleteFlagEvent);
 
-router.get('/account', sdkKeysController.getSdkKey)
+router.get('/account', sdkKeysController.getSdkKey);
+
+router.get('/account/new', sdkKeysController.createSdkKey);
 
 module.exports = router;
