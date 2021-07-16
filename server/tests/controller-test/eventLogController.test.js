@@ -5,7 +5,8 @@ const {
 	getEventLog,
 	addUpdateFlagEvent,
 	addDeleteFlagEvent,
-	getEventsForFlag
+	getEventsForFlag,
+	addCreateFlagEvent
 } = require('../../controllers/eventLogController');
 const { createEventDb } = require('../../lib/db/events');
 
@@ -33,7 +34,7 @@ describe('Test Flag Controller Methods', () => {
 		await clearTable([ 'Logs' ]);
 	});
 
-	xtest('getEventLog should return log data in json object', async () => {
+	test('getEventLog should return log data in json object', async () => {
 		const mockRequest = {};
 
 		let responseObject = {};
@@ -71,5 +72,57 @@ describe('Test Flag Controller Methods', () => {
 		expect(mockRequest.eventLog).toHaveLength(2);
 		expect(mockRequest.eventLog[0]).toHaveProperty('flag_id', 2);
 		expect(mockRequest.eventLog[1]).toHaveProperty('flag_id', 2);
+	});
+
+	test('createEventLog should not raise error', async () => {
+		const mockRequest = {
+			flag : {
+				id    : 2,
+				title : 'TEST_LOG 4'
+			}
+		};
+
+		const mockResponse = {};
+
+		await expect(addCreateFlagEvent(mockRequest, mockResponse, noop)).toBeTruthy();
+	});
+
+	test('updateEventLog should not raise error', async () => {
+		const mockRequest = {
+			toggleChange : true,
+			flag         : {
+				id        : 2,
+				title     : 'TEST_LOG 4',
+				is_active : false
+			}
+		};
+
+		const mockResponse = {};
+
+		await expect(addCreateFlagEvent(mockRequest, mockResponse, noop)).toBeTruthy();
+	});
+
+	test('addDeleteFlagEvent should return log data in json object', async () => {
+		const mockRequest = {
+			body : {
+				id    : 1,
+				title : 'DELETED_FLAG'
+			}
+		};
+
+		let responseObject = {};
+
+		const mockResponse = {
+			json : jest.fn().mockImplementation((result) => {
+				responseObject = result;
+			})
+		};
+
+		await addDeleteFlagEvent(mockRequest, mockResponse, noop);
+
+		expect(responseObject).toHaveProperty('data');
+		expect(responseObject.data).toHaveProperty('title', 'DELETED_FLAG');
+		expect(responseObject.data).toHaveProperty('description', "Deleted flag 'DELETED_FLAG' with id: '1'");
+		expect(responseObject.data).toHaveProperty('flag_id', 1);
 	});
 });
