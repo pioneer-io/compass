@@ -32,6 +32,12 @@ const apiClient = {
 	logFlagDeletion : function(flagData, callback) {
 		return axios.post(routes.POST_EVENTS_LOG_URL, flagData).then(unwrapData).then(callback).catch(logError);
 	},
+	getSdkKey : function(callback) {
+		return axios.get(routes.GET_SDK_KEY_URL).then(unwrapData).then(callback).catch(logError);
+	},
+	createSdkKey : function(callback) {
+		return axios.get(routes.CREATE_SDK_KEY_URL).then(unwrapData).then(callback).catch(logError);
+	}
 };
 
 export default apiClient;

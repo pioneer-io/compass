@@ -1,6 +1,8 @@
 const {connect, StringCodec, consumerOpts, createInbox} = require("nats");
 const {createStreams, streamsCreated} = require("./jetstreamManager")
 const {fetchAllFlags} = require("../db/flags")
+const {fetchUsersSdkKey} = require("../db/sdkKeys")
+
 let nc;
 let js;
 
@@ -25,7 +27,20 @@ async function publishUpdatedRules() {
 
   const pubMsg = await js.publish('DATA.FullRuleSet', sc.encode(flagData))
 
-  await nc.drain();
+}
+
+async function publishSdkKey() {
+  await createJetStreamConnect();
+
+  if (! await streamsCreated()) {
+    await createStreams();
+  }
+  
+  let sdkKey = await fetchUsersSdkKey();
+  sdkKey = JSON.stringify(sdkKey);
+  console.log(`Publishing this msg: ${sdkKey} to this stream: 'KEY.sdkKey'`);
+
+  const pubMsg = await js.publish('KEY.sdkKey', sc.encode(sdkKey));
 }
 
 async function subscribeToRuleSetRequests() {
@@ -45,6 +60,28 @@ async function subscribeToRuleSetRequests() {
   })(sub);
 }
 
+async function subscribeToSdkKeyRequests() {
+  await createJetStreamConnect();
+
+  if (! await streamsCreated()) {
+    await createStreams();
+  }
+
+  const sub = await js.subscribe('KEY.sdkKeyRequest', config('sdkKeyRequest'));
+
+  (async (sub) => {
+    for await (const m of sub) {
+      publishSdkKey();
+      m.ack();
+    };
+  })(sub);
+}
+
+async function initSubscriptions() {
+  await subscribeToRuleSetRequests();
+  await subscribeToSdkKeyRequests();
+}
+
 function config(subject) {
   const opts = consumerOpts();
   opts.durable(subject);
@@ -56,4 +93,5 @@ function config(subject) {
 }
 
 exports.publishUpdatedRules = publishUpdatedRules;
-exports.subscribeToRuleSetRequests = subscribeToRuleSetRequests;
+exports.initSubscriptions = initSubscriptions;
+exports.publishSdkKey = publishSdkKey;

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import * as actions from '../../actions/LogActions';
 import LogEvent from './LogEvent';
-import LogsHeader from './LogsHeader';
+import PageHead from '../sharedComponents/PageHead';
 import { handleErrorRedirect } from '../../lib/helpers';
 
 
@@ -17,9 +17,11 @@ const Logs = () => {
   }, [dispatch]);
 
   if (error.length > 0) { return handleErrorRedirect(error); }
+  const pageDesc = 'View the logs of all flag creations, updates, and deletions.';
+
   return (
     <>
-      <LogsHeader />
+      <PageHead title={'Event Logs'} description={pageDesc} />
       <section className="log-container">
         <ul className="log-tiles px-8 pb-8 divide-y divide-gray-200">
           {logEvents.map(event => <LogEvent {...event} key={event.id} />)}
