@@ -9,8 +9,7 @@ const {
 	updateFlag,
 	deleteFlag
 } = require('../../controllers/flagsController');
-const { createFlagDb, fetchAllFlags } = require('../../lib/db/flags');
-const { publishUpdatedRules } = require('../../lib/nats/nats-pub');
+const { createFlagDb } = require('../../lib/db/flags');
 
 describe('Test Flag Controller Methods', () => {
 	// no-op function for mocks
