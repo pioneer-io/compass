@@ -1,11 +1,12 @@
 const HttpError = require('../models/httpError');
 const { validationResult } = require('express-validator');
-//const { publishUpdatedRules } = require('../lib/nats/nats-pub');
+const { publishSdkKey } = require('../lib/nats/nats-pub');
 const {generateNewSdkKey, fetchUsersSdkKey} = require('../lib/db/sdkKeys');
 
 const getSdkKey = async (req, res, next) => {
     await fetchUsersSdkKey().then(key => {
         const sdkKey = key;
+		publishSdkKey();
         res.json({sdkKey});
     }).catch(err => {
 		console.error(err);
