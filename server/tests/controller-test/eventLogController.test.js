@@ -1,9 +1,7 @@
 // Test eventLog controller methods
 const clearTable = require('../helper/clearTable');
 const {
-	addCreateEventFlag,
 	getEventLog,
-	addUpdateFlagEvent,
 	addDeleteFlagEvent,
 	getEventsForFlag,
 	addCreateFlagEvent
