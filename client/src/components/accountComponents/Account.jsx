@@ -5,18 +5,15 @@ import { fetchSdkKey, createNewSdkKey } from '../../actions/SdkKeyActions';
 
 const Account = () => {
   const dispatch = useDispatch();
+  const sdkKey = useSelector(state => state.sdkKey);
   
   useEffect(() => {
     dispatch(fetchSdkKey());
   })
-
   
   const generateSDKKey = () => {
     dispatch(createNewSdkKey());
-    // generate new and save to DB
-    // then we want to rerender the page with SDK key showing
   }
-  const sdkKey = useSelector(state => state.sdkKey);
 
   const renderText = () => {
     const copyText = (e) =>{

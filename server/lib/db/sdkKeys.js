@@ -10,9 +10,6 @@ async function invalidateCurrentSdkKey() {
 		console.log(err);
 		throw new HttpError('Database error. Failed to invalidate SDK key', 500);
 	});
-
-	const success = result.rowCount === 1
-	console.log(`invalidation success: ${success}`);
 }
 
 async function generateNewSdkKey() {
