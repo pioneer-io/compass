@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import SingleFlagHeader from './SingleFlagHeader';
 import EditFlagForm from './EditFlagForm';
 import DeleteFlagModal from './DeleteFlagModal';
 import SingleFlagLogs from './SingleFlagLogs';
 import Toggle from '../sharedComponents/Toggle';
+import PageHead from '../sharedComponents/PageHead';
 import { updateFlag, getFlag } from '../../actions/FlagActions';
 import { fetchLogs } from '../../actions/LogActions';
 import { parseDate, handleErrorRedirect } from '../../lib/helpers';
@@ -40,7 +40,7 @@ const SingleFlag = (props) => {
       is_active: !flag.is_active,
       rollout: flag.rollout
     };
-    
+
 		dispatch(updateFlag(updatedFlag, true, () => setFlagToggled(!flagToggled)));
 	}
 
@@ -54,7 +54,7 @@ const SingleFlag = (props) => {
 
   return (
     <>
-      <SingleFlagHeader {...flag}/>
+      <PageHead title={'Flag details'} description={''}/>
       <EditFlagForm editingFlag={editingFlag} setEditingFlag={setEditingFlag} flagCurrentTitle={flag.title} flag={flag}/>
       <DeleteFlagModal deletingFlag={deletingFlag} setDeletingFlag={setDeletingFlag} flag={flag} history={props.history}/>
       <div className="bg-white shadow overflow-hidden sm:rounded-lg">
