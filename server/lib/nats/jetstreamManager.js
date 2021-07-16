@@ -12,7 +12,7 @@ async function createStreams() {
 	const jsm = await nc.jetstreamManager();
 
 	jsm.streams.add({ name: 'DATA', subjects: [ 'DATA.*' ], storage: 'memory', max_msgs: 1 }); //max_age: 300000000})
-	Jsm.streams.add({ name: 'KEY', subjects: [ 'KEY.*' ], storage: 'memory', max_msgs: 1 });
+	jsm.streams.add({ name: 'KEY', subjects: [ 'KEY.*' ], storage: 'memory', max_msgs: 1 });
 
 	const dataStreamInfo = await jsm.streams.info('DATA');
 	const keyStreamInfo = await jsm.streams.info('KEY')

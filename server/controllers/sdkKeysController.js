@@ -5,6 +5,7 @@ const {generateNewSdkKey, fetchUsersSdkKey} = require('../lib/db/sdkKeys');
 
 const getSdkKey = async (req, res, next) => {
     await fetchUsersSdkKey().then(key => {
+		console.log('fetching sdk key')
         const sdkKey = key;
 		publishSdkKey();
         res.json({sdkKey});

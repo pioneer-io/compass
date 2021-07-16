@@ -27,7 +27,6 @@ async function publishUpdatedRules() {
 
   const pubMsg = await js.publish('DATA.FullRuleSet', sc.encode(flagData))
 
-  await nc.drain();
 }
 
 async function publishSdkKey() {
@@ -42,7 +41,6 @@ async function publishSdkKey() {
   console.log(`Publishing this msg: ${sdkKey} to this stream: 'KEY.sdkKey'`);
 
   const pubMsg = await js.publish('KEY.sdkKey', sc.encode(sdkKey));
-  await nc.drain();
 }
 
 async function subscribeToRuleSetRequests() {
