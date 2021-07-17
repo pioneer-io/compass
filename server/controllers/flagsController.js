@@ -1,7 +1,7 @@
 const HttpError = require('../models/httpError');
 const { validationResult } = require('express-validator');
 // const { publishUpdatedRules } = require('../lib/nats/nats-pub');
-const jsm = require('../lib/nats/jsm');
+const jsw = require('../lib/nats/jsw');
 const { createFlagDb, fetchAllFlags, fetchFlag, updateFlagDb, deleteFlagDb } = require('../lib/db/flags');
 
 const getFlags = async (req, res, next) => {
@@ -36,7 +36,7 @@ const createFlag = async (req, res, next) => {
 		await createFlagDb(title, description, rollout)
 			.then((flag) => {
 				req.flag = flag;
-				jsm.publishUpdatedRules();
+				jsw.publishUpdatedRules();
 				next();
 			})
 			.catch((err) => {
@@ -71,7 +71,7 @@ const updateFlag = async (req, res, next) => {
 				req.flag = flag;
 				req.toggleChange = toggleChange;
 
-				jsm.publishUpdatedRules();
+				jsw.publishUpdatedRules();
 				next();
 			})
 			.catch(err => {
@@ -90,7 +90,7 @@ const deleteFlag = async (req, res, next) => {
 	await deleteFlagDb(id)
 		.then((deleteSuccess) => {
 			if (deleteSuccess) {
-				jsm.publishUpdatedRules();
+				jsw.publishUpdatedRules();
 
 				res.send({ id });
 			} else {

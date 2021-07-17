@@ -4,21 +4,21 @@ const { connect, AckPolicy, StringCodec, consumerOpts, createInbox } = require('
 const {fetchAllFlags} = require("../db/flags")
 const {fetchUsersSdkKey} = require("../db/sdkKeys")
 
-// extract (if await checkstreams created) create stream
-
-class JetstreamManager {
+class JetstreamWrapper {
   
   constructor() {
     this.sc = StringCodec();
   }
 
-  async init() {
-    // this.nc = await connect({ servers: "localhost:4222" });
-    // this.js = this.nc.jetstream();
+  // create streams, create consumers, create subscriptions
+  async init() { 
     await this._createJetStreamConnect();
-    // if (!await this._checkStreamsCreated()) {
+
+    if (!await this._checkStreamsCreated()) {
       await this._createStreams();
-    // }
+      await this._addConsumers();
+    }
+
     await this.publishUpdatedRules();
 	  await this._initSubscriptions();
   }
@@ -40,8 +40,6 @@ class JetstreamManager {
     for (const info of subscriptionsInfo) {
       await this._subscribeToRequests(info);
     }
-    // await this._subscribeToRuleSetRequests();
-    // await this._subscribeToSdkKeyRequests();
   }
 
   async _subscribeToRequests({streamName, subsetName, handler}) {
@@ -66,8 +64,9 @@ class JetstreamManager {
   }
 
   async _createJetStreamConnect() {
-    this.nc = await connect({ servers: "localhost:4222" });
-    this.js = this.nc.jetstream();
+    this.nc = await connect({ servers: "localhost:4222" }); // put the server address and port in an env variable?
+    this.js = await this.nc.jetstream();
+    this.jsm = await this.nc.jetstreamManager();
   }
 
   async _publish({ data, streamName }) {
@@ -90,21 +89,14 @@ class JetstreamManager {
   // everything below was refactored from jetstreamManager.js
 
   async _createStreams() {
-    // await this._createJetStreamConnect();
-    const jsm = await this.nc.jetstreamManager();
+    this.jsm.streams.add({ name: 'DATA', subjects: [ 'DATA.*' ], storage: 'memory', max_msgs: 1 }); //max_age: 300000000})
+    this.jsm.streams.add({ name: 'KEY', subjects: [ 'KEY.*' ], storage: 'memory', max_msgs: 1 });
 
-    jsm.streams.add({ name: 'DATA', subjects: [ 'DATA.*' ], storage: 'memory', max_msgs: 1 }); //max_age: 300000000})
-    jsm.streams.add({ name: 'KEY', subjects: [ 'KEY.*' ], storage: 'memory', max_msgs: 1 });
-
-    const dataStreamInfo = await jsm.streams.info('DATA');
-    const keyStreamInfo = await jsm.streams.info('KEY')
-
-    await this.addConsumers(jsm);
+    const dataStreamInfo = await this.jsm.streams.info('DATA');
+    const keyStreamInfo = await this.jsm.streams.info('KEY')
   }
 
-  // create streams, create consumers, create subscriptions
-
-  async addConsumers(jsm) {
+  async _addConsumers(jsm) {
     await jsm.consumers.add('DATA', {
       durable_name : 'dataStream',
       ack_policy   : AckPolicy.Explicit
@@ -117,15 +109,9 @@ class JetstreamManager {
   }
 
   async _checkStreamsCreated() {
-    await this._createJetStreamConnect();
-    const jsm = await this.nc.jetstreamManager();
-
-    let data;
-    let key;
-
     try {
-      data = await jsm.streams.info('DATA');
-      key = await jsm.streams.info('KEY');
+      let data = await this.jsm.streams.info('DATA');
+      let key = await this.jsm.streams.info('KEY');
 
       return data.config.name === 'DATA' && key.config.name === 'KEY';
     } catch (err) {
@@ -135,9 +121,5 @@ class JetstreamManager {
   }
 }
 
-
-const jsm = new JetstreamManager();
-module.exports = jsm;
-
-// exports.createStreams = createStreams;
-// exports.streamsCreated = streamsCreated;
+const jsw = new JetstreamWrapper();
+module.exports = jsw;

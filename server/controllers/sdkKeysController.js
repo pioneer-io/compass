@@ -1,7 +1,7 @@
 const HttpError = require('../models/httpError');
 const { validationResult } = require('express-validator');
 // const { publishSdkKey } = require('../lib/nats/nats-pub');
-const jsm = require('../lib/nats/jsm');
+const jsw = require('../lib/nats/jsw');
 const { generateNewSdkKey, fetchUsersSdkKey } = require('../lib/db/sdkKeys');
 
 const getSdkKey = async (req, res, next) => {
@@ -9,7 +9,7 @@ const getSdkKey = async (req, res, next) => {
 		.then((key) => {
 			console.log('fetching sdk key');
 			const sdkKey = key;
-			jsm.publishSdkKey();
+			jsw.publishSdkKey();
 			res.json({ sdkKey });
 		})
 		.catch((err) => {
