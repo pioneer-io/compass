@@ -4,7 +4,7 @@ const HttpError = require('../../models/httpError');
 const CLIENT_CONFIG = {
 	user     : 'postgres',
 	host     : 'localhost',
-	port     : process.env.PORT,
+	port     : process.env.POSTGRES_PORT,
 	database : 'postgres',
 	password : 'secret'
 };
