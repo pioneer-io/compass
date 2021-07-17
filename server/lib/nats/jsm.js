@@ -24,39 +24,32 @@ class JetstreamManager {
   }
 
   async _initSubscriptions() {
-    await this._subscribeToRuleSetRequests();
-    await this._subscribeToSdkKeyRequests();
+    const self = this;
+    const subscriptionsInfo = [
+      {
+        streamName: 'DATA',
+        subsetName: 'FullRuleSetRequest',
+        handler: self.publishUpdatedRules
+      },
+      {
+        streamName: 'KEY',
+        subsetName: 'sdkKeyRequest',
+        handler: self.publishSdkKey
+      }
+    ];
+    for (const info of subscriptionsInfo) {
+      await this._subscribeToRequests(info);
+    }
+    // await this._subscribeToRuleSetRequests();
+    // await this._subscribeToSdkKeyRequests();
   }
 
-  async _subscribeToRuleSetRequests() {
-    // await this._createJetStreamConnect();
-  
-    // if (! await this._checkStreamsCreated()) {
-    //   await this._createStreams();
-    // }
-  
-    const sub = await this.js.subscribe('DATA.FullRuleSetRequest', this._config('FullRuleSetRequest'));
-  
+  async _subscribeToRequests({streamName, subsetName, handler}) {
+    const sub = await this.js.subscribe(`${streamName}.${subsetName}`, this._config(subsetName));
+
     (async (sub) => {
       for await (const m of sub) {
-        this.publishUpdatedRules();
-        m.ack();
-      };
-    })(sub);
-  }
-  
-  async _subscribeToSdkKeyRequests() {
-    // await this._createJetStreamConnect();
-  
-    // if (! await this._checkStreamsCreated()) {
-    //   await this._createStreams();
-    // }
-  
-    const sub = await this.js.subscribe('KEY.sdkKeyRequest', this._config('sdkKeyRequest'));
-  
-    (async (sub) => {
-      for await (const m of sub) {
-        this.publishSdkKey();
+        handler();
         m.ack();
       };
     })(sub);
@@ -78,12 +71,6 @@ class JetstreamManager {
   }
 
   async publishUpdatedRules() {
-    // await this._createJetStreamConnect();
-
-    // if (! await this._checkStreamsCreated()) {
-    //   await this._createStreams();
-    // }
-
     let flagData = await fetchAllFlags();
     flagData = JSON.stringify(flagData);
     console.log(`Publishing this msg: ${(flagData)} to this stream: 'DATA.FullRuleSet'`)
@@ -93,12 +80,6 @@ class JetstreamManager {
   }
 
   async publishSdkKey() {
-    // await this._createJetStreamConnect();
-
-    // if (! await this._checkStreamsCreated()) {
-    //   await this._createStreams();
-    // }
-    
     let sdkKey = await fetchUsersSdkKey();
     sdkKey = JSON.stringify(sdkKey);
     console.log(`Publishing this msg: ${sdkKey} to this stream: 'KEY.sdkKey'`);
