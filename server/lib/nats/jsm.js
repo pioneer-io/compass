@@ -49,7 +49,7 @@ class JetstreamManager {
 
     (async (sub) => {
       for await (const m of sub) {
-        handler();
+        handler.call(this);
         m.ack();
       };
     })(sub);
@@ -70,21 +70,21 @@ class JetstreamManager {
     this.js = this.nc.jetstream();
   }
 
+  async _publish({ data, streamName }) {
+    const json = JSON.stringify(data);
+    const encodedData = this.sc.encode(json);
+    console.log(`Publishing this msg: ${json} to this stream: '${streamName}'`)
+    const pubMsg = await this.js.publish(streamName, encodedData)
+  }
+
   async publishUpdatedRules() {
     let flagData = await fetchAllFlags();
-    flagData = JSON.stringify(flagData);
-    console.log(`Publishing this msg: ${(flagData)} to this stream: 'DATA.FullRuleSet'`)
-
-    const pubMsg = await this.js.publish('DATA.FullRuleSet', this.sc.encode(flagData))
-
+    await this._publish({data: flagData, streamName: 'DATA.FullRuleSet'});
   }
 
   async publishSdkKey() {
     let sdkKey = await fetchUsersSdkKey();
-    sdkKey = JSON.stringify(sdkKey);
-    console.log(`Publishing this msg: ${sdkKey} to this stream: 'KEY.sdkKey'`);
-
-    const pubMsg = await this.js.publish('KEY.sdkKey', this.sc.encode(sdkKey));
+    await this._publish({ data: sdkKey, streamName: 'KEY.sdkKey' });
   }
 
   // everything below was refactored from jetstreamManager.js
@@ -101,6 +101,8 @@ class JetstreamManager {
 
     await this.addConsumers(jsm);
   }
+
+  // create streams, create consumers, create subscriptions
 
   async addConsumers(jsm) {
     await jsm.consumers.add('DATA', {
