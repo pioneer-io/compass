@@ -4,7 +4,7 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"test": "set PORT=5430 && jest --runInBand --silent",
+		"test": "PORT=5430 jest --runInBand --forceExit --silent",
 		"start": "node index.js",
 		"start-watch": "nodemon index.js",
 		"dev": "set PORT=5432 && concurrently \"npm run start-watch\" \"cd ../client && npm start\""
