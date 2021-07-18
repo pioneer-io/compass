@@ -7,8 +7,24 @@ on:
     branches: [main]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    env:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
 
     strategy:
       matrix:
@@ -25,7 +41,16 @@ jobs:
       - run: |
           cd ./server
           npm install
+
+      - name: Setup Database
+        env:
+          PGHOST: localhost
+          PGUSER: postgres
+          PGPASSWORD: postgres
+
       - run: npm run build --if-present
-      - run: |
+
+      - name: Run Tests
+        run: |
           cd ./server
           npm test
