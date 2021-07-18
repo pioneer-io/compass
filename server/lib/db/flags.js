@@ -24,7 +24,7 @@ async function createFlagWithDefaultDescription(title, rollout) {
 async function createFlagDb(title, description, rollout) {
 	let result;
 
-	if (description.trim().length < 1) {
+	if (!description || description.trim().length < 1) {
 		result = await createFlagWithDefaultDescription(title, rollout).catch((err) => {
 			console.error(err);
 			throw new HttpError(`Database error. Creation failed.`, 500);

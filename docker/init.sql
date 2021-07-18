@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS Logs (
   flag_id int NOT NULL,
   title varchar(100) NOT NULL,
   description varchar(100) NOT NULL,
-  created_at timestamp DEFAULT NOW(),
+  created_at timestamp with time zone NOT NULL DEFAULT current_timestamp,
   PRIMARY KEY (id)
 );
 
