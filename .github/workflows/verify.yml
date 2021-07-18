@@ -18,6 +18,9 @@ jobs:
       - uses: actions/checkout@v2
       - name: build docker compose
         run: docker-compose -f ./docker/docker-compose.yml up -d
+      - name: start nats server
+        uses: docker://nats
+        run: docker run -d --name nats-main -p 4222:4222 -p 6222:6222 -p 8222:8222 nats --js
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
