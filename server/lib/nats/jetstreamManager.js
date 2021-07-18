@@ -44,8 +44,7 @@ async function streamsCreated() {
 		key = await jsm.streams.info('KEY');
 
 		return data.config.name === 'DATA' && key.config.name === 'KEY';
-	} catch (err) {
-		console.log('stream not created.', err);
+	} catch {
 		return false;
 	}
 }
