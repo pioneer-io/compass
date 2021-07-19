@@ -1,7 +1,7 @@
 const express = require('express');
 const HttpError = require('./models/httpError');
 const routes = require('./routes/api');
-// const { publishUpdatedRules, initSubscriptions } = require('./lib/nats/nats-pub');
+const rateLimit = require("express-rate-limit");
 const jsw = require('./lib/nats/jsw');
 const {fetchUsersSdkKey} = require('./lib/db/sdkKeys');
 require('dotenv').config();
@@ -9,6 +9,12 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+const limiter = rateLimit({
+  windowMs: 10 * 60 * 1000, // 10 minutes
+  max: 200 // limit each IP to 100 requests per windowMs
+});
+
+app.use(limiter);
 app.use((req, res, next) => {
 	res.header('Access-Control-Allow-Origin', '*');
 	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
