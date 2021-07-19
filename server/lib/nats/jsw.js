@@ -1,5 +1,3 @@
-// refactored into an oop (nats singleton)
-
 const { connect, AckPolicy, StringCodec, consumerOpts, createInbox } = require('nats');
 const { fetchAllFlags } = require('../db/flags');
 const { fetchUsersSdkKey } = require('../db/sdkKeys');
@@ -12,7 +10,9 @@ class JetstreamWrapper {
 
 	// create streams, create consumers, create subscriptions
 	async init() {
-		await this._createJetStreamConnect();
+		await this._createJetStreamConnect().catch(err => {
+			throw Error(err, "Error initializing JetStream connection");
+		});
 
 		if (!await this._checkStreamsCreated()) {
 			await this._createStreams();
@@ -64,9 +64,11 @@ class JetstreamWrapper {
 	}
 
 	async _createJetStreamConnect() {
-		this.nc = await connect({ servers: 'localhost:4222' }).catch(err => console.error(err));
+		this.nc = await connect({ servers: 'localhost:4222' }).catch(err => {
+			throw Error(err, "Error connecting to NATS")
+		});
 		// put the server address and port in an env variable?
-		if (!this.nc) { return }; // if this.nc is undefined, don't run next two lines
+
 		this.js = await this.nc.jetstream().catch(err => console.error(err));
 		this.jsm = await this.nc.jetstreamManager().catch(err => console.error(err));
 	}

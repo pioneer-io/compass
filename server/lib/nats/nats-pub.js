@@ -15,7 +15,9 @@ async function createJetStreamConnect() {
 
 // publishing to jetstream
 async function publishUpdatedRules() {
-    await createJetStreamConnect();
+    await createJetStreamConnect().catch(err => {
+      throw new Error(err, "JetStream connect failed");
+    });
 
   if (! await streamsCreated()) {
     await createStreams();
@@ -35,7 +37,7 @@ async function publishSdkKey() {
   if (! await streamsCreated()) {
     await createStreams();
   }
-  
+
   let sdkKey = await fetchUsersSdkKey();
   sdkKey = JSON.stringify(sdkKey);
   console.log(`Publishing this msg: ${sdkKey} to this stream: 'KEY.sdkKey'`);
