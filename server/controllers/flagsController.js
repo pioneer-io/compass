@@ -1,6 +1,5 @@
 const HttpError = require('../models/httpError');
 const { validationResult } = require('express-validator');
-// const { publishUpdatedRules } = require('../lib/nats/nats-pub');
 const jsw = require('../lib/nats/jsw');
 const { createFlagDb, fetchAllFlags, fetchFlag, updateFlagDb, deleteFlagDb } = require('../lib/db/flags');
 
