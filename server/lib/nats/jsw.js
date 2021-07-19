@@ -64,9 +64,11 @@ class JetstreamWrapper {
 	}
 
 	async _createJetStreamConnect() {
-		this.nc = await connect({ servers: 'localhost:4222' }); // put the server address and port in an env variable?
-		this.js = await this.nc.jetstream();
-		this.jsm = await this.nc.jetstreamManager();
+		this.nc = await connect({ servers: 'localhost:4222' }).catch(err => console.error(err));
+		// put the server address and port in an env variable?
+		if (!this.nc) { return }; // if this.nc is undefined, don't run next two lines
+		this.js = await this.nc.jetstream().catch(err => console.error(err));
+		this.jsm = await this.nc.jetstreamManager().catch(err => console.error(err));
 	}
 
 	async _publish({ data, streamName }) {
@@ -85,8 +87,6 @@ class JetstreamWrapper {
 		let fetchedSdkKey = await fetchUsersSdkKey();
 		await this._publish({ data: fetchedSdkKey, streamName: sdkKey.fullSubject });
 	}
-
-	// everything below was refactored from jetstreamManager.js
 
 	async _createStreams() {
 		this.jsm.streams.add({
@@ -125,7 +125,6 @@ class JetstreamWrapper {
 
 			return data.config.name === ruleset.streamName && key.config.name === sdkKey.streamName;
 		} catch (err) {
-			//console.log('stream not created.', err);
 			return false;
 		}
 	}
