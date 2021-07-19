@@ -97,12 +97,12 @@ class JetstreamWrapper {
   }
 
   async _addConsumers(jsm) {
-    await jsm.consumers.add('DATA', {
+    await this.jsm.consumers.add('DATA', {
       durable_name : 'dataStream',
       ack_policy   : AckPolicy.Explicit
     });
 
-    await jsm.consumers.add('KEY', {
+    await this.jsm.consumers.add('KEY', {
       durable_name : 'keyStream',
       ack_policy   : AckPolicy.Explicit
     });
@@ -114,8 +114,8 @@ class JetstreamWrapper {
       let key = await this.jsm.streams.info('KEY');
 
       return data.config.name === 'DATA' && key.config.name === 'KEY';
-    } catch (err) {
-      console.log('stream not created.', err);
+    } catch {
+      //console.log('stream not created.', err);
       return false;
     }
   }
