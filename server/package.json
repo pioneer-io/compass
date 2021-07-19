@@ -7,7 +7,8 @@
 		"test": "PORT=5430 jest --runInBand --forceExit --silent",
 		"start": "node index.js",
 		"start-watch": "nodemon index.js",
-		"dev": "set PORT=5432 && concurrently \"npm run start-watch\" \"cd ../client && npm start\""
+		"dev": "set POSTGRES_PORT=5432 && concurrently \"npm run start-watch\" \"cd ../client && npm start\"",
+		"server": "set POSTGRES_PORT=5432 && npm run start-watch"
 	},
 	"author": "",
 	"license": "ISC",
