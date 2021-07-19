@@ -27,15 +27,11 @@ class JetstreamWrapper {
 		const self = this;
 		const subscriptionsInfo = [
 			{
-				// streamName : 'DATA',
-				// subsetName : 'FullRuleSetRequest',
 				streamName : ruleset.streamName,
 				subsetName : ruleset.subsetNameRequest,
 				handler    : self.publishUpdatedRules
 			},
 			{
-				// streamName : 'KEY',
-				// subsetName : 'sdkKeyRequest',
 				streamName : sdkKey.streamName,
 				subsetName : sdkKey.subsetNameRequest,
 				handler    : self.publishSdkKey
@@ -82,50 +78,40 @@ class JetstreamWrapper {
 
 	async publishUpdatedRules() {
 		let flagData = await fetchAllFlags();
-		// await this._publish({ data: flagData, streamName: 'DATA.FullRuleSet' });
 		await this._publish({ data: flagData, streamName: ruleset.fullSubject });
 	}
 
 	async publishSdkKey() {
 		let fetchedSdkKey = await fetchUsersSdkKey();
-		// await this._publish({ data: sdkKey, streamName: 'KEY.sdkKey' });
 		await this._publish({ data: fetchedSdkKey, streamName: sdkKey.fullSubject });
 	}
 
 	// everything below was refactored from jetstreamManager.js
 
 	async _createStreams() {
-		// this.jsm.streams.add({ name: 'DATA', subjects: [ 'DATA.*' ], storage: 'memory', max_msgs: 1 }); //max_age: 300000000})
-		// this.jsm.streams.add({ name: 'KEY', subjects: [ 'KEY.*' ], storage: 'memory', max_msgs: 1 });
 		this.jsm.streams.add({
 			name     : ruleset.streamName,
-			// subjects : [ 'DATA.*' ],
 			subjects : [ `${ruleset.streamName}.*` ],
 			storage  : 'memory',
 			max_msgs : 1
 		}); //max_age: 300000000})
 		this.jsm.streams.add({
 			name     : sdkKey.streamName,
-			// subjects : [ 'KEY.*' ],
 			subjects : [ `${sdkKey.streamName}.*` ],
 			storage  : 'memory',
 			max_msgs : 1
 		});
 
-		// const dataStreamInfo = await this.jsm.streams.info('DATA');
-		// const keyStreamInfo = await this.jsm.streams.info('KEY');
 		const dataStreamInfo = await this.jsm.streams.info(ruleset.streamName);
 		const keyStreamInfo = await this.jsm.streams.info(sdkKey.streamName);
 	}
 
 	async _addConsumers(jsm) {
-		// await this.jsm.consumers.add('DATA', {
 		await this.jsm.consumers.add(ruleset.streamName, {
 			durable_name : 'dataStream',
 			ack_policy   : AckPolicy.Explicit
 		});
 
-		// await this.jsm.consumers.add('KEY', {
 		await this.jsm.consumers.add(sdkKey.streamName, {
 			durable_name : 'keyStream',
 			ack_policy   : AckPolicy.Explicit
@@ -134,12 +120,9 @@ class JetstreamWrapper {
 
 	async _checkStreamsCreated() {
 		try {
-			// let data = await this.jsm.streams.info('DATA');
-			// let key = await this.jsm.streams.info('KEY');
 			let data = await this.jsm.streams.info(ruleset.streamName);
 			let key = await this.jsm.streams.info(sdkKey.streamName);
 
-			// return data.config.name === 'DATA' && key.config.name === 'KEY';
 			return data.config.name === ruleset.streamName && key.config.name === sdkKey.streamName;
 		} catch (err) {
 			//console.log('stream not created.', err);
