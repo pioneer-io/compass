@@ -1,5 +1,12 @@
 version: "3.2"
 services:
+  nats:
+    image: nats:latest
+    container_name: nats-main
+    restart: always
+    ports:
+      - 4222:4222
+
   postgres:
     image: postgres:latest
     container_name: feature-flag-postgres
