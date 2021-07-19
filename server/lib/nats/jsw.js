@@ -77,17 +77,23 @@ class JetstreamWrapper {
 		const json = JSON.stringify(data);
 		const encodedData = this.sc.encode(json);
 		console.log(`Publishing this msg: ${json} to this stream: '${streamName}'`);
-		const pubMsg = await this.js.publish(streamName, encodedData);
+		const pubMsg = await this.js.publish(streamName, encodedData).catch(err => {
+			throw Error(err, "Publish message failed. There is no connected stream.");
+		});
 	}
 
 	async publishUpdatedRules() {
 		let flagData = await fetchAllFlags();
-		await this._publish({ data: flagData, streamName: ruleset.fullSubject });
+		await this._publish({ data: flagData, streamName: ruleset.fullSubject }).catch(err => {
+			throw Error(err, "Cannot publish; there is no stream connected.");
+		});
 	}
 
 	async publishSdkKey() {
 		let fetchedSdkKey = await fetchUsersSdkKey();
-		await this._publish({ data: fetchedSdkKey, streamName: sdkKey.fullSubject });
+		await this._publish({ data: fetchedSdkKey, streamName: sdkKey.fullSubject }).catch(err => {
+			throw Error(err, "Cannot publish; there is no stream connected.");
+		});
 	}
 
 	async _createStreams() {
@@ -96,7 +102,7 @@ class JetstreamWrapper {
 			subjects : [ `${ruleset.streamName}.*` ],
 			storage  : 'memory',
 			max_msgs : 1
-		}); //max_age: 300000000})
+		});
 		this.jsm.streams.add({
 			name     : sdkKey.streamName,
 			subjects : [ `${sdkKey.streamName}.*` ],

@@ -35,7 +35,7 @@ const createFlag = async (req, res, next) => {
 		await createFlagDb(title, description, rollout)
 			.then((flag) => {
 				req.flag = flag;
-				jsw.publishUpdatedRules();
+				jsw.publishUpdatedRules().catch(err => console.error("There was an error publishing the updated ruleset to NATS."));
 				next();
 			})
 			.catch((err) => {
@@ -70,7 +70,7 @@ const updateFlag = async (req, res, next) => {
 				req.flag = flag;
 				req.toggleChange = toggleChange;
 
-				jsw.publishUpdatedRules();
+				jsw.publishUpdatedRules().catch(err => console.error("There was an error publishing the updated ruleset to NATS"));
 				next();
 			})
 			.catch(err => {
@@ -89,7 +89,7 @@ const deleteFlag = async (req, res, next) => {
 	await deleteFlagDb(id)
 		.then((deleteSuccess) => {
 			if (deleteSuccess) {
-				jsw.publishUpdatedRules();
+				jsw.publishUpdatedRules().catch(err => console.error("There was an error publishing the updated ruleset to NATS"));
 
 				res.send({ id });
 			} else {

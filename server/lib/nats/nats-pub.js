@@ -27,7 +27,9 @@ async function publishUpdatedRules() {
   flagData = JSON.stringify(flagData);
   console.log(`Publishing this msg: ${(flagData)} to this stream: 'DATA.FullRuleSet'`)
 
-  const pubMsg = await js.publish('DATA.FullRuleSet', sc.encode(flagData))
+  const pubMsg = await js.publish('DATA.FullRuleSet', sc.encode(flagData)).catch(err => {
+    throw Error(err, "Cannot publish flag data. No connected Jetstream to publish to.");
+  });
 
 }
 
@@ -42,7 +44,9 @@ async function publishSdkKey() {
   sdkKey = JSON.stringify(sdkKey);
   console.log(`Publishing this msg: ${sdkKey} to this stream: 'KEY.sdkKey'`);
 
-  const pubMsg = await js.publish('KEY.sdkKey', sc.encode(sdkKey));
+  const pubMsg = await js.publish('KEY.sdkKey', sc.encode(sdkKey)).catch(err => {
+    throw Error(err, "Cannot publish SDK key; no JetStream connected.");
+  });
 }
 
 async function subscribeToRuleSetRequests() {
