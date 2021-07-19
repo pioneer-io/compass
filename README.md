@@ -41,6 +41,7 @@ Example response:
             "description": "Redirects users to the login microservice",
             "is_active": false,
             "version": 1,
+            "rollout": 0,
             "updated_at": "2021-07-12T18:02:12.439Z",
             "created_at": "2021-07-12T18:02:12.439Z"
         },
@@ -50,6 +51,7 @@ Example response:
             "description": "log this event, app!",
             "is_active": false,
             "version": 1,
+            "rollout": 60,
             "updated_at": "+053499-03-12T04:49:28.999Z",
             "created_at": "2021-07-12T18:02:32.081Z"
         }
@@ -66,23 +68,23 @@ Example response:
 ```
 {
     "flag": {
-        "id": 34,
-        "title": "this is a testing flag!",
-        "description": "log this event, app!",
+        "id": 1,
+        "title": "LOGIN_MICROSERVICE",
+        "description": "Redirects users to the login microservice",
         "is_active": false,
         "version": 1,
-        "updated_at": "+053499-03-12T04:49:28.999Z",
-        "created_at": "2021-07-12T18:02:32.081Z"
+        "rollout": 0,
+        "updated_at": "2021-07-18T16:18:42.369Z",
+        "created_at": "2021-07-18T16:18:42.369Z"
     },
     "eventLog": [
         {
             "id": 1,
-            "title": "this is a testing flag!",
-            "flag_id": 34,
-            "description": "Flag created.",
-            "created_at": "2021-07-12T18:02:32.098Z"
-        },
-        // .. etc
+            "flag_id": 1,
+            "title": "LOGIN_MICROSERVICE",
+            "description": "Created new flag: LOGIN_MICROSERVICE",
+            "created_at": "2021-07-18T16:18:42.379Z"
+        }
     ]
 }
 ```
@@ -96,8 +98,9 @@ Example request:
 ```
 {
     "flag": {
-        "title": "new flag",
-        "description": "this is my newest flag!"
+        "title": "testing_flag",
+        "rollout": 5,
+        "description": "testing out flag creation"
     }
 }
 ```
@@ -107,13 +110,14 @@ Example response:
 ```
 {
     "flag": {
-        "id": 35,
-        "title": "new flag",
-        "description": "this is my newest flag!",
+        "id": 37,
+        "title": "testing_flag",
+        "description": "testing out flag creation",
         "is_active": false,
         "version": 1,
-        "updated_at": "2021-07-12T22:55:14.699Z",
-        "created_at": "2021-07-12T22:55:14.699Z"
+        "rollout": 5,
+        "updated_at": "2021-07-19T16:42:28.483Z",
+        "created_at": "2021-07-19T16:42:28.483Z"
     }
 }
 ```
@@ -129,6 +133,7 @@ Example request:
     "flag": {
         "title": "new title",
         "is_active": false,
+        "rollout": 55,
         "description": "adding a more descriptive text here.."
     }
 }
@@ -144,6 +149,7 @@ Example response:
         "description": "adding a more descriptive text here..",
         "is_active": false,
         "version": 1,
+        "rollout": 55,
         "updated_at": "+053499-06-18T05:00:09.999Z",
         "created_at": "2021-07-12T18:02:32.081Z"
     }
@@ -186,3 +192,7 @@ Example response:
     },
 ]
 ```
+
+### Tests
+
+To run tests, run `npm test` from the `/server` directory.
