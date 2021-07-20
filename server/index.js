@@ -34,5 +34,5 @@ app.use((err, req, res, next) => {
 
 app.listen(PORT, async () => {
 	console.log(`Server listening on ${PORT}`);
-	await jsw.init().catch(err => console.error("NATS connection failed"));
+	await jsw.init().catch(err => console.error("NATS connection failed", err));
 });

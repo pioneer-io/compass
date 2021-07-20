@@ -10,9 +10,7 @@ class JetstreamWrapper {
 
 	// create streams, create consumers, create subscriptions
 	async init() {
-		await this._createJetStreamConnect().catch(err => {
-			throw Error(err, "Error initializing JetStream connection");
-		});
+		await this._createJetStreamConnect();
 
 		if (!await this._checkStreamsCreated()) {
 			await this._createStreams();
@@ -69,7 +67,7 @@ class JetstreamWrapper {
 		});
 		// put the server address and port in an env variable?
 
-		this.js = await this.nc.jetstream().catch(err => console.error(err));
+		this.js = this.nc.jetstream()
 		this.jsm = await this.nc.jetstreamManager().catch(err => console.error(err));
 	}
 
