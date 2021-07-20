@@ -8,7 +8,9 @@ async function createJetStreamConnect() {
 }
 
 async function createStreams() {
-	await createJetStreamConnect();
+	await createJetStreamConnect().catch(err => {
+		throw Error(err, "NATS connection failed")
+	});
 	const jsm = await nc.jetstreamManager();
 
 	jsm.streams.add({ name: 'DATA', subjects: [ 'DATA.*' ], storage: 'memory', max_msgs: 1 }); //max_age: 300000000})
@@ -33,7 +35,10 @@ async function addConsumers(jsm) {
 }
 
 async function streamsCreated() {
-	await createJetStreamConnect();
+	await createJetStreamConnect().catch(err => {
+		throw new Error(err)
+	});
+	
 	const jsm = await nc.jetstreamManager();
 
 	let data;

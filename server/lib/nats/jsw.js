@@ -1,5 +1,3 @@
-// refactored into an oop (nats singleton)
-
 const { connect, AckPolicy, StringCodec, consumerOpts, createInbox } = require('nats');
 const { fetchAllFlags } = require('../db/flags');
 const { fetchUsersSdkKey } = require('../db/sdkKeys');
@@ -64,29 +62,37 @@ class JetstreamWrapper {
 	}
 
 	async _createJetStreamConnect() {
-		this.nc = await connect({ servers: 'localhost:4222' }); // put the server address and port in an env variable?
-		this.js = await this.nc.jetstream();
-		this.jsm = await this.nc.jetstreamManager();
+		this.nc = await connect({ servers: 'localhost:4222' }).catch(err => {
+			throw Error(err, "Error connecting to NATS")
+		});
+		// put the server address and port in an env variable?
+
+		this.js = this.nc.jetstream()
+		this.jsm = await this.nc.jetstreamManager().catch(err => console.error(err));
 	}
 
 	async _publish({ data, streamName }) {
 		const json = JSON.stringify(data);
 		const encodedData = this.sc.encode(json);
 		console.log(`Publishing this msg: ${json} to this stream: '${streamName}'`);
-		const pubMsg = await this.js.publish(streamName, encodedData);
+		const pubMsg = await this.js.publish(streamName, encodedData).catch(err => {
+			throw Error(err, "Publish message failed. There is no connected stream.");
+		});
 	}
 
 	async publishUpdatedRules() {
 		let flagData = await fetchAllFlags();
-		await this._publish({ data: flagData, streamName: ruleset.fullSubject });
+		await this._publish({ data: flagData, streamName: ruleset.fullSubject }).catch(err => {
+			throw Error(err, "Cannot publish; there is no stream connected.");
+		});
 	}
 
 	async publishSdkKey() {
 		let fetchedSdkKey = await fetchUsersSdkKey();
-		await this._publish({ data: fetchedSdkKey, streamName: sdkKey.fullSubject });
+		await this._publish({ data: fetchedSdkKey, streamName: sdkKey.fullSubject }).catch(err => {
+			throw Error(err, "Cannot publish; there is no stream connected.");
+		});
 	}
-
-	// everything below was refactored from jetstreamManager.js
 
 	async _createStreams() {
 		this.jsm.streams.add({
@@ -94,7 +100,7 @@ class JetstreamWrapper {
 			subjects : [ `${ruleset.streamName}.*` ],
 			storage  : 'memory',
 			max_msgs : 1
-		}); //max_age: 300000000})
+		});
 		this.jsm.streams.add({
 			name     : sdkKey.streamName,
 			subjects : [ `${sdkKey.streamName}.*` ],
@@ -125,7 +131,6 @@ class JetstreamWrapper {
 
 			return data.config.name === ruleset.streamName && key.config.name === sdkKey.streamName;
 		} catch (err) {
-			//console.log('stream not created.', err);
 			return false;
 		}
 	}
