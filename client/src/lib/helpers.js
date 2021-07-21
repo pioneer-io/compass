@@ -18,3 +18,24 @@ export const handleErrorRedirect = (error) => {
 		return <Redirect to="/error" />
 	}
 }
+
+const filter = (logEvents, subject) => {
+  return logEvents.filter(event => event.description.toLowerCase().includes(subject));
+};
+
+export const filterLogEvents = (logEvents, filterBy) => {
+  switch(filterBy) {
+    case 'all':
+      return logEvents;
+    case 'created':
+      return filter(logEvents, 'created');
+    case 'updated':
+      return filter(logEvents, 'edited');
+    case 'deleted':
+      return filter(logEvents, 'deleted');
+    case 'toggled on/off':
+      return filter(logEvents, 'toggled');
+    default:
+      return logEvents;
+  }
+}
