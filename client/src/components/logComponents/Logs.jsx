@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import * as actions from '../../actions/LogActions';
 import LogEvent from './LogEvent';
+import LogFilter from './LogFilter';
 import PageHead from '../sharedComponents/PageHead';
 import { handleErrorRedirect } from '../../lib/helpers';
 
@@ -23,6 +24,7 @@ const Logs = () => {
     <>
       <PageHead title={'Event Logs'} description={pageDesc} />
       <section className="log-container">
+        <LogFilter />
         <ul className="log-tiles px-8 pb-8 divide-y divide-gray-200">
           {logEvents.map(event => <LogEvent {...event} key={event.id} />)}
         </ul>
