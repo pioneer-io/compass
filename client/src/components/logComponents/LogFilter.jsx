@@ -1,10 +1,8 @@
 import React from 'react';
 import LogFilterOption from './LogFilterOption';
 
-const LogFilter = ({handleFilterClick}) => {
+const LogFilter = ({handleFilterClick, selected}) => {
   const filterOptions = ['all', 'created', 'toggled on/off', 'updated', 'deleted'];
-  const selected = 'all';
-
 
   return(
     <fieldset>

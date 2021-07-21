@@ -14,7 +14,7 @@ const limiter = rateLimit({
   max: 200 // limit each IP to 200 requests per windowMs
 });
 
-//app.use(limiter);
+app.use(limiter);
 app.use((req, res, next) => {
 	res.header('Access-Control-Allow-Origin', '*');
 	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');

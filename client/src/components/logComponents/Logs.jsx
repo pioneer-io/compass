@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import * as actions from '../../actions/LogActions';
-import LogEvent from './LogEvent';
+import LogList from './LogList';
 import LogFilter from './LogFilter';
 import PageHead from '../sharedComponents/PageHead';
 import { handleErrorRedirect, filterLogEvents } from '../../lib/helpers';
@@ -10,15 +10,14 @@ const Logs = () => {
   // reverse so most recent events are displayed first
   const logEvents = useSelector(state => state.eventLogs).reverse();
   const error = useSelector(state => state.errors);
-  const dispatch = useDispatch();
+  const [filter, setFilter] = useState('all');
 
-  let filteredLogEvents = logEvents; // no filter initially
+  const dispatch = useDispatch();
 
   const onFilterClick = (e) => {
     const optId = e.target.id.split('-');
     const filterBy = optId[optId.length-1]
-    filteredLogEvents = filterLogEvents(logEvents, filterBy);
-    console.log("filtered log events: ", filteredLogEvents);
+    setFilter(filterBy);
   }
 
   useEffect(() => {
@@ -32,10 +31,8 @@ const Logs = () => {
     <>
       <PageHead title={'Event Logs'} description={pageDesc} />
       <section className="log-container">
-        <LogFilter handleFilterClick={onFilterClick} />
-        <ul className="log-tiles px-8 pb-8 divide-y divide-gray-200">
-          {filteredLogEvents.map(event => <LogEvent {...event} key={event.id} />)}
-        </ul>
+        <LogFilter handleFilterClick={onFilterClick} selected={filter} />
+        <LogList filteredLogs={filterLogEvents(logEvents, filter)} />
       </section>
     </>
   );
