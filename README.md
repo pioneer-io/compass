@@ -12,6 +12,8 @@ Ensure Docker is running then `docker pull nats` to pull nats server.
 
 To run server in detached mode: `docker run -d --name nats-main -p 4222:4222 -p 6222:6222 -p 8222:8222 nats --js`
 
+Note that Pioneer uses Nats JetStream, hence the `--js` flag above.
+
 To stop the docker container when finished with server:
 
 ```
