@@ -8,7 +8,7 @@ const getSdkKey = async (req, res, next) => {
 		.then((key) => {
 			console.log('fetching sdk key');
 			const sdkKey = key;
-			publishSdkKey().catch(err => console.error("There was an error publishing the new sdkKey to NATS"));
+			publishSdkKey();
 			res.json({ sdkKey });
 		})
 		.catch((err) => {
