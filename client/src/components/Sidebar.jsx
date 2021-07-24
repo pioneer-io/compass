@@ -11,7 +11,7 @@ const Sidebar = () => {
       <div className="flex flex-col h-0 flex-1 bg-gray-800">
         <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
           <div className=" items-center flex-shrink-0 px-4">
-              { <img className="flex items-center" src="https://raw.githubusercontent.com/pioneer-io/compass/add-logo/client/public/images/pioneer_color%20logo%20for%20dark%20bg.png" alt="pioneer logo"></img> }
+              <img className="flex items-center" src="https://raw.githubusercontent.com/pioneer-io/compass/add-logo/client/public/images/pioneer_color%20logo%20for%20dark%20bg.png" alt="pioneer logo"></img>
           </div>
           <nav className='mt-5 flex-1 px-2 space-y-1 bg-gray-800'>
             <a href="/flags" className={`${(isCurrentPage('/flags') || isCurrentPage('/')) ? 'bg-gray-900' : 'bg-gray-800'} text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md`}>
