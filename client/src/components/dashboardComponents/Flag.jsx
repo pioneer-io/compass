@@ -19,10 +19,10 @@ const Flag = ({ id, title, description, is_active, created_at, updated_at, rollo
 				<h3 className="text-2xl leading-10 font-medium text-green-700">{title}</h3>
 			</a>
 			<Toggle toggledOn={is_active} _id={id} handleClickToggle={handleClickToggle} />
-			<p>Description: {truncate(description)}</p>
-			<p>Current rollout: {rollout}%</p>
-			<p>Created: {parseDate(created_at)}</p>
-			<p>Last updated: {parseDate(updated_at)}</p>
+			<p><b>Description:</b> {truncate(description)}</p>
+			<p><b>Current rollout:</b> {rollout}%</p>
+			<p><b>Created:</b> {parseDate(created_at)}</p>
+			<p><b>Last updated:</b> {parseDate(updated_at)}</p>
 		</li>
 	);
 };
