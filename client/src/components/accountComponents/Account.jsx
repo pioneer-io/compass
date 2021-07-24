@@ -39,7 +39,7 @@ const Account = () => {
       <PageHead title={'Your Account'} description={pageDesc} />
       <div className="p-8 max-w-7xl mx-auto sm:px-6 lg:px-8">
         <h3 className="mb-2 text-xl text-green-700">Your SDK key</h3>
-        {renderText()}
+        <p className="bg-gray-200 rounded h-10 w-max p-2.5">{renderText()}</p>
       </div>
       <div className="clear-both py-10 mb-10">
         <button
