@@ -21,8 +21,8 @@ const Flag = ({ id, title, description, is_active, created_at, updated_at, rollo
 			<Toggle toggledOn={is_active} _id={id} handleClickToggle={handleClickToggle} />
 			<p><b>Description:</b> {truncate(description)}</p>
 			<p><b>Current rollout:</b> {rollout}%</p>
-			<p><b>Created:</b> {parseDate(created_at)}</p>
-			<p><b>Last updated:</b> {parseDate(updated_at)}</p>
+			{/*  <p><b>Created:</b> {parseDate(created_at)}</p> */}
+			{/* <p><b>Last updated:</b> {parseDate(updated_at)}</p> */}
 		</li>
 	);
 };
