@@ -18,14 +18,22 @@ module.exports = {
 
       black: colors.black,
       white: colors.white,
-      gray: colors.coolGray,
-      red: colors.red,
+      gray: colors.coolGray,    
       yellow: colors.amber,
       green: colors.emerald,
       blue: colors.blue,
       indigo: colors.indigo,
       purple: colors.violet,
       pink: colors.pink,
+      pioneer_red: {
+        DEFAULT: '#f48883',
+      },
+      pioneer_green: {
+        DEFAULT: '#9ebeb9',
+      },
+      pioneer_blue: {
+        DEFAULT: '#1a4451',
+      },
     },
     spacing: {
       px: '1px',
