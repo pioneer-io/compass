@@ -1,4 +1,5 @@
 const colors = require('tailwindcss/colors');
+const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
 	purge        : [],
@@ -11,6 +12,12 @@ module.exports = {
 			lg    : '1024px',
 			xl    : '1280px',
 			'2xl' : '1536px'
+		},
+		extend                   : {
+			fontFamily : {
+				header : [ 'Rubik', 'ui-sans-serif', 'system-ui', 'Roboto', 'Arial', '"Noto Sans"' ],
+				body   : [ 'Poppins', 'ui-sans-serif', 'system-ui', 'Roboto', 'Arial', '"Noto Sans"' ]
+			}
 		},
 		colors                   : {
 			transparent  : 'transparent',
