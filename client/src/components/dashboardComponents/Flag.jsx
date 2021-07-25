@@ -16,11 +16,15 @@ const Flag = ({ id, title, description, is_active, created_at, updated_at, rollo
 	return (
 		<li className="py-6 sm:px-0 clear-both">
 			<a href={`/flags/${id}`}>
-				<h3 className="text-2xl leading-10 font-medium text-green-700">{title}</h3>
+				<h3 className="text-2xl leading-10 font-medium text-pioneer_red">{title}</h3>
 			</a>
 			<Toggle toggledOn={is_active} _id={id} handleClickToggle={handleClickToggle} />
-			<p><b>Description:</b> {truncate(description)}</p>
-			<p><b>Current rollout:</b> {rollout}%</p>
+			<p>
+				<b>Description:</b> {truncate(description)}
+			</p>
+			<p>
+				<b>Current rollout:</b> {rollout}%
+			</p>
 			{/*  <p><b>Created:</b> {parseDate(created_at)}</p> */}
 			{/* <p><b>Last updated:</b> {parseDate(updated_at)}</p> */}
 		</li>
