@@ -13,26 +13,64 @@ module.exports = {
 			'2xl' : '1536px'
 		},
 		colors                   : {
-			transparent   : 'transparent',
-			current       : 'currentColor',
+			transparent  : 'transparent',
+			current      : 'currentColor',
 
-			black         : colors.black,
-			white         : colors.white,
-			gray          : colors.coolGray,
-			yellow        : colors.amber,
-			green         : colors.emerald,
-			blue          : colors.blue,
-			indigo        : colors.indigo,
-			purple        : colors.violet,
-			pink          : colors.pink,
-			pioneer_red   : {
-				DEFAULT : '#f48883'
+			black        : colors.black,
+			gray         : colors.coolGray,
+			yellow       : colors.amber,
+			green        : colors.emerald,
+			blue         : colors.blue,
+			indigo       : colors.indigo,
+			purple       : colors.violet,
+			pink         : colors.pink,
+			white        : {
+				DEFAULT : '#F5F5F5',
+				100     : '#fcfcfc',
+				200     : '#fafafa',
+				300     : '#f8f8f8',
+				400     : '#f6f6f6',
+				500     : '#f5f5f5',
+				600     : '#dddddd',
+				700     : '#c4c4c4',
+				800     : '#acacac',
+				900     : '#939393'
 			},
-			pioneer_green : {
-				DEFAULT : '#9ebeb9'
+			pioneerRed   : {
+				DEFAULT : '#f48883',
+				100     : '#fde7e6',
+				200     : '#fbcfcd',
+				300     : '#f8b8b5',
+				400     : '#f6a09c',
+				500     : '#f48883',
+				600     : '#f17973',
+				700     : '#f1746e',
+				800     : '#ef6d67',
+				900     : '#d7625d'
 			},
-			pioneer_blue  : {
-				DEFAULT : '#1a4451'
+			pioneerGreen : {
+				DEFAULT : '#9ebeb9',
+				100     : '#e2ecea',
+				200     : '#cfdfdc',
+				300     : '#bbd2ce',
+				400     : '#a8c5c0',
+				500     : '#9ebeb9',
+				600     : '#8eaba7',
+				700     : '#7e9894',
+				800     : '#6f8582',
+				900     : '#5f726f'
+			},
+			pioneerBlue  : {
+				DEFAULT : '#1a4451',
+				100     : '#cfd5d4',
+				200     : '#afb9b7',
+				300     : '#8f9c9a',
+				400     : '#6f807d',
+				500     : '#5f726f',
+				600     : '#566764',
+				700     : '#43504e',
+				800     : '#394443',
+				900     : '#303938'
 			}
 		},
 		spacing                  : {

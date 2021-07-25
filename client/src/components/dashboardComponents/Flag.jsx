@@ -16,7 +16,7 @@ const Flag = ({ id, title, description, is_active, created_at, updated_at, rollo
 	return (
 		<li className="py-6 sm:px-0 clear-both">
 			<a href={`/flags/${id}`}>
-				<h3 className="text-2xl leading-10 font-medium text-pioneer_red">{title}</h3>
+				<h3 className="text-2xl bg-pioneerGreen-500 leading-10 font-medium text-pioneerRed-800">{title}</h3>
 			</a>
 			<Toggle toggledOn={is_active} _id={id} handleClickToggle={handleClickToggle} />
 			<p>
