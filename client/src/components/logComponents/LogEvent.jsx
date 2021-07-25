@@ -7,8 +7,10 @@ const LogEvent = ({ flag_id, title, description, created_at }) => {
 		<li className="py-6 sm:px-0 clear-both">
 			<div className="pt-10 h-20 block mr-10 float-left">{heroicon(description.toLowerCase())}</div>
 			<div className="inline-block ml-10">
-				<a href={`/flags/${flag_id}`}><h2 className="text-2xl">{title}</h2></a>
-				<h3 className="text-gray-800">Flag ID: {flag_id}</h3>
+				<a href={`/flags/${flag_id}`}>
+					<h2 className="text-2xl font-header">{title}</h2>
+				</a>
+				<h3 className="text-gray-800 font-header">Flag ID: {flag_id}</h3>
 				<p className="text-gray-800">Log event: {description}</p>
 				<p className="text-gray-800">Timestamp: {parseDate(created_at)}</p>
 			</div>

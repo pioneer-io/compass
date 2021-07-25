@@ -41,7 +41,7 @@ const FlagForm = ({
 					<div className="space-y-8 divide-y divide-gray-200 sm:space-y-5 p-6">
 						<div>
 							<div>
-								<h3 className="text-lg leading-6 font-medium text-gray-900">
+								<h3 className="text-lg leading-6 font-medium text-gray-900 font-header">
 									{formContextIsEdit ? 'Edit' : 'New'} Flag
 								</h3>
 								<p className="mt-1 max-w-2xl text-sm text-gray-500">
@@ -96,9 +96,7 @@ const FlagForm = ({
 									max="100"
 									className="shadow-sm block focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"
 								/>
-								<p className="mt-2 text-sm text-gray-500">
-									Rollout percentage must be between 0-100.
-								</p>
+								<p className="mt-2 text-sm text-gray-500">Rollout percentage must be between 0-100.</p>
 							</div>
 						</div>
 						<div className="clear-both py-10 mb-10">

@@ -25,7 +25,7 @@ const DeleteConfirmationModal = ({ deletingFlag, setDeletingFlag, flag, history 
 					<div className="space-y-8 divide-y divide-gray-200 sm:space-y-5 p-6">
 						<div>
 							<div>
-								<h3 className="text-lg leading-6 font-medium text-gray-900">Delete Flag?</h3>
+								<h3 className="text-lg leading-6 font-medium text-gray-900 font-header">Delete Flag?</h3>
 								<p className="mt-1 max-w-2xl text-sm text-gray-500">
 									Do you really want to delete this flag? This can't be undone, so please make sure there will be no
 									impacts to your SDKs!
