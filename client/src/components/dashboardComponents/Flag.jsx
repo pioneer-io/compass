@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import Toggle from '../sharedComponents/Toggle';
 import { updateFlag } from '../../actions/FlagActions';
-import { parseDate, truncate } from '../../lib/helpers';
+import { truncate } from '../../lib/helpers';
 
 const Flag = ({ id, title, description, is_active, created_at, updated_at, rollout }) => {
 	const dispatch = useDispatch();
