@@ -41,7 +41,7 @@ const FlagForm = ({
 					<div className="space-y-8 divide-y divide-gray-200 sm:space-y-5 p-6">
 						<div>
 							<div>
-								<h3 className="text-lg leading-6 font-medium text-gray-900">
+								<h3 className="text-lg leading-6 font-medium text-gray-900 font-header">
 									{formContextIsEdit ? 'Edit' : 'New'} Flag
 								</h3>
 								<p className="mt-1 max-w-2xl text-sm text-gray-500">
@@ -62,7 +62,7 @@ const FlagForm = ({
 											onChange={handleFlagTitleKeyDown}
 											type="text"
 											autoComplete="given-name"
-											className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+											className="max-w-lg block w-full shadow-sm focus:ring-pioneerBlue-500 focus:border-pioneerBlue-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
 											value={flagTitle}
 										/>
 									</div>
@@ -77,7 +77,7 @@ const FlagForm = ({
 										onChange={handleFlagDescriptionKeydown}
 										value={flagDescription}
 										rows="3"
-										className="max-w-lg shadow-sm block w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"
+										className="max-w-lg shadow-sm block w-full focus:ring-pioneerBlue-500 focus:border-pioneerBlue-500 sm:text-sm border border-gray-300 rounded-md"
 									/>
 									<p className="mt-2 text-sm text-gray-500">Write a few sentences about the purpose of the flag.</p>
 								</div>
@@ -94,25 +94,23 @@ const FlagForm = ({
 									value={flagRollout}
 									min="0"
 									max="100"
-									className="shadow-sm block focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"
+									className="shadow-sm block focus:ring-pioneerBlue-500 focus:border-pioneerBlue-500 sm:text-sm border border-gray-300 rounded-md"
 								/>
-								<p className="mt-2 text-sm text-gray-500">
-									Rollout percentage must be between 0-100.
-								</p>
+								<p className="mt-2 text-sm text-gray-500">Rollout percentage must be between 0-100.</p>
 							</div>
 						</div>
 						<div className="clear-both py-10 mb-10">
 							<button
 								onClick={handleSubmit}
 								type="button"
-								className="ml-5 float-right inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+								className="ml-5 float-right inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-pioneerBlue-600 hover:bg-pioneerBlue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pioneerBlue-500"
 							>
 								Save
 							</button>
 							<button
 								type="button"
 								onClick={handleCancel}
-								className="float-right inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+								className="float-right inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-pioneerBlue-100 hover:bg-pioneerBlue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pioneerBlue-500"
 							>
 								Cancel
 							</button>
