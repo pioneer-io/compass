@@ -57,13 +57,13 @@ const SingleFlag = (props) => {
       <PageHead title={'Flag details'} description={''}/>
       <EditFlagForm editingFlag={editingFlag} setEditingFlag={setEditingFlag} flagCurrentTitle={flag.title} flag={flag}/>
       <DeleteFlagModal deletingFlag={deletingFlag} setDeletingFlag={setDeletingFlag} flag={flag} history={props.history}/>
-      <div className="bg-white shadow overflow-hidden sm:rounded-lg">
-      <div className="px-4 py-5 sm:px-6">
+      <div className="bg-white-100 overflow-hidden sm:rounded-lg px-10 mx-5 my-7 shadow border border-gray-200">
+      <div className="px-4 py-5 sm:px-6 mx-5">
         <h3 className="text-xl leading-6 font-medium text-gray-900 font-header">
           {flag.title}
         </h3>
       </div>
-      <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
+      <div className="border-t border-gray-200 px-4 py-5 sm:p-0 mx-5">
         <dl className="sm:divide-y sm:divide-gray-200">
           <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt className="text-sm font-medium text-gray-500">
@@ -118,16 +118,16 @@ const SingleFlag = (props) => {
         </dl>
       </div>
     </div>
-    <div className="clear-both py-10 mb-10">
-      <button onClick={handleDeleteFlag}type="button" className="ml-5 float-right inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-        Delete flag
-      </button>
-      <button onClick={handleEditFlag} type="button" className="float-right inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-        Edit flag
-      </button>
-      <button onClick={() => {props.history.push('/')}} type="button" className="float-left inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-        Back to Dashboard
-      </button>
+    <div className="clear-both py-5 mb-10 ml-5 mr-5">
+        <button onClick={handleDeleteFlag}type="button" className="shadow ml-5 float-right inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md bg-pioneerRed-700 hover:bg-pioneerRed-900 text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+          Delete flag
+        </button>
+        <button onClick={handleEditFlag} type="button" className="shadow float-right inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white-100 bg-pioneerBlue-400 hover:bg-pioneerBlue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          Edit flag
+        </button>
+        <button onClick={() => {props.history.push('/')}} type="button" className="shadow float-left inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-pioneerBlue-400 hover:bg-pioneerBlue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+          Back to Dashboard
+        </button>
     </div>
     </>
   );
