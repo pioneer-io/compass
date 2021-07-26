@@ -9,7 +9,7 @@ let js;
 const sc = StringCodec();
 
 async function createJetStreamConnect() {
-  nc = await connect({ servers: "localhost:4222" });
+  nc = await connect({ servers: process.env.NATS_SERVER });
   js = nc.jetstream();
 }
 
