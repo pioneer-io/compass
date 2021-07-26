@@ -1,3 +1,9 @@
+<img src="https://user-images.githubusercontent.com/19399698/126998779-e3bc3a2d-0e2a-4353-8f3e-9aa857455fe5.png" alt="Pioneer logo" width="200" height="200">
+
+# Compass
+
+Compass is an integral component of Pioneer feature flag management.  Compass consists of a user interface built on React, and a node.js backend. For more information, visit Pioneer's case study page.
+
 ## Run locally
 
 `npm install` in both the `client` and `server` directories.
