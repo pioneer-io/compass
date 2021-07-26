@@ -24,7 +24,12 @@ const Account = () => {
     if (sdkKey) {
       return (
         <p>{sdkKey}
-          <button onClick={copyText} className="ml-3 text-sm text-green-900">Copy to Clipboard</button>
+          <button id="copy-key">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline mx-2" stroke="currentColor" fill="none" viewBox="0 0 24 24" onClick={copyText}>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+            </svg>
+          </button>
+          {/*<button onClick={copyText} className="ml-3 text-sm text-green-900">Copy to Clipboard</button>*/}
         </p>);
     } else {
       return <p>You don't have an SDK key yet. You can click below to generate one.</p>
