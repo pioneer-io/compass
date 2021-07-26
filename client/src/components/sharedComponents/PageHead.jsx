@@ -17,7 +17,7 @@ const PageHead = ({ title, description, setCreatingNew }) => {
 					type="button"
 					className={`${isDashboard(title)
 						? 'inline-flex'
-						: 'hidden'} items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
+						: 'hidden'} items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-700 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
 				>
 					Create new flag
 				</button>

@@ -14,7 +14,7 @@ import UnknownError from './errorHandling/unknown';
 function App() {
   return (
     <>
-      <div className="flex md:flex md:flex-shrink-0 min-h-screen">
+      <div className="flex md:flex md:flex-shrink-0 min-h-screen bg-white-500">
         <Sidebar />
         <div className="main w-full mx-auto sm:px-6 lg:px-8">
           <Switch>

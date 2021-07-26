@@ -22,7 +22,6 @@ module.exports = {
 		colors                   : {
 			transparent  : 'transparent',
 			current      : 'currentColor',
-
 			black        : colors.black,
 			gray         : colors.coolGray,
 			yellow       : colors.amber,
@@ -78,6 +77,9 @@ module.exports = {
 				700     : '#153641',
 				800     : '#123039',
 				900     : '#102931'
+			},
+			dodgerBlue	: {
+				500: '#005a9c'
 			}
 		},
 		spacing                  : {
