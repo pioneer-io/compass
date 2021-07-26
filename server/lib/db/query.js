@@ -4,9 +4,9 @@ const HttpError = require('../../models/httpError');
 const CLIENT_CONFIG = {
 	user     : 'postgres',
 	host     : 'localhost',
-	port     : process.env.POSTGRES_PORT,
+	port     : '',
 	database : 'postgres',
-	password : 'secret'
+	password : ''
 };
 
 const logQuery = (statement, parameters) => {
@@ -17,6 +17,9 @@ const logQuery = (statement, parameters) => {
 };
 
 const query = async (statement, parameters) => {
+	CLIENT_CONFIG.password = process.env.POSTGRES_PASSWORD
+	CLIENT_CONFIG.port = process.env.POSTGRES_PORT
+
 	const client = new Client(CLIENT_CONFIG);
 
 	await client.connect();

@@ -1,9 +1,10 @@
+require('dotenv').config();
 const { connect, AckPolicy } = require('nats');
 let nc;
 let js;
 
 async function createJetStreamConnect() {
-	nc = await connect({ servers: 'localhost:4222' });
+	nc = await connect({ servers: process.env.NATS_SERVER });
 	js = nc.jetstream();
 }
 
