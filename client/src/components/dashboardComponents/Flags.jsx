@@ -40,7 +40,7 @@ const Flags = () => {
 
       <NewFlagForm creatingNew={creatingNew} setCreatingNew={setCreatingNew} existingFlags={flagList} />
       <section className="flag-container">
-        <ul className="p-8 flag-tiles divide-y divide-gray-200">
+        <ul className="p-8 flag-tiles">
           {flagList.map(flag => <Flag {...flag} key={flag.id} />)}
         </ul>
       </section>
