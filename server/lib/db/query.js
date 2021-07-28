@@ -1,13 +1,18 @@
 const { Client } = require('pg');
 const HttpError = require('../../models/httpError');
 
-const CLIENT_CONFIG = {
-	user     : 'postgres',
-	host     : 'localhost',
-	port     : process.env.POSTGRES_PORT,
-	database : 'postgres',
-	password : 'secret'
-};
+let clientConfig
+
+const createClientConfig = () => {
+	clientConfig = {
+		user: process.env.POSTGRES_USER,
+		password: process.env.POSTGRES_PASSWORD,
+		port: process.env.POSTGRES_PORT,
+		host: process.env.POSTGRES_HOST,
+		database: process.env.POSTGRES_DB
+	}
+}
+
 
 const logQuery = (statement, parameters) => {
 	const timeStamp = new Date();
@@ -17,7 +22,11 @@ const logQuery = (statement, parameters) => {
 };
 
 const query = async (statement, parameters) => {
-	const client = new Client(CLIENT_CONFIG);
+	if (!clientConfig) {
+		createClientConfig();
+	}
+
+	const client = new Client(clientConfig);
 
 	await client.connect();
 	logQuery(statement, parameters);
