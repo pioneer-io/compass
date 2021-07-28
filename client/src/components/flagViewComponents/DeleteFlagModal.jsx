@@ -36,7 +36,7 @@ const DeleteConfirmationModal = ({ deletingFlag, setDeletingFlag, flag, history 
 							<button
 								onClick={handleSubmit}
 								type="button"
-								className="ml-5 float-right inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-pioneerRed-700 hover:bg-pioneerRed-900 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pioneerRed-700"
+								className="ml-5 float-right inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-pioneerRed-700 hover:bg-pioneerRed-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pioneerRed-700"
 							>
 								Delete Flag!
 							</button>

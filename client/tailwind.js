@@ -43,14 +43,14 @@ module.exports = {
 				900     : '#939393'
 			},
 			pioneerRed   : {
-				DEFAULT : '#f48883',
+				DEFAULT : '#f45459',
 				100     : '#fde7e6',
 				200     : '#fbcfcd',
 				300     : '#f8b8b5',
 				400     : '#f6a09c',
 				500     : '#f48883',
 				600     : '#f17973',
-				700     : '#f1746e',
+				700     : '#f45459',
 				800     : '#ef6d67',
 				900     : '#d7625d'
 			},
@@ -80,6 +80,10 @@ module.exports = {
 			},
 			dodgerBlue	: {
 				500: '#005a9c'
+			},
+			pioneerDarkBlue  : {
+				DEFAULT: '314359',
+				900: '314359'
 			}
 		},
 		spacing                  : {
