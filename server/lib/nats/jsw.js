@@ -62,7 +62,7 @@ class JetstreamWrapper {
 	}
 
 	async _createJetStreamConnect() {
-		this.nc = await connect({ servers: 'localhost:4222' }).catch(err => {
+		this.nc = await connect({ servers: process.env.NATS_SERVER }).catch(err => {
 			throw Error(err, "Error connecting to NATS")
 		});
 		// put the server address and port in an env variable?
