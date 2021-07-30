@@ -20,17 +20,17 @@ module.exports = {
 			}
 		},
 		colors                   : {
-			transparent  : 'transparent',
-			current      : 'currentColor',
-			black        : colors.black,
-			gray         : colors.coolGray,
-			yellow       : colors.amber,
-			green        : colors.emerald,
-			blue         : colors.blue,
-			indigo       : colors.indigo,
-			purple       : colors.violet,
-			pink         : colors.pink,
-			white        : {
+			transparent : 'transparent',
+			current     : 'currentColor',
+			black       : colors.black,
+			gray        : colors.coolGray,
+			yellow      : colors.amber,
+			green       : colors.emerald,
+			blue        : colors.blue,
+			indigo      : colors.indigo,
+			purple      : colors.violet,
+			pink        : colors.pink,
+			white       : {
 				DEFAULT : '#F5F5F5',
 				100     : '#fcfcfc',
 				200     : '#fafafa',
@@ -42,48 +42,32 @@ module.exports = {
 				800     : '#acacac',
 				900     : '#939393'
 			},
-			pioneerRed   : {
+			pioneerRed  : {
 				DEFAULT : '#f45459',
-				100     : '#fde7e6',
-				200     : '#fbcfcd',
-				300     : '#f8b8b5',
-				400     : '#f6a09c',
-				500     : '#f48883',
-				600     : '#f17973',
-				700     : '#f45459',
-				800     : '#ef6d67',
-				900     : '#d7625d'
+				100     : '#fccccd',
+				200     : '#faaaac',
+				300     : '#f7878b',
+				400     : '#f5656a',
+				500     : '#f45459',
+				600     : '#dc4c50',
+				700     : '#c34347',
+				800     : '#ab3b3e',
+				900     : '#923235'
 			},
-			pioneerGreen : {
-				DEFAULT : '#9ebeb9',
-				100     : '#e2ecea',
-				200     : '#cfdfdc',
-				300     : '#bbd2ce',
-				400     : '#a8c5c0',
-				500     : '#9ebeb9',
-				600     : '#8eaba7',
-				700     : '#7e9894',
-				800     : '#6f8582',
-				900     : '#5f726f'
+			pioneerBlue : {
+				DEFAULT : '#314359',
+				100     : '#c1c7cd',
+				200     : '#98a1ac',
+				300     : '#6f7b8b',
+				400     : '#46566a',
+				500     : '#314359',
+				600     : '#2c3c50',
+				700     : '#273647',
+				800     : '#222f3e',
+				900     : '#1d2835'
 			},
-			pioneerBlue  : {
-				DEFAULT : '#1a4451',
-				100     : '#bac7cb',
-				200     : '#8da2a8',
-				300     : '#5f7c85',
-				400     : '#315762',
-				500     : '#1a4451',
-				600     : '#173d49',
-				700     : '#153641',
-				800     : '#123039',
-				900     : '#102931'
-			},
-			dodgerBlue	: {
-				500: '#005a9c'
-			},
-			pioneerDarkBlue  : {
-				DEFAULT: '314359',
-				900: '314359'
+			dodgerBlue  : {
+				500 : '#005a9c'
 			}
 		},
 		spacing                  : {
