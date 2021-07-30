@@ -8,17 +8,11 @@ import { handleErrorRedirect } from '../../lib/helpers';
 
 
 const sortFlags = (flagList) => {
-  flagList.sort((a, b) => {
-    if (a.updated_at < b.updated_at) {
-      return 1
-    } else if (a.updated_at > b.updated_at) {
-      return -1
-    } else {
-      return 0
-    }
+  return flagList.sort((a, b) => {
+    const titleA = a.title.toLowerCase();
+    const titleB = b.title.toLowerCase();
+    return (titleA < titleB) ? -1 : (titleB > titleA) ? 1 : 0;
   });
-
-  return flagList
 }
 
 const Flags = () => {
