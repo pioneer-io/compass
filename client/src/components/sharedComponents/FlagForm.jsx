@@ -103,14 +103,14 @@ const FlagForm = ({
 							<button
 								onClick={handleSubmit}
 								type="button"
-								className="ml-5 float-right inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-pioneerBlue-600 hover:bg-pioneerBlue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pioneerBlue-500"
+								className="ml-5 float-right inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-pioneerBlue-500 hover:bg-pioneerBlue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pioneerBlue-500"
 							>
 								Save
 							</button>
 							<button
 								type="button"
 								onClick={handleCancel}
-								className="float-right inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-pioneerBlue-100 hover:bg-pioneerBlue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pioneerBlue-500"
+								className="float-right inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-pioneerBlue-200 hover:bg-pioneerBlue-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pioneerBlue-500"
 							>
 								Cancel
 							</button>
