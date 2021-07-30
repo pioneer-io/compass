@@ -22,10 +22,10 @@ const Sidebar = () => {
 							href="/flags"
 							className={`${isCurrentPage('/flags') || isCurrentPage('/')
 								? 'bg-pioneerBlue-900'
-								: 'bg-pioneerBlue-500'} text-white group flex items-center px-2 py-2 text font-medium rounded-md`}
+								: 'bg-pioneerBlue-500'} text-white hover:bg-pioneerBlue-700 hover:text-white group flex items-center px-2 py-2 text font-medium rounded-md`}
 						>
 							<svg
-								className="text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
+								className="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
 								xmlns="http://www.w3.org/2000/svg"
 								fill="none"
 								viewBox="0 0 24 24"
@@ -46,7 +46,7 @@ const Sidebar = () => {
 							href="/logs"
 							className={`${isCurrentPage('/logs')
 								? 'bg-pioneerBlue-900'
-								: 'bg-pioneerBlue-500'} text-white group flex items-center px-2 py-2 text font-medium rounded-md`}
+								: 'bg-pioneerBlue-500'} text-white hover:bg-pioneerBlue-700 hover:text-white group flex items-center px-2 py-2 text font-medium rounded-md`}
 						>
 							<svg
 								className="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
