@@ -1,6 +1,6 @@
 // flag form will take state/set for form visibility, and an arg to define the context('edit' or 'new')
 // title, desc, rollout as well
-// it will need to accecpt methods for handleCancel, resetFields, handleSubmit
+// it will need to accept methods for handleCancel, resetFields, handleSubmit
 // it will define handle value change methods 50-62
 // the html will have conditional rendering for the title and description labels
 
