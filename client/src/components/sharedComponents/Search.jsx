@@ -10,9 +10,9 @@ function Search({searchWord, setSearchWord}) {
     <input
       onChange={handleSearchChange}
       type="text"
-      placeholder="Search..."
+      placeholder="Search by flag title..."
       autoComplete="given-name"
-      className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+      className="float-right my-4 max-w-lg block w-full shadow-sm focus:ring-pioneerBlue-400 focus:border-pioneerBlue-400 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
       value={searchWord}
     />
   )
