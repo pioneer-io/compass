@@ -119,13 +119,13 @@ const SingleFlag = (props) => {
       </div>
     </div>
     <div className="clear-both py-5 mb-10 ml-5 mr-5">
-        <button onClick={handleDeleteFlag}type="button" className="shadow ml-5 float-right inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md bg-pioneerRed-700 hover:bg-pioneerRed-900 text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+        <button onClick={handleDeleteFlag}type="button" className="shadow ml-5 float-right inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md bg-pioneerRed-600 hover:bg-pioneerRed-500 text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pioneerRed-600">
           Delete flag
         </button>
-        <button onClick={handleEditFlag} type="button" className="shadow float-right inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white-100 bg-pioneerBlue-400 hover:bg-pioneerBlue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+        <button onClick={handleEditFlag} type="button" className="shadow float-right inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white-100 bg-pioneerBlue-400 hover:bg-pioneerBlue-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pioneerBlue-500">
           Edit flag
         </button>
-        <button onClick={() => {props.history.push('/')}} type="button" className="shadow float-left inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-pioneerBlue-400 hover:bg-pioneerBlue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+        <button onClick={() => {props.history.push('/')}} type="button" className="shadow float-left inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-pioneerBlue-400 hover:bg-pioneerBlue-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pioneerBlue-500">
           Back to Dashboard
         </button>
     </div>
