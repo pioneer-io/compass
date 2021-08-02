@@ -1,6 +1,6 @@
 FROM node:15.1.0
 
-LABEL version="1.2"
+LABEL version="1.3"
 LABEL description="Docker base image for frontend of compass application"
 
 WORKDIR /app 
