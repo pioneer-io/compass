@@ -2,7 +2,7 @@
   "name": "compass-frontend",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:3001",
+  "proxy": "http://compass-server:3001",
   "dependencies": {
     "@tailwindcss/forms": "^0.3.3",
     "@testing-library/jest-dom": "^5.11.4",
