@@ -2,6 +2,9 @@
     <img src="https://user-images.githubusercontent.com/56378698/127357452-1b57af9c-be5a-42ff-aecb-bd2e2c006716.png" alt="Pioneer logo" width="200" height="200">
 </p>
 
+# Docker branch
+Note, this branch is used for creating `compass-server` and `compass-client` Docker images. It differs from the main branch by not having an `.env` file and not having a `docker` directory.
+
 # Compass
 
 Compass is an integral component of Pioneer feature flag management.  Compass consists of a user interface built on React, and a node.js backend. For more information, visit Pioneer's [case study page](https://pioneer-io.github.io/).
