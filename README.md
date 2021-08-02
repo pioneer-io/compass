@@ -3,7 +3,7 @@
 </p>
 
 # Docker branch
-Note, this branch is used for creating `compass-server` and `compass-client` Docker images. It differs from the main branch by not having an `.env` file and not having a `docker` directory.
+Note, this branch is used for creating `compass-server` and `compass-client` Docker images. It differs from the main branch by not having an `.env` file and not having a `docker` directory. Additionally, the client proxies to the `compass-server` container, not `localhost:3001`.
 
 # Compass
 
