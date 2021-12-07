@@ -4,6 +4,8 @@
 
 # Compass
 
+# ⚠️ This project is no longer actively maintained ⚠️
+
 Compass is an integral component of Pioneer feature flag management.  Compass consists of a user interface built on React, and a node.js backend. For more information, visit Pioneer's [case study page](https://pioneer-io.github.io/).
 
 ## Run locally
